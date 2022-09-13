@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "rootDir": "source",
+    "outDir": "dist",
+    "noEmitOnError": true,
+    "jsx": "react",
+    "jsxFactory": "h"
+  },
+  "include": [
+    "./source/**/*"
+  ]
+}
