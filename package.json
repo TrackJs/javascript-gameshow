@@ -1,7 +1,7 @@
 {
   "name": "javascriptaire-quiz",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Gameshow runner for 'Who Wants to be a JavaScriptaire' Quiz.",
   "scripts": {
     "build": "webpack",
     "pack": "NODE_ENV=production webpack",
