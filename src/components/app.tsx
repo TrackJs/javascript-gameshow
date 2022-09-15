@@ -8,6 +8,7 @@ import Home from '../routes/home';
 import Profile from '../routes/profile';
 
 import NewGame from '../routes/game/new';
+import GameBoard from '../routes/game/board';
 
 const App = () => (
 	<main id="app">
@@ -17,6 +18,7 @@ const App = () => (
             <Route path="/profile/:user" component={Profile} />
 
             <Route path="/game/new" component={NewGame} />
+            <Route path="/game/:gameId" component={GameBoard} />
         </Router>
     </main>
 );

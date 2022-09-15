@@ -1,10 +1,14 @@
-import { Game, GameOptions } from "./Game";
+import { Game } from "./Game";
 
 class _GameController {
 
-  newGame(options : GameOptions) {
-    let game = new Game(options);
-    this.saveGame(game);
+  loadGame(gameId: string) : Game | null {
+    let gameString = localStorage.getItem(`game-${gameId}`);
+    if (!gameString) {
+      return null;
+    }
+
+    return JSON.parse(gameString) as Game;
   }
 
   saveGame(game: Game) {

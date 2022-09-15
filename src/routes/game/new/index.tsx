@@ -1,4 +1,6 @@
 import { h, Component, ComponentChild } from 'preact';
+import { route } from 'preact-router';
+import { Game } from 'src/Game';
 import { GameController } from 'src/GameController';
 
 export default class NewGame extends Component<any, any> {
@@ -19,7 +21,12 @@ export default class NewGame extends Component<any, any> {
     e.preventDefault();
     let data = new FormData(e.target as HTMLFormElement);
 
-    GameController.newGame({ playerName: (data.get("name") || "anonymous") as string });
+    let game = new Game({
+      playerName: (data.get("name") || "anonymous") as string
+    });
+
+    GameController.saveGame(game);
+    route(`/game/${game.id}`, false);
   }
 
 }
