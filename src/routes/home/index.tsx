@@ -1,12 +1,12 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
-import { GameController } from 'src/GameController';
+import { GameRepository } from 'src/GameRepository';
 import style from './style.css';
 
 export default class Home extends Component<any, any> {
 
 	render() : ComponentChild {
-		let games = GameController.getAllGames();
+		let games = GameRepository.getAllGames();
 		const gameList = games.map((game) => (
 			<li>
 				<a href={`/game/${game.id}`}>{game.playerName}'s game at {game.startedOn}</a>
@@ -26,7 +26,7 @@ export default class Home extends Component<any, any> {
 	}
 
 	onClearGames(e: Event) {
-		GameController.clear();
+		GameRepository.clear();
 		route("/", true);
 	}
 

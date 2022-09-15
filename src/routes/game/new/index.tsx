@@ -1,7 +1,7 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
 import { Game } from 'src/Game';
-import { GameController } from 'src/GameController';
+import { GameRepository } from 'src/GameRepository';
 
 export default class NewGame extends Component<any, any> {
 
@@ -25,7 +25,7 @@ export default class NewGame extends Component<any, any> {
       playerName: (data.get("name") || "anonymous") as string
     });
 
-    GameController.saveGame(game);
+    GameRepository.saveGame(game);
     route(`/game/${game.id}`, false);
   }
 
