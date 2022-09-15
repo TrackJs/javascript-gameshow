@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "luxon": "^3.0.3",
     "preact": "^10.10.0",
     "preact-render-to-string": "^5.2.1",
     "preact-router": "^3.2.1",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.12",
     "@types/jest": "^27.4.1",
+    "@types/luxon": "^3.0.1",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",

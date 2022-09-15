@@ -16,7 +16,7 @@ export default class GameBoard extends Component<GameBoardProps, GameBoardState>
     super();
 
     this.state = {
-      game: GameController.loadGame(props.gameId)
+      game: GameController.getGame(props.gameId)
     };
   }
 

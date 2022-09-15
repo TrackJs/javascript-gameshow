@@ -2,7 +2,26 @@ import { Game } from "./Game";
 
 class _GameController {
 
-  loadGame(gameId: string) : Game | null {
+  clear() : void {
+    localStorage.clear();
+  }
+
+  getAllGames() : Game[] {
+    const games = [];
+    for(let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key?.startsWith("game-")) {
+        let gameId = key.split("game-")[1];
+        let game = this.getGame(gameId);
+        if (game) {
+          games.push(game);
+        }
+      }
+    }
+    return games;
+  }
+
+  getGame(gameId: string) : Game | null {
     let gameString = localStorage.getItem(`game-${gameId}`);
     if (!gameString) {
       return null;
