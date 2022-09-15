@@ -7,15 +7,18 @@ import Header from './header';
 import Home from '../routes/home';
 import Profile from '../routes/profile';
 
+import NewGame from '../routes/game/new';
+
 const App = () => (
-	<div id="app">
-        <Header />
+	<main id="app">
         <Router>
             <Route path="/" component={Home} />
             <Route path="/profile/" component={Profile} user="me" />
             <Route path="/profile/:user" component={Profile} />
+
+            <Route path="/game/new" component={NewGame} />
         </Router>
-    </div>
+    </main>
 );
 
 export default App;
