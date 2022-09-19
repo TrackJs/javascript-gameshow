@@ -4,9 +4,14 @@ import { UrlRouteProps } from 'src/components/app';
 import { Game } from 'src/Game';
 import { GameController } from 'src/GameController';
 import { GameRepository } from 'src/GameRepository';
-import { QuestionController } from 'src/QuestionController';
+import { Question, QuestionController } from 'src/QuestionController';
+import { shuffleArray } from 'src/utils/shuffleArray';
 
-export default class QuestionShow extends Component<UrlRouteProps, any> {
+type QuestionShowState = {
+  question: Question
+}
+
+export default class QuestionShow extends Component<UrlRouteProps, QuestionShowState> {
 
   constructor(props: UrlRouteProps) {
     super();
@@ -14,20 +19,23 @@ export default class QuestionShow extends Component<UrlRouteProps, any> {
     if (!props.gameId || !props.questionIdx) {
       route("/error/404");
     }
+
+    this.state = {
+      question: QuestionController.getQuestion(props.questionIdx as string)
+    }
   }
 
   render(): ComponentChild {
-    let question = QuestionController.getQuestion(this.props.questionIdx as string);
-
+    let answers = shuffleArray(this.state.question.answers);
     return(
       <form class="question" onSubmit={this.onSubmit.bind(this)}>
-        <div class="question-text">{question.text}</div>
+        <div class="question-text">{this.state.question.text}</div>
         <ol class="answers">
-          { question.options.map(o => (
+          { answers.map(answer => (
             <li>
               <label>
-                <span>{o.text}</span>
-                <input type="radio" name="answer" value={`${!!o.isCorrect}`}></input>
+                <span>{answer.text}</span>
+                <input type="radio" name="selectedAnswerId" value={answer.id}></input>
               </label>
             </li>
           ))}
@@ -41,7 +49,7 @@ export default class QuestionShow extends Component<UrlRouteProps, any> {
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
 
-    let isCorrect = (formData.get("answer") === "true");
+    let isCorrect = (formData.get("selectedAnswerId") === this.state.question.correctId);
 
     console.log(isCorrect);
   }
