@@ -29,13 +29,13 @@ export default class GameStart extends Component<any, GameStartState> {
   }
 
   render(): ComponentChild {
-    let questionId = GameController.getNextQuestionIndex(this.state.game);
+    let questionIdx = GameController.getNextQuestionIndex(this.state.game);
 
     return(
       <div>
         I am the start
 
-        <a href={`/game/${this.state.game.id}/q/${questionId}`}>Start the next question</a>
+        <a href={`/game/${this.state.game.id}/q/${questionIdx}`}>Start the next question</a>
 
       </div>
     );
