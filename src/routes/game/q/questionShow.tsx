@@ -20,9 +20,14 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       route("/error/404");
     }
 
-    this.state = {
-      question: QuestionController.getQuestion(props.questionIdx as string)
+    let question = QuestionController.getQuestion(props.gameId as string, props.questionIdx as string);
+    if (!question) {
+      alert('TODO could not get a question');
     }
+
+    this.state = {
+      question: question as Question
+    };
   }
 
   render(): ComponentChild {

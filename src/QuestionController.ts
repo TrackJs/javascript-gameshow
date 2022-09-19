@@ -10,19 +10,53 @@ export type Question = {
   }[]
 }
 
+type UsageRecords = [
+  {
+    questionId: string,
+    gameId: string,
+    questionIdx: string
+  }
+]
+
 class _QuestionController {
 
-  getQuestion(questionIdx: string) : Question {
+  getQuestion(gameId: string, questionIdx: string) : Question | undefined {
     let difficulty = INDEX_TO_DIFFICULTY[questionIdx];
+    let usageRecords = this.getUsageRecords();
 
-    let question = QUESTIONS.find(q => q.difficulty === difficulty);
-
-    if (question) {
-      return question
+    let existingUsage = usageRecords.find(ur => ur.gameId === gameId && ur.questionIdx === questionIdx);
+    if (existingUsage) {
+      return QUESTIONS.find(q => q.id === existingUsage?.questionId);
     }
 
-    throw new Error('no questions found');
+    let usedQuestionIds = usageRecords.map(ur => ur.questionId);
+    let question = QUESTIONS
+      .filter(q => !usedQuestionIds.some(uqid => uqid === q.id))
+      .find(q => q.difficulty === difficulty);
+
+    if (question) {
+      usageRecords.push({
+        questionId: question.id,
+        gameId,
+        questionIdx
+      });
+      this.saveUsageRecords(usageRecords);
+
+      return question;
+    }
   }
+
+
+
+  private getUsageRecords() : UsageRecords {
+    let usageRecords = JSON.parse(localStorage.getItem("question-usage-records") || "[]");
+    return usageRecords;
+  }
+
+  private saveUsageRecords(usageRecords: UsageRecords) : void  {
+    localStorage.setItem("question-usage-records", JSON.stringify(usageRecords));
+  }
+
 
   /*
     difficulties:
@@ -58,9 +92,11 @@ const INDEX_TO_DIFFICULTY : { [questionIndex: string]: number } = {
   "9": 4
 };
 
+
 const QUESTIONS : Question[] = [
   {
     id: '1',
+    difficulty: 0,
     text: '"\u{1F4A9}".length',
     afterText: 'Unicode characters, like the \u{1F4A9} emoji, require two bytes. String.prototype.length returns the number of bytes rather than the number of characters, returning an unexpected result.',
     correctId: '3',
@@ -86,6 +122,7 @@ const QUESTIONS : Question[] = [
   },
   {
     id: '29',
+    difficulty: 0,
     text: 'Math.min()',
     afterText: 'Called with no arguments, Math.min() returns the largest number in JavaScript.',
     correctId: '2',
