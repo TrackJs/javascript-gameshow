@@ -24,8 +24,7 @@
     "luxon": "^3.0.3",
     "preact": "^10.10.0",
     "preact-render-to-string": "^5.2.1",
-    "preact-router": "^3.2.1",
-    "uuid": "^9.0.0"
+    "preact-router": "^3.2.1"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.12",
