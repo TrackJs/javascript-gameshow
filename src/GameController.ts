@@ -26,6 +26,10 @@ class _GameController {
     this.setState({ hasStarted: true });
   }
 
+  getNextQuestionIndex(game : Game) : number {
+    return game.QuestionsAsked.length;
+  }
+
 }
 
 export const GameController = new _GameController();
