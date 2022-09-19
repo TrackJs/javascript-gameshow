@@ -11,6 +11,7 @@ export class Game {
   public startedOn: DateTime
 
   public QuestionsAsked: {
+    questionIdx: string,
     questionId: string,
     isCorrect: boolean
   }[] = [];

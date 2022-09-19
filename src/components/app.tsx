@@ -12,6 +12,7 @@ import GameStart from '../routes/game/gameStart';
 import GameFinish from '../routes/game/gameFinish';
 import QuestionStart from '../routes/game/q/questionStart';
 import QuestionShow from '../routes/game/q/questionShow';
+import QuestionResult from '../routes/game/q/questionResult';
 
 import Error404 from '../routes/error/error404';
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/game/:gameId" component={GameStart} />
             <Route path="/game/:gameId/q/:questionIdx" component={QuestionStart} />
             <Route path="/game/:gameId/q/:questionIdx/show" component={QuestionShow} />
+            <Route path="/game/:gameId/q/:questionIdx/result" component={QuestionResult} />
             <Route path="/game/:gameId/finish" component={GameFinish} />
 
             <Route path="/error/404" component={Error404} />
@@ -34,8 +36,8 @@ const App = () => (
 );
 
 export interface UrlRouteProps {
-    gameId: string|undefined,
-    questionIdx: string|undefined
+    gameId: string,
+    questionIdx: string
 }
 
 export default App;

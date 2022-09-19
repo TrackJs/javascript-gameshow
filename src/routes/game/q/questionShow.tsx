@@ -8,6 +8,7 @@ import { Question, QuestionController } from 'src/QuestionController';
 import { shuffleArray } from 'src/utils/shuffleArray';
 
 type QuestionShowState = {
+  game: Game
   question: Question
 }
 
@@ -20,12 +21,18 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       route("/error/404");
     }
 
-    let question = QuestionController.getQuestion(props.gameId as string, props.questionIdx as string);
+    let question = QuestionController.getQuestion(props.gameId, props.questionIdx);
     if (!question) {
       alert('TODO could not get a question');
     }
 
+    let game = GameRepository.getGame(props.gameId) as Game;
+    if (!game) {
+      alert('TODO could not get the game');
+    }
+
     this.state = {
+      game,
       question: question as Question
     };
   }
@@ -54,9 +61,14 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
 
-    let isCorrect = (formData.get("selectedAnswerId") === this.state.question.correctId);
+    this.state.game.QuestionsAsked.push({
+      questionIdx: this.props.questionIdx,
+      questionId: this.state.question.id,
+      isCorrect: (formData.get("selectedAnswerId") === this.state.question.correctId)
+    });
 
-    console.log(isCorrect);
+    GameRepository.saveGame(this.state.game);
+    route(`/game/${this.state.game.id}/q/${this.props.questionIdx}/result`);
   }
 
 }
