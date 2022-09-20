@@ -15,7 +15,7 @@ export class Game {
   public questionsAsked: {
     questionIdx: string,
     questionId: string,
-    isCorrect: boolean
+    isCorrect: boolean|null
   }[] = [];
 
   public prizeStack: Prize[] = [];

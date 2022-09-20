@@ -3,6 +3,7 @@ import { Game } from 'src/Game';
 
 export type PrizeStackProps = {
   game: Game
+  questionIdx: number
 }
 
 export default class PrizeStack extends Component<PrizeStackProps, any> {
@@ -13,9 +14,9 @@ export default class PrizeStack extends Component<PrizeStackProps, any> {
         I am the prize stack
         <ol>
           {
-            props.game.prizeStack.reverse().map(prize => (
-              <li>{prize.name}</li>
-            ))
+            props.game.prizeStack.map(prize => (
+              <li>{prize.name}{prize.questionIdx === props.questionIdx ? " (Current)" : ""}</li>
+            )).reverse()
           }
         </ol>
       </div>

@@ -25,12 +25,16 @@ export default class QuestionResult extends Component<UrlRouteProps, QuestionRes
     this.state = { game, question };
   }
 
-  render(): ComponentChild {
-    let result = this.state.game.questionsAsked[parseInt(this.props.questionIdx, 10)];
+  render(props: UrlRouteProps, state: QuestionResultState): ComponentChild {
+    let result = state.game.questionsAsked[parseInt(props.questionIdx, 10)];
+
     return(
       <div>
         <h1>{result.isCorrect ? "Correct!" : "Wrong"}</h1>
-        <div>{this.state.question.afterText}</div>
+        <div>{state.question.afterText}</div>
+        <div>
+          <a href={`/game/${props.gameId}/q/${parseInt(props.questionIdx, 10) + 1}`}>Next Question</a>
+        </div>
       </div>
     );
   }
