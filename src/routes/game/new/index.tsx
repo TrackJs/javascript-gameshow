@@ -2,6 +2,7 @@ import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
 import { Game } from 'src/Game';
 import { GameRepository } from 'src/GameRepository';
+import { PrizeController } from 'src/PrizeController';
 
 export default class NewGame extends Component<any, any> {
 
@@ -22,8 +23,11 @@ export default class NewGame extends Component<any, any> {
     let data = new FormData(e.target as HTMLFormElement);
 
     let game = new Game({
+      id: GameRepository.getNextGameId(),
       playerName: (data.get("name") || "anonymous") as string
     });
+
+    game.prizeStack = PrizeController.getPrizeStack(game.id as string);
 
     GameRepository.saveGame(game);
     route(`/game/${game.id}`, false);

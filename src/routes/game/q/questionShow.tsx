@@ -61,7 +61,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
 
-    this.state.game.QuestionsAsked.push({
+    this.state.game.questionsAsked.push({
       questionIdx: this.props.questionIdx,
       questionId: this.state.question.id,
       isCorrect: (formData.get("selectedAnswerId") === this.state.question.correctId)

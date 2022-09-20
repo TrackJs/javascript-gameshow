@@ -31,13 +31,10 @@ class _GameRepository {
   }
 
   saveGame(game: Game) {
-    if (!game.id) {
-      game.id = GameRepository.getNextGameId();
-    }
     localStorage.setItem(`game-${game.id}`, JSON.stringify(game));
   }
 
-  private getNextGameId() : string {
+  getNextGameId() : string {
     let games = GameRepository.getAllGames();
     return `${games.length}`;
   }

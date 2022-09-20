@@ -5,6 +5,8 @@ import { Game } from 'src/Game';
 import { GameController } from 'src/GameController';
 import { GameRepository } from 'src/GameRepository';
 
+import PrizeStack from 'src/components/prizeStack';
+
 type GameStartState = {
   game: Game
 }
@@ -36,6 +38,8 @@ export default class GameStart extends Component<any, GameStartState> {
         I am the start
 
         <a href={`/game/${this.state.game.id}/q/${questionIdx}`}>Start the next question</a>
+
+        <PrizeStack game={this.state.game} />
 
       </div>
     );

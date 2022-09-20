@@ -27,7 +27,7 @@ class _GameController {
   }
 
   getNextQuestionIndex(game : Game) : number {
-    return game.QuestionsAsked.length;
+    return game.questionsAsked.length;
   }
 
 }

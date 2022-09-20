@@ -1,23 +1,28 @@
 import { DateTime } from 'luxon';
+import { Prize } from './PrizeController';
 
 export type GameOptions = {
+  id: string;
   playerName: string;
 }
 
 export class Game {
 
-  public id: string|undefined
+  public id: string
   public playerName: string
   public startedOn: DateTime
 
-  public QuestionsAsked: {
+  public questionsAsked: {
     questionIdx: string,
     questionId: string,
     isCorrect: boolean
   }[] = [];
 
+  public prizeStack: Prize[] = [];
+
   constructor(opts: GameOptions) {
-    this.playerName = opts.playerName
+    this.id = opts.id;
+    this.playerName = opts.playerName;
     this.startedOn = DateTime.now();
   }
 }
