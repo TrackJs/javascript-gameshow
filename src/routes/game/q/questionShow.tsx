@@ -6,12 +6,15 @@ import { Question, QuestionController } from 'src/controllers/QuestionController
 import { shuffleArray } from 'src/utils/shuffleArray';
 
 import PrizeStack from 'src/components/prizeStack';
+import style from './questionShow.scss';
 
 interface QuestionShowState {
   game: Game
   question: Question
   questionIdx: number
 }
+
+const ANSWER_LABEL = ["A","B","C","D"];
 
 export default class QuestionShow extends Component<UrlRouteProps, QuestionShowState> {
 
@@ -33,23 +36,24 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     let questionIdx = parseInt(props.questionIdx, 10);
 
     return(
-      <div>
+      <div class="question-show">
         <form class="question" onSubmit={this.onSubmit.bind(this)}>
           <div class="question-text">{this.state.question.text}</div>
           <ol class="answers">
-            { answers.map(answer => (
+            { answers.map((answer, i) => (
               <li>
-                <label>
-                  <span>{answer.text}</span>
-                  <input type="radio" name="selectedAnswerId" value={answer.id}></input>
+                <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`}></input>
+                <label for={`answer-${i}`}>
+                  <span>{ANSWER_LABEL[i]}. {answer.text}</span>
                 </label>
               </li>
             ))}
           </ol>
-          <button type="submit">Final Answer</button>
+
+          <button type="submit" class="final-answer">Final<br/> Answer</button>
         </form>
 
-        <PrizeStack game={this.state.game} questionIdx={questionIdx} />
+        {/* <PrizeStack game={this.state.game} questionIdx={questionIdx} /> */}
       </div>
     );
   }
