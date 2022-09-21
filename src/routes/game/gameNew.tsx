@@ -1,8 +1,6 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
-import { Game } from 'src/Game';
-import { GameRepository } from 'src/GameRepository';
-import { PrizeController } from 'src/PrizeController';
+import { GameController } from 'src/controllers/GameController';
 
 export default class NewGame extends Component<any, any> {
 
@@ -22,14 +20,10 @@ export default class NewGame extends Component<any, any> {
     e.preventDefault();
     let data = new FormData(e.target as HTMLFormElement);
 
-    let game = new Game({
-      id: GameRepository.getNextGameId(),
+    let game = GameController.createGame({
       playerName: (data.get("name") || "anonymous") as string
     });
 
-    game.prizeStack = PrizeController.getPrizeStack(game.id as string);
-
-    GameRepository.saveGame(game);
     route(`/game/${game.id}`, false);
   }
 

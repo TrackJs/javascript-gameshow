@@ -1,7 +1,7 @@
-import { h, Component, ComponentChild, RenderableProps } from 'preact';
-import { Game } from 'src/Game';
+import { h, Component, ComponentChild } from 'preact';
+import { Game } from 'src/controllers/GameController';
 
-export type PrizeStackProps = {
+export interface PrizeStackProps {
   game: Game
   questionIdx: number
 }

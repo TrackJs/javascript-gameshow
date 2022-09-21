@@ -1,14 +1,13 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
-import { UrlRouteProps } from 'src/components/app';
-import PrizeStack from 'src/components/prizeStack';
-import { Game } from 'src/Game';
-import { GameController } from 'src/GameController';
-import { GameRepository } from 'src/GameRepository';
-import { Question, QuestionController } from 'src/QuestionController';
+import { UrlRouteProps } from 'src/app';
+import { Game, GameController } from 'src/controllers/GameController';
+import { Question, QuestionController } from 'src/controllers/QuestionController';
 import { shuffleArray } from 'src/utils/shuffleArray';
 
-type QuestionShowState = {
+import PrizeStack from 'src/components/prizeStack';
+
+interface QuestionShowState {
   game: Game
   question: Question
 }
@@ -18,27 +17,16 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
   constructor(props: UrlRouteProps) {
     super();
 
-    if (!props.gameId || !props.questionIdx) {
-      route("/error/404");
+    let game = GameController.getGame(props.gameId) as Game;
+    let question = QuestionController.getQuestion(props.gameId, props.questionIdx) as Question;
+    if (!game || !question) {
+      alert("TODO Bad Path");
     }
 
-    let question = QuestionController.getQuestion(props.gameId, props.questionIdx);
-    if (!question) {
-      alert('TODO could not get a question');
-    }
-
-    let game = GameRepository.getGame(props.gameId) as Game;
-    if (!game) {
-      alert('TODO could not get the game');
-    }
-
-    this.state = {
-      game,
-      question: question as Question
-    };
+    this.state = { game, question };
   }
 
-  render(): ComponentChild {
+  render(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
     let answers = shuffleArray(this.state.question.answers);
     return(
       <div>
@@ -57,7 +45,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
           <button type="submit">Final Answer</button>
         </form>
 
-        <PrizeStack game={this.state.game} questionIdx={parseInt(this.props.questionIdx, 10)} />
+        <PrizeStack game={this.state.game} questionIdx={this.props.questionIdx} />
       </div>
     );
   }
@@ -66,9 +54,9 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
 
-    let result = this.state.game.questionsAsked[parseInt(this.props.questionIdx, 10)];
+    let result = this.state.game.questionsAsked[this.props.questionIdx];
     result.isCorrect = (formData.get("selectedAnswerId") === this.state.question.correctId);
-    GameRepository.saveGame(this.state.game);
+    GameController.saveGame(this.state.game);
 
     route(`/game/${this.state.game.id}/q/${this.props.questionIdx}/result`);
   }

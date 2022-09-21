@@ -19,6 +19,8 @@ interface PrizeClaim {
   prizeId: string
 }
 
+const STORAGE_KEY = "prize-claims";
+
 class _PrizeController {
 
   getPrizeStack(gameId: string) : Prize[] {
@@ -56,17 +58,16 @@ class _PrizeController {
   }
 
   private getPrizeClaims() : PrizeClaim[] {
-    let usageRecords = JSON.parse(localStorage.getItem("prize-claims") || "[]");
+    let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
   private savePrizeClaims(prizeClaims: PrizeClaim[]) : void  {
-    localStorage.setItem("prize-claims", JSON.stringify(prizeClaims));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prizeClaims));
   }
 }
 
 export const PrizeController = new _PrizeController();
-
 
 const PRIZE_INVENTORY : InventoryPrize[] = [
   {

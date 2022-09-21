@@ -1,11 +1,9 @@
 import { h, Component, ComponentChild } from 'preact';
-import { route } from 'preact-router';
-import { UrlRouteProps } from 'src/components/app';
-import { Game } from 'src/Game';
-import { GameRepository } from 'src/GameRepository';
-import { Question, QuestionController } from 'src/QuestionController';
+import { UrlRouteProps } from 'src/app';
+import { Game, GameController } from 'src/controllers/GameController';
+import { Question, QuestionController } from 'src/controllers/QuestionController';
 
-type QuestionResultState = {
+interface QuestionResultState {
   game: Game
   question: Question
 }
@@ -15,12 +13,11 @@ export default class QuestionResult extends Component<UrlRouteProps, QuestionRes
   constructor(props: UrlRouteProps) {
     super();
 
-    if (!props.gameId || !props.questionIdx) {
-      route("/error/404");
-    }
-
-    let game = GameRepository.getGame(props.gameId) as Game;
+    let game = GameController.getGame(props.gameId) as Game;
     let question = QuestionController.getQuestion(props.gameId, props.questionIdx) as Question;
+    if (!game || !question) {
+      alert("TODO Bad Path");
+    }
 
     this.state = { game, question };
   }
@@ -33,12 +30,10 @@ export default class QuestionResult extends Component<UrlRouteProps, QuestionRes
         <h1>{result.isCorrect ? "Correct!" : "Wrong"}</h1>
         <div>{state.question.afterText}</div>
         <div>
-          <a href={`/game/${props.gameId}/q/${parseInt(props.questionIdx, 10) + 1}`}>Next Question</a>
+          <a href={`/game/${props.gameId}/q/${props.questionIdx + 1}`}>Next Question</a>
         </div>
       </div>
     );
   }
 
-
 }
-

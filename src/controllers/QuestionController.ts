@@ -1,4 +1,4 @@
-export type Question = {
+export interface Question {
   id: string,
   difficulty: 0|1|2|3|4|5,
   type: "code"|"text",
@@ -11,13 +11,13 @@ export type Question = {
   }[]
 }
 
-type UsageRecords = [
-  {
-    questionId: string,
-    gameId: string,
-    questionIdx: string
-  }
-]
+interface QuestionUsage {
+  questionId: string,
+  gameId: string,
+  questionIdx: string
+}
+
+const STORAGE_KEY = "question-usage";
 
 class _QuestionController {
 
@@ -47,31 +47,14 @@ class _QuestionController {
     }
   }
 
-
-
-  private getUsageRecords() : UsageRecords {
-    let usageRecords = JSON.parse(localStorage.getItem("question-usage-records") || "[]");
+  private getUsageRecords() : QuestionUsage[] {
+    let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
-  private saveUsageRecords(usageRecords: UsageRecords) : void  {
-    localStorage.setItem("question-usage-records", JSON.stringify(usageRecords));
+  private saveUsageRecords(usageRecords: QuestionUsage[]) : void  {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(usageRecords));
   }
-
-
-  /*
-    difficulties:
-
-    5 players max.
-    10 questions.
-
-    1 trivial-math    5
-    1 trivial-other   5
-    1 trivia          5
-    2 easy           10
-    3 moderate       15
-    2 hard           10
-  */
 }
 
 export const QuestionController = new _QuestionController();

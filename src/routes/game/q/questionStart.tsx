@@ -1,18 +1,16 @@
 import { h, Component, ComponentChild } from 'preact';
-import { UrlRouteProps } from 'src/components/app';
-import { Game } from 'src/Game';
-import { GameController } from 'src/GameController';
-import { GameRepository } from 'src/GameRepository';
+import { UrlRouteProps } from 'src/app';
+import { Game, GameController } from 'src/controllers/GameController';
+import { Question, QuestionController } from 'src/controllers/QuestionController';
 
 import PrizeStack from 'src/components/prizeStack';
-import { Question, QuestionController } from 'src/QuestionController';
 
 export default class QuestionStart extends Component<UrlRouteProps, any> {
 
   constructor(props: UrlRouteProps) {
     super();
 
-    let game = GameRepository.getGame(props.gameId) as Game;
+    let game = GameController.getGame(props.gameId) as Game;
     let question = QuestionController.getQuestion(props.gameId, props.questionIdx) as Question;
     if (!game || !question) {
       alert("TODO Bad Path");
@@ -25,13 +23,13 @@ export default class QuestionStart extends Component<UrlRouteProps, any> {
         questionId: question.id,
         isCorrect: null
       });
-      GameRepository.saveGame(game);
+      GameController.saveGame(game);
     }
 
     this.state = { game, question };
   }
 
-  render(): ComponentChild {
+  render(props: UrlRouteProps, state: any): ComponentChild {
     return(
       <div>
         Show about this next question, prizes, etc.
@@ -39,7 +37,7 @@ export default class QuestionStart extends Component<UrlRouteProps, any> {
         <a href={`/game/${this.props.gameId}/q/${this.props.questionIdx}/show`}>Show me the question</a>
         <a href={`/game/${this.props.gameId}/finish`}>Take my stuff and run</a>
 
-        <PrizeStack game={this.state.game} questionIdx={parseInt(this.props.questionIdx, 10)} />
+        <PrizeStack game={this.state.game} questionIdx={props.questionIdx} />
 
       </div>
     );
