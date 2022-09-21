@@ -6,6 +6,7 @@ import { Question, QuestionController } from 'src/controllers/QuestionController
 interface QuestionResultState {
   game: Game
   question: Question
+  questionIdx: number
 }
 
 export default class QuestionResult extends Component<UrlRouteProps, QuestionResultState> {
@@ -13,13 +14,14 @@ export default class QuestionResult extends Component<UrlRouteProps, QuestionRes
   constructor(props: UrlRouteProps) {
     super();
 
+    let questionIdx = parseInt(props.questionIdx, 10);
     let game = GameController.getGame(props.gameId) as Game;
-    let question = QuestionController.getQuestion(props.gameId, props.questionIdx) as Question;
+    let question = QuestionController.getQuestion(props.gameId, questionIdx) as Question;
     if (!game || !question) {
       alert("TODO Bad Path");
     }
 
-    this.state = { game, question };
+    this.state = { game, question, questionIdx };
   }
 
   render(props: UrlRouteProps, state: QuestionResultState): ComponentChild {

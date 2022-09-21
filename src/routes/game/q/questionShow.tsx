@@ -10,6 +10,7 @@ import PrizeStack from 'src/components/prizeStack';
 interface QuestionShowState {
   game: Game
   question: Question
+  questionIdx: number
 }
 
 export default class QuestionShow extends Component<UrlRouteProps, QuestionShowState> {
@@ -17,17 +18,20 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
   constructor(props: UrlRouteProps) {
     super();
 
+    let questionIdx = parseInt(props.questionIdx, 10);
     let game = GameController.getGame(props.gameId) as Game;
-    let question = QuestionController.getQuestion(props.gameId, props.questionIdx) as Question;
+    let question = QuestionController.getQuestion(props.gameId, questionIdx) as Question;
     if (!game || !question) {
       alert("TODO Bad Path");
     }
 
-    this.state = { game, question };
+    this.state = { game, question, questionIdx };
   }
 
   render(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
     let answers = shuffleArray(this.state.question.answers);
+    let questionIdx = parseInt(props.questionIdx, 10);
+
     return(
       <div>
         <form class="question" onSubmit={this.onSubmit.bind(this)}>
@@ -45,7 +49,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
           <button type="submit">Final Answer</button>
         </form>
 
-        <PrizeStack game={this.state.game} questionIdx={this.props.questionIdx} />
+        <PrizeStack game={this.state.game} questionIdx={questionIdx} />
       </div>
     );
   }
@@ -54,7 +58,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     e.preventDefault();
     let formData = new FormData(e.target as HTMLFormElement);
 
-    let result = this.state.game.questionsAsked[this.props.questionIdx];
+    let result = this.state.game.questionsAsked[this.state.questionIdx];
     result.isCorrect = (formData.get("selectedAnswerId") === this.state.question.correctId);
     GameController.saveGame(this.state.game);
 

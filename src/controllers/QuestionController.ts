@@ -14,14 +14,14 @@ export interface Question {
 interface QuestionUsage {
   questionId: string,
   gameId: string,
-  questionIdx: string
+  questionIdx: number
 }
 
 const STORAGE_KEY = "question-usage";
 
 class _QuestionController {
 
-  getQuestion(gameId: string, questionIdx: string) : Question | undefined {
+  getQuestion(gameId: string, questionIdx: number) : Question | undefined {
     let difficulty = INDEX_TO_DIFFICULTY[questionIdx];
     let usageRecords = this.getUsageRecords();
 
@@ -59,18 +59,18 @@ class _QuestionController {
 
 export const QuestionController = new _QuestionController();
 
-const INDEX_TO_DIFFICULTY : { [questionIndex: string]: number } = {
-  "0": 0,
-  "1": 1,
-  "2": 2,
-  "3": 3,
-  "4": 3,
-  "5": 4,
-  "6": 4, // lock in after. 6x prizes
-  "7": 4, // 3x good prizes per game up to 15? 9 committed now
-  "8": 5,
-  "9": 5
-};
+const INDEX_TO_DIFFICULTY = [
+  0,
+  1,
+  2,
+  3,
+  3,
+  4,
+  4, // lock in after. 6x prizes
+  4, // 3x good prizes per game up to 15? 9 committed now
+  5,
+  5
+];
 
 const QUESTIONS : Question[] = [
   // Trivial Math Questions (5+)
