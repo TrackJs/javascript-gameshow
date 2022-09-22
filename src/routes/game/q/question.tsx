@@ -77,16 +77,50 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     return(
       <div class="question-show">
         <form class="question" onSubmit={this.onFinalAnswer.bind(this)}>
-          <div class="question-text">{question.text}</div>
+          <div class="question-text-bg">
+            <div class="flex question-text justify-center align-center">
+              {question.type === "code" ?
+                <div class="flex flex-column">
+                  <span class="code-result">What is the result of this JavaScript?</span>
+                  <pre>{question.text}</pre>
+                </div> :
+                <span>{question.text}</span>
+              }
+            </div>
+          </div>
           <ol class="answers">
-            { answers.map((answer, i) => (
-              <li>
-                <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`}></input>
-                <label for={`answer-${i}`}>
-                  <span>{ANSWER_LABEL[i]}. {answer.text}</span>
-                </label>
-              </li>
-            ))}
+            <div class="answer-row flex justify-center">
+              { answers.filter((answer, i) => i <= 1).map((answer, i) => (
+                <li>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`}></input>
+                  <label for={`answer-${i}`}>
+                    <div class="answer-text">
+                      <span class="letter">{ANSWER_LABEL[i]}:</span>&nbsp;
+                      {question.type === "code" ?
+                        <pre>{answer.text}</pre> :
+                        <span>{answer.text}</span>
+                      }
+                    </div>
+                  </label>
+                </li>
+              ))}
+            </div>
+            <div class="answer-row flex justify-center">
+            { answers.filter((answer, i) => i > 1).map((answer, i) => (
+                <li>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i+2}`}></input>
+                  <label for={`answer-${i+2}`}>
+                    <div class="answer-text">
+                      <span class="letter">{ANSWER_LABEL[i+2]}:</span>&nbsp;
+                      {question.type === "code" ?
+                        <pre>{answer.text}</pre> :
+                        <span>{answer.text}</span>
+                      }
+                    </div>
+                  </label>
+                </li>
+              ))}
+            </div>
           </ol>
 
           <button type="submit" class="final-answer">Final<br/> Answer</button>

@@ -19,4 +19,18 @@ html, body {
 	height: 100%;
 }
 
+.flex {
+	display: flex;
+	flex-direction: row;
+	&.flex-column {
+		flex-direction: column;
+	}
+	&.align-center {
+		align-items: center;
+	}
+	&.justify-center {
+		justify-content: center;
+	}
+}
+
 @import "./routes/game/q/questionShow.scss";
