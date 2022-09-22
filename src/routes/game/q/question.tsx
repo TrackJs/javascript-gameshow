@@ -2,7 +2,7 @@ import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
 import { UrlRouteProps } from 'src/app';
 import { Game, GameController, GameQuestionAsked } from 'src/controllers/GameController';
-import { Question, QuestionController } from 'src/controllers/QuestionController';
+import { Question, QuestionAnswer, QuestionController } from 'src/controllers/QuestionController';
 import { SoundController } from 'src/controllers/SoundController';
 import { shuffleArray } from 'src/utils/shuffleArray';
 
@@ -12,6 +12,9 @@ interface QuestionShowState {
   game: Game
   questionIdx: number,
   step: "start"|"show"|"result"
+  showAnswers: boolean
+  hasFinalAnswer: boolean
+  answers?: QuestionAnswer[]
   question?: Question
   questionAsked?: GameQuestionAsked
 }
@@ -32,7 +35,9 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     this.state = {
       game,
       questionIdx,
-      step: "start"
+      step: "start",
+      showAnswers: false,
+      hasFinalAnswer: false
     };
   }
 
@@ -41,11 +46,8 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     if (state.step === "start") {
       display = this.renderQuestionStart(props, state);
     }
-    else if (state.step === "show") {
-      display = this.renderQuestionShow(props, state);
-    }
     else {
-      display = this.renderQuestionResult(props, state);
+      display = this.renderQuestionShow(props, state);
     }
 
     return (
@@ -70,12 +72,9 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
 
   private renderQuestionShow(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
     let question = state.question as Question;
-    let answers = shuffleArray(question.answers);
-
-    SoundController.play({ name: "wait1" });
 
     return(
-      <div class="question-show">
+      <div class={`question-show`}>
         <form class="question" onSubmit={this.onFinalAnswer.bind(this)}>
           <div class="question-text-bg">
             <div class="flex question-text justify-center align-center">
@@ -90,11 +89,12 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
           </div>
           <ol class="answers">
             <div class="answer-row flex justify-center">
-              { answers.filter((answer, i) => i <= 1).map((answer, i) => (
+              { state.answers?.filter((answer, i) => i <= 1).map((answer, i) => (
                 <li>
-                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`}></input>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`} class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`} required={true}></input>
                   <label for={`answer-${i}`}>
-                    <div class="answer-text">
+                    <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
+                      style={`transition: opacity 200ms ease-in-out ${i}s`}>
                       <span class="letter">{ANSWER_LABEL[i]}:</span>&nbsp;
                       {question.type === "code" ?
                         <pre>{answer.text}</pre> :
@@ -106,11 +106,12 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
               ))}
             </div>
             <div class="answer-row flex justify-center">
-            { answers.filter((answer, i) => i > 1).map((answer, i) => (
+            { state.answers?.filter((answer, i) => i > 1).map((answer, i) => (
                 <li>
-                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i+2}`}></input>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i+2}`} class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`} required={true}></input>
                   <label for={`answer-${i+2}`}>
-                    <div class="answer-text">
+                    <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
+                      style={`transition: opacity 200ms ease-in-out ${i+2}s`}>
                       <span class="letter">{ANSWER_LABEL[i+2]}:</span>&nbsp;
                       {question.type === "code" ?
                         <pre>{answer.text}</pre> :
@@ -123,7 +124,10 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
             </div>
           </ol>
 
-          <button type="submit" class="final-answer">Final<br/> Answer</button>
+          <div class="controls">
+            <button hidden={state.showAnswers} type="button" class="show-answer" onClick={e => this.onShowAnswers(e)}>Show<br/>Answers</button>
+            <button hidden={!state.showAnswers || state.hasFinalAnswer} type="submit" class="final-answer">Final<br/>Answer</button>
+          </div>
         </form>
 
         {/* <PrizeStack game={this.state.game} questionIdx={questionIdx} /> */}
@@ -169,7 +173,18 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       GameController.saveGame(game);
     }
 
-    this.setState({ step: "show", question, game, questionAsked });
+    SoundController.play({ name: "wait1" });
+    this.setState({
+      step: "show",
+      question,
+      game,
+      questionAsked,
+      answers: shuffleArray(question.answers)
+    });
+  }
+
+  private onShowAnswers(e: Event) {
+    this.setState({ showAnswers: true });
   }
 
   private onFinalAnswer(e: Event) {
@@ -185,8 +200,18 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     SoundController.stop({ name: "wait1" });
     SoundController.play({ name: "final_answer" });
 
+    this.setState({ hasFinalAnswer: true });
+
     setTimeout(() => {
       this.setState({ step: "result", game, questionAsked });
+
+      if (questionAsked.isCorrect) {
+        SoundController.play({ name: "win" });
+      }
+      else {
+        SoundController.play({ name: "lose" });
+      }
+
     }, 5_000);
   }
 

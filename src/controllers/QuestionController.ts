@@ -1,3 +1,8 @@
+export interface QuestionAnswer {
+  id: string
+  text: string
+}
+
 export interface Question {
   id: string,
   difficulty: 0|1|2|3|4|5,
@@ -5,10 +10,7 @@ export interface Question {
   text: string,
   afterText: string,
   correctId: string
-  answers: {
-    id: string
-    text: string,
-  }[]
+  answers: QuestionAnswer[]
 }
 
 interface QuestionUsage {
