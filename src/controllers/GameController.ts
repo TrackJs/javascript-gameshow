@@ -5,15 +5,17 @@ export interface GameOptions {
   playerName: string;
 }
 
+export interface GameQuestionAsked {
+  questionIdx: number,
+  questionId: string,
+  isCorrect: boolean|null
+}
+
 export interface Game {
   id: string,
   playerName: string,
   startedOn: DateTime,
-  questionsAsked: {
-    questionIdx: number,
-    questionId: string,
-    isCorrect: boolean|null
-  }[],
+  questionsAsked: GameQuestionAsked[],
   prizeStack: Prize[]
 }
 
