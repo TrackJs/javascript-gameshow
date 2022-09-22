@@ -1,0 +1,34 @@
+.prize-show {
+
+
+  .prize-show-bg {
+    background-image: url(/assets/images/prize_bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    width: 100vw;
+    height: 120px;
+  }
+  .prize-show-text {
+    width: 920px;
+    margin: 0 auto;
+    height: 120px;
+    font-size: 2em;
+    font-weight: 400;
+  }
+  .prize-name {
+    padding: 40px;
+    flex: 1
+  }
+  .prize-image {
+    flex: 0 0 300px;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .prize-sponsor {
+    padding: 40px;
+    flex: 1
+  }
+}
