@@ -154,6 +154,13 @@
         border: 4px solid #3d758c;
         background-color: #101011;
         color: white;
+        cursor: pointer;
+
+        &:active,&:hover,&:focus {
+          border: 4px solid orange;
+          background-color: beige;
+          color: black;
+        }
       }
     }
 

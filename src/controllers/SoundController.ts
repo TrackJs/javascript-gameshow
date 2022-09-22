@@ -16,6 +16,7 @@ class _SoundController {
 
   private soundLookup : { [key:string]: {
     arrayBuffer: ArrayBuffer
+    audioBuffer?: AudioBuffer
     source?: AudioBufferSourceNode
   } } = {};
 
@@ -34,17 +35,21 @@ class _SoundController {
     let context = this.getAudioContext();
     let sound = this.soundLookup[opts.name];
 
-    if (sound.source) {
+    if (sound.audioBuffer) {
+      sound.source = context.createBufferSource();
+      sound.source.buffer = sound.audioBuffer;
+      sound.source.connect(context.destination);
       sound.source.start(0);
     }
     else {
       context.decodeAudioData(sound.arrayBuffer)
-      .then((audioBuffer) => {
-        sound.source = context.createBufferSource();
-        sound.source.buffer = audioBuffer;
-        sound.source.connect(context.destination);
-        sound.source.start(0);
-      });
+        .then((audioBuffer) => {
+          sound.audioBuffer = audioBuffer;
+          sound.source = context.createBufferSource();
+          sound.source.buffer = audioBuffer;
+          sound.source.connect(context.destination);
+          sound.source.start(0);
+        });
     }
   }
 

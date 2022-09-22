@@ -8,13 +8,15 @@ import { getRandomInteger } from 'src/utils/getRandomInteger';
 
 import PrizeShow from 'src/components/prizeShow';
 import PrizeStack from 'src/components/prizeStack';
+import { route } from 'preact-router';
 
-interface QuestionShowState {
+interface QuestionRouteState {
   game: Game
   questionIdx: number,
   step: "start"|"show"|"result"
   showAnswers: boolean
   hasFinalAnswer: boolean
+  waitSound: string
   isCorrect?: boolean
   answers?: QuestionAnswer[]
   question?: Question
@@ -23,47 +25,20 @@ interface QuestionShowState {
 
 const ANSWER_LABEL = ["A","B","C","D"];
 
-export default class QuestionShow extends Component<UrlRouteProps, QuestionShowState> {
-
-  private waitSound: string;
+export default class QuestionRoute extends Component<UrlRouteProps, QuestionRouteState> {
 
   constructor(props: UrlRouteProps) {
     super();
 
-    let questionIdx = parseInt(props.questionIdx, 10);
-    let game = GameController.getGame(props.gameId) as Game;
-    if (!game) {
-      alert("TODO Bad Path");
-    }
-
-    this.waitSound = `wait${getRandomInteger(1, 5)}`;
-    let questionAsked = game.questionsAsked[questionIdx];
-    if (questionAsked?.answerId && typeof questionAsked?.isCorrect === "boolean") {
-      let question = QuestionController.getQuestion(game.id, questionIdx);
-      this.state = {
-        game,
-        questionIdx,
-        step: "result",
-        showAnswers: true,
-        hasFinalAnswer: true,
-        isCorrect: questionAsked.isCorrect,
-        answers: question ? shuffleArray(question.answers) : undefined,
-        question,
-        questionAsked
-      };
-    }
-    else {
-      this.state = {
-        game,
-        questionIdx,
-        step: "start",
-        showAnswers: false,
-        hasFinalAnswer: false
-      };
-    }
+    this.state = this.getInitialState(props);
   }
 
-  render(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
+  componentWillReceiveProps(props: UrlRouteProps): void {
+    let state = this.getInitialState(props);
+    this.setState(state);
+  }
+
+  render(props: UrlRouteProps, state: QuestionRouteState): ComponentChild {
     let display: ComponentChild;
     if (state.step === "start") {
       display = this.renderQuestionStart(props, state);
@@ -77,7 +52,47 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     )
   }
 
-  private renderQuestionStart(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
+  private getInitialState(props: UrlRouteProps): QuestionRouteState {
+    let questionIdx = parseInt(props.questionIdx, 10);
+    let game = GameController.getGame(props.gameId) as Game;
+    if (!game) {
+      alert("TODO Bad Path");
+    }
+
+    let waitSound = `wait${getRandomInteger(1, 5)}`;
+    let questionAsked = game.questionsAsked[questionIdx];
+    if (questionAsked?.answerId && typeof questionAsked?.isCorrect === "boolean") {
+      let question = QuestionController.getQuestion(game.id, questionIdx);
+      return {
+        game,
+        questionIdx,
+        step: "result",
+        showAnswers: true,
+        hasFinalAnswer: true,
+        isCorrect: questionAsked.isCorrect,
+        answers: question ? shuffleArray(question.answers) : undefined,
+        question,
+        questionAsked,
+        waitSound
+      };
+    }
+    else {
+      return {
+        game,
+        questionIdx,
+        step: "start",
+        showAnswers: false,
+        hasFinalAnswer: false,
+        isCorrect: undefined,
+        answers: undefined,
+        question: undefined,
+        questionAsked: undefined,
+        waitSound
+      };
+    }
+  }
+
+  private renderQuestionStart(props: UrlRouteProps, state: QuestionRouteState): ComponentChild {
     return(
       <div>
         Show about this next question, prizes, etc.
@@ -92,7 +107,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     );
   }
 
-  private renderQuestionShow(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
+  private renderQuestionShow(props: UrlRouteProps, state: QuestionRouteState): ComponentChild {
     let question = state.question as Question;
 
     return(
@@ -160,6 +175,8 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
           <div class="controls">
             <button hidden={state.showAnswers} type="button" class="show-answer" onClick={e => this.onShowAnswers(e)}>Show<br/>Answers</button>
             <button hidden={!state.showAnswers || state.hasFinalAnswer} type="submit" class="final-answer">Final<br/>Answer</button>
+            <button hidden={state.isCorrect !== true} type="button" class="next-question" onClick={e => route(`/game/${state.game.id}/q/${state.questionIdx + 1}`)}>Next<br/>Question</button>
+            <button hidden={state.isCorrect !== false} type="button" class="next-question" onClick={e => route(`/game/${state.game.id}/finish`)}>Finish<br/>Game</button>
           </div>
         </form>
 
@@ -192,7 +209,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       GameController.saveGame(game);
     }
 
-    SoundController.play({ name: this.waitSound });
+    SoundController.play({ name: this.state.waitSound });
     this.setState({
       step: "show",
       question,
@@ -218,7 +235,7 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     questionAsked.isCorrect = isCorrect
     GameController.saveGame(game);
 
-    SoundController.stop({ name: this.waitSound });
+    SoundController.stop({ name: this.state.waitSound });
     SoundController.play({ name: "final_answer" });
 
     this.setState({ hasFinalAnswer: true });
