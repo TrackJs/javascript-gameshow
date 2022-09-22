@@ -1,8 +1,21 @@
 .question-show {
-  position: absolute;
-  bottom: 40px;
+
+  .prize {
+    position: absolute;
+    top: 40px;
+    width: 100vw;
+    transform: translateX(100vw); // hide off to the right
+
+    &.show {
+      transform: translateX(0);
+      transition: transform 1s;
+    }
+  }
 
   .question {
+    position: absolute;
+    bottom: 40px;
+
     display: flex;
     flex-direction: column;
     width: 100vw;

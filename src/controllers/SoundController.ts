@@ -1,5 +1,5 @@
 export interface SoundOptions {
-  name: "wait1"|"wait2"|"wait3"|"wait4"|"win"|"lose"|"final_answer",
+  name: string,
 }
 
 const SOUND_PATH : { [key:string] : string } = {

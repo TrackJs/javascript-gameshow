@@ -1,11 +1,12 @@
 import { h, Component, ComponentChild } from 'preact';
-import { route } from 'preact-router';
 import { UrlRouteProps } from 'src/app';
 import { Game, GameController, GameQuestionAsked } from 'src/controllers/GameController';
 import { Question, QuestionAnswer, QuestionController } from 'src/controllers/QuestionController';
 import { SoundController } from 'src/controllers/SoundController';
 import { shuffleArray } from 'src/utils/shuffleArray';
+import { getRandomInteger } from 'src/utils/getRandomInteger';
 
+import PrizeShow from 'src/components/prizeShow';
 import PrizeStack from 'src/components/prizeStack';
 
 interface QuestionShowState {
@@ -14,6 +15,7 @@ interface QuestionShowState {
   step: "start"|"show"|"result"
   showAnswers: boolean
   hasFinalAnswer: boolean
+  isCorrect?: boolean
   answers?: QuestionAnswer[]
   question?: Question
   questionAsked?: GameQuestionAsked
@@ -22,6 +24,8 @@ interface QuestionShowState {
 const ANSWER_LABEL = ["A","B","C","D"];
 
 export default class QuestionShow extends Component<UrlRouteProps, QuestionShowState> {
+
+  private waitSound: string;
 
   constructor(props: UrlRouteProps) {
     super();
@@ -32,13 +36,31 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       alert("TODO Bad Path");
     }
 
-    this.state = {
-      game,
-      questionIdx,
-      step: "start",
-      showAnswers: false,
-      hasFinalAnswer: false
-    };
+    this.waitSound = `wait${getRandomInteger(1, 5)}`;
+    let questionAsked = game.questionsAsked[questionIdx];
+    if (questionAsked?.answerId && typeof questionAsked?.isCorrect === "boolean") {
+      let question = QuestionController.getQuestion(game.id, questionIdx);
+      this.state = {
+        game,
+        questionIdx,
+        step: "result",
+        showAnswers: true,
+        hasFinalAnswer: true,
+        isCorrect: questionAsked.isCorrect,
+        answers: question ? shuffleArray(question.answers) : undefined,
+        question,
+        questionAsked
+      };
+    }
+    else {
+      this.state = {
+        game,
+        questionIdx,
+        step: "start",
+        showAnswers: false,
+        hasFinalAnswer: false
+      };
+    }
   }
 
   render(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
@@ -75,6 +97,11 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
 
     return(
       <div class={`question-show`}>
+
+        <div class={`prize ${(state.step === "result" && state.isCorrect) ? "show" : ""}`}>
+          <PrizeShow game={state.game} questionIdx={state.questionIdx} />
+        </div>
+
         <form class="question" onSubmit={this.onFinalAnswer.bind(this)}>
           <div class="question-text-bg">
             <div class="flex question-text justify-center align-center">
@@ -91,7 +118,10 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
             <div class="answer-row flex justify-center">
               { state.answers?.filter((answer, i) => i <= 1).map((answer, i) => (
                 <li>
-                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`} class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`} required={true}></input>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i}`}
+                    checked={state.questionAsked?.answerId === answer.id}
+                    class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`}
+                    required={true}></input>
                   <label for={`answer-${i}`}>
                     <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
                       style={`transition: opacity 200ms ease-in-out ${i}s`}>
@@ -108,7 +138,10 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
             <div class="answer-row flex justify-center">
             { state.answers?.filter((answer, i) => i > 1).map((answer, i) => (
                 <li>
-                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i+2}`} class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`} required={true}></input>
+                  <input type="radio" name="selectedAnswerId" value={answer.id} id={`answer-${i+2}`}
+                    checked={state.questionAsked?.answerId === answer.id}
+                    class={`${state.step} ${(question.correctId === answer.id) ? "correct" : ""}`}
+                    required={true}></input>
                   <label for={`answer-${i+2}`}>
                     <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
                       style={`transition: opacity 200ms ease-in-out ${i+2}s`}>
@@ -135,21 +168,6 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     );
   }
 
-  private renderQuestionResult(props: UrlRouteProps, state: QuestionShowState): ComponentChild {
-    let question = state.question as Question;
-    let result = state.game.questionsAsked[state.questionIdx];
-
-    return(
-      <div>
-        <h1>{result.isCorrect ? "Correct!" : "Wrong"}</h1>
-        <div>{question.afterText}</div>
-        <div>
-          <a href={`/game/${props.gameId}/q/${props.questionIdx + 1}`}>Next Question</a>
-        </div>
-      </div>
-    );
-  }
-
   private onShowQuestion(e: Event) {
     e.preventDefault();
     let game = this.state.game;
@@ -167,13 +185,14 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
       questionAsked = {
         questionIdx: questionIdx,
         questionId: question.id,
+        answerId: null,
         isCorrect: null
       }
       game.questionsAsked.push(questionAsked);
       GameController.saveGame(game);
     }
 
-    SoundController.play({ name: "wait1" });
+    SoundController.play({ name: this.waitSound });
     this.setState({
       step: "show",
       question,
@@ -194,18 +213,20 @@ export default class QuestionShow extends Component<UrlRouteProps, QuestionShowS
     let questionAsked = this.state.questionAsked as GameQuestionAsked;
 
     let formData = new FormData(e.target as HTMLFormElement);
-    questionAsked.isCorrect = (formData.get("selectedAnswerId") === question.correctId);
+    questionAsked.answerId = formData.get("selectedAnswerId") as string;
+    let isCorrect = (questionAsked.answerId === question.correctId);
+    questionAsked.isCorrect = isCorrect
     GameController.saveGame(game);
 
-    SoundController.stop({ name: "wait1" });
+    SoundController.stop({ name: this.waitSound });
     SoundController.play({ name: "final_answer" });
 
     this.setState({ hasFinalAnswer: true });
 
     setTimeout(() => {
-      this.setState({ step: "result", game, questionAsked });
+      this.setState({ step: "result", game, questionAsked, isCorrect });
 
-      if (questionAsked.isCorrect) {
+      if (isCorrect) {
         SoundController.play({ name: "win" });
       }
       else {

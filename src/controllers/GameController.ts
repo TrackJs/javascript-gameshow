@@ -8,6 +8,7 @@ export interface GameOptions {
 export interface GameQuestionAsked {
   questionIdx: number,
   questionId: string,
+  answerId: string|null,
   isCorrect: boolean|null
 }
 
