@@ -8,12 +8,6 @@
     }
   }
 
-  .controls {
-    & > * {
-      margin-left: 10px;
-    }
-  }
-
   @keyframes pulseGlow {
     0% {
       filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);

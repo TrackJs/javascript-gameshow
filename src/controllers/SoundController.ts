@@ -1,5 +1,6 @@
 export enum SOUND {
   final_answer = "final_answer",
+  find_player = "find_player",
   meet_contestant = "meet_contestant",
   opening_theme = "opening_theme",
   question_1 = "question_1",
@@ -33,13 +34,13 @@ class _SoundController {
     });
   }
 
-  async play(sound: SOUND) {
+  async play(sound: SOUND, offset?: number, duration?: number) {
     let soundData = await this._sounds[sound];
 
     let source = this._audioContext.createBufferSource();
     source.buffer = soundData.buffer;
     source.connect(this._audioContext.destination);
-    source.start(0);
+    source.start(0, offset, duration);
 
     // only in case we need to stop it.
     soundData.lastSource = source;

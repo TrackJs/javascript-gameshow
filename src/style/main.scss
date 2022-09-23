@@ -1,52 +1,3 @@
-html, body {
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	background: #00FF00;
-	font-family: 'Helvetica Neue', arial, sans-serif;
-	font-weight: 400;
-	color: #444;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-ol, li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#app {
-	height: 100%;
-}
-
-.flex {
-	display: flex;
-	flex-direction: row;
-	&.flex-column {
-		flex-direction: column;
-	}
-	&.align-center {
-		align-items: center;
-	}
-	&.justify-center {
-		justify-content: center;
-	}
-}
-
-.container {
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-}
-
 // colors
 $border-color:	#3d758c;
 $dark-purple:   #470147;
@@ -55,9 +6,12 @@ $orange:				#e1a02e;
 $boxed-border: 4px solid $border-color;
 $boxed-background: linear-gradient(45deg, black, $dark-purple);
 
+@import "./reset.scss";
+@import "./common.scss";
 @import "./buttons.scss";
 
 @import "./routes/home.scss";
+@import "./routes/findPlayer.scss";
 @import "./routes/game/gameList.scss";
 @import "./routes/game/gameNew.scss";
 @import "./routes/game/gameStart.scss";

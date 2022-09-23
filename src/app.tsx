@@ -10,6 +10,7 @@ import Question from './routes/game/q/question';
 
 import Error404 from './routes/error/error404';
 import GameList from './routes/game/gameList';
+import FindPlayer from './routes/findPlayer';
 
 export interface UrlRouteProps {
     gameId: string,
@@ -20,6 +21,8 @@ const App = () => (
 	<main id="app">
         <Router>
             <Route path="/" component={Home} />
+
+            <Route path="/find-player" component={FindPlayer} />
 
             <Route path="/game/new" component={NewGame} />
             <Route path="/game/:gameId" component={GameStart} />

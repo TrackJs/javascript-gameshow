@@ -1,0 +1,42 @@
+.flex {
+	display: flex;
+	flex-direction: row;
+	&.flex-column {
+		flex-direction: column;
+	}
+	&.align-center {
+		align-items: center;
+	}
+	&.justify-center {
+		justify-content: center;
+	}
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.box {
+	border: $boxed-border;
+	background: $boxed-background;
+	color: white;
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.controls {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+
+	display: flex;
+	flex-direction: column;
+
+	& > * {
+		margin-bottom: 10px;
+	}
+}
