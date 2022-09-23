@@ -270,6 +270,10 @@ const QUESTIONS : Question[] = [
       {
         "id": "3",
         "text": "window"
+      },
+      {
+        "id": "4",
+        "text": "throw Error"
       }
     ]
   },
@@ -362,6 +366,10 @@ const QUESTIONS : Question[] = [
       {
         "id": "3",
         "text": "document"
+      },
+      {
+        "id": "4",
+        "text": "throw Error"
       }
     ]
   },
@@ -514,6 +522,10 @@ const QUESTIONS : Question[] = [
       {
         "id": "3",
         "text": "3"
+      },
+      {
+        "id": "4",
+        "text": "undefined"
       }
     ]
   },
@@ -532,6 +544,10 @@ const QUESTIONS : Question[] = [
       {
         "id": "2",
         "text": "[Arguments]"
+      },
+      {
+        "id": "3",
+        "text": "undefined"
       },
       {
         "id": "4",
@@ -1332,7 +1348,7 @@ const QUESTIONS : Question[] = [
     "type": "code",
     "text": "typeof typeof 1",
     "afterText": "typeof returns a string, which has a type of string",
-    "correctId": "1",
+    "correctId": "2",
     "answers": [
       {
         "id": "1",

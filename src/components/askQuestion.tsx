@@ -33,10 +33,8 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
   }
 
   render(props: AskQuestionProps, state: AskQuestionState): ComponentChild {
-
     let question = props.question;
     let answers = state.answers;
-    console.log('render', state);
 
     return(
       <form class="c-ask-question flex flex-column align-center" onSubmit={e => this.onFinalAnswer(e)}>
@@ -45,7 +43,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
             {question.type === "code" ?
               <div class="flex flex-column">
                 <span class="code-result">What is the result of this JavaScript?</span>
-                <pre>{question.text}</pre>
+                <pre class={question.text.length >= 30 ? "small" : "" }>{question.text}</pre>
               </div> :
               <span>{question.text}</span>
             }
@@ -73,7 +71,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
         </ol>
         <div class="form-controls">
           <button class="btn btn-orange btn-round" hidden={state.showAnswers} type="button" onClick={e => this.onShowAnswers()}>Show<br/>Answers</button>
-          <button class="btn btn-orange btn-round" type="submit">Final<br/>Answer</button>
+          <button class="btn btn-orange btn-round" hidden={state.isFinal} type="submit">Final<br/>Answer</button>
         </div>
       </form>
     );
@@ -93,7 +91,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
             style={`transition: opacity 200ms ease-in-out ${index}s`}>
             <span class="letter">{ANSWER_LABEL[index]}:</span>&nbsp;
             {question.type === "code" ?
-              <pre>{answer.text}</pre> :
+              <pre class={answer.text.length >= 20 ? "small" : "" }>{answer.text}</pre> :
               <span>{answer.text}</span>
             }
           </div>
