@@ -33,6 +33,15 @@ html, body {
 	}
 }
 
+@keyframes rotateYAnimation {
+	from {transform: rotateY(0deg);}
+	to {transform: rotateY(360deg);}
+}
+@keyframes rotateXAnimation {
+	from {transform: rotateX(0deg);}
+	to {transform: rotateX(360deg);}
+}
+
 @import "./routes/game/gameNew.scss";
 @import "./routes/game/gameStart.scss";
 @import "./routes/game/q/questionShow.scss";

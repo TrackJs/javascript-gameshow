@@ -28,12 +28,12 @@ export default class GameStart extends Component<UrlRouteProps, GameStartState> 
     return(
       <div class="game-start">
 
-        <div class="prizes flex">
-          <div class="game-logo"></div>
-          <div class="prize-stack">
-            <PrizeStack game={state.game} questionIdx={questionIdx} />
-          </div>
-          <div class="big-prizes"></div>
+        <div class="game-logo">
+          <img src="/assets/images/logo.png" height="300" width="300"/>
+        </div>
+
+        <div class="prize-stack-wrap">
+          <PrizeStack game={state.game} questionIdx={questionIdx} />
         </div>
 
         <div class="controls">
@@ -41,6 +41,7 @@ export default class GameStart extends Component<UrlRouteProps, GameStartState> 
             Start<br/>Game
           </button>
         </div>
+
       </div>
     );
   }

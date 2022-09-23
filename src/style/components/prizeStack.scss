@@ -1,12 +1,12 @@
 ol.prize-stack {
   list-style: none;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 40px);
-  margin: 20px 0;
   background: linear-gradient(-45deg, black, #470147);
   border: 4px solid #3d758c;
+  height: 100%;
 
   li {
     list-style: none;
@@ -19,6 +19,11 @@ ol.prize-stack {
 
     &.threshold {
       color: white;
+    }
+
+    &.current {
+      background-color: orange;
+      color: black;
     }
 
     .name {

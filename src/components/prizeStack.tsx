@@ -13,7 +13,7 @@ export default class PrizeStack extends Component<PrizeStackProps, any> {
       <ol class="prize-stack">
         {
           props.game.prizeStack.map((prize, i) => (
-            <li class={prize.isThreshold === true ? "threshold" : ""}>
+            <li class={`${prize.isThreshold === true ? "threshold" : ""} ${prize.questionIdx === props.questionIdx ? "current" : ""}`}>
               <div class="name">{i+1}.&nbsp;&nbsp;{prize.name}</div>
               <div class="sponsor">{prize.sponsorName}</div>
             </li>

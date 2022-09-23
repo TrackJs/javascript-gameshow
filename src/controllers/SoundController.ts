@@ -34,6 +34,7 @@ class _SoundController {
   play(opts: SoundOptions) {
     let context = this.getAudioContext();
     let sound = this.soundLookup[opts.name];
+    if (!sound) { return; }
 
     if (sound.audioBuffer) {
       sound.source = context.createBufferSource();

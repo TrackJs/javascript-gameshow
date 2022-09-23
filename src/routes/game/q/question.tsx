@@ -48,6 +48,7 @@ export default class QuestionRoute extends Component<UrlRouteProps, QuestionRout
     let display: ComponentChild;
     if (state.step === "start") {
       display = this.renderQuestionStart(props, state);
+      SoundController.play({ name: "wait2" });
     }
     else {
       display = this.renderQuestionShow(props, state);
@@ -100,15 +101,20 @@ export default class QuestionRoute extends Component<UrlRouteProps, QuestionRout
 
   private renderQuestionStart(props: UrlRouteProps, state: QuestionRouteState): ComponentChild {
     return(
-      <div>
-        Show about this next question, prizes, etc.
+      <div class="question-start">
 
-        <button type="button" onClick={e => this.onShowQuestion(e)}>Show Question</button>
+        <div class="game-logo">
+          <img src="/assets/images/logo.png" height="300" width="300"/>
+        </div>
 
-        <a href={`/game/${this.props.gameId}/finish`}>Take my stuff and run</a>
+        <div class="prize-stack-wrap">
+          <PrizeStack game={state.game} questionIdx={state.questionIdx} />
+        </div>
 
-        <PrizeStack game={this.state.game} questionIdx={state.questionIdx} />
-
+        <div class="controls">
+          <button type="button" onClick={e => this.onShowQuestion(e)}>Answer<br/>Question</button>
+          <button type="button" onClick={e => route(`/game/${this.props.gameId}/finish`)}>Quit<br/>Game</button>
+        </div>
       </div>
     );
   }
@@ -215,6 +221,7 @@ export default class QuestionRoute extends Component<UrlRouteProps, QuestionRout
       GameController.saveGame(game);
     }
 
+    SoundController.stop({ name: "wait2" });
     SoundController.play({ name: this.state.waitSound });
     this.setState({
       step: "show",

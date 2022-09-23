@@ -1,10 +1,24 @@
 .game-start {
 
+  .game-logo {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    animation: rotateYAnimation 8s linear infinite;
+  }
+
+  .prize-stack-wrap {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    height: calc(100vh - 40px);
+  }
+
   .controls {
-    height: 0;
-    position: relative;
-    left: 47vw;
-    top: -80px;
+    position: absolute;
+    right: 440px;
+    bottom: 20px;
 
     button {
       max-width: 15vw;
