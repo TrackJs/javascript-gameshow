@@ -6,11 +6,15 @@ export default class NewGame extends Component<any, any> {
 
   render(): ComponentChild {
     return (
-    	<div>
-        <h1>Start a new game</h1>
+    	<div class="route-game-new flex flex-column justify-center align-center">
+        <img src="/assets/images/logo.png" width="400" height="400" />
         <form onSubmit={this.onNewGameSubmit}>
-          <input type="text" name="name" required placeholder="What is your name?"></input>
-          <button type="submit">Are you ready to be a JavaScriptær?</button>
+          <div>
+            <input type="text" name="name" required placeholder="What is your name?"></input>
+          </div>
+          <div class="controls">
+            <button type="submit">Play<br/>Game</button>
+          </div>
         </form>
       </div>
     );
