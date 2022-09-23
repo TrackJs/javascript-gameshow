@@ -10,16 +10,16 @@ export default class PrizeStack extends Component<PrizeStackProps, any> {
 
   render(props: PrizeStackProps, state: any): ComponentChild {
     return(
-      <div>
-        I am the prize stack
-        <ol>
-          {
-            props.game.prizeStack.map(prize => (
-              <li>{prize.name}{prize.questionIdx === props.questionIdx ? " (Current)" : ""}</li>
-            )).reverse()
-          }
-        </ol>
-      </div>
+      <ol class="prize-stack">
+        {
+          props.game.prizeStack.map((prize, i) => (
+            <li>
+              <div class="name">{i+1}.&nbsp;&nbsp;{prize.name}</div>
+              <div class="sponsor">{prize.sponsorName}</div>
+            </li>
+          )).reverse()
+        }
+      </ol>
     );
   }
 

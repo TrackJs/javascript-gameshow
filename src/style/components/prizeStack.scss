@@ -1,0 +1,32 @@
+ol.prize-stack {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+  margin: 20px 0;
+  background: linear-gradient(45deg, black, navy);
+  border: 4px solid #ccc;
+
+  li {
+    list-style: none;
+    flex: 1 0 auto;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    color: orange;
+
+    padding: 5px 20px;
+
+    .name {
+      font-weight: 600;
+      font-size: 1.6em;
+    }
+    .sponsor {
+      font-size: 1.2em;
+      font-weight: 400;
+      margin-left: 35px;
+      opacity: 0.8;
+    }
+  }
+}

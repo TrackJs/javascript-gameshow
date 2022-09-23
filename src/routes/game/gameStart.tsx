@@ -3,6 +3,7 @@ import { UrlRouteProps } from 'src/app';
 import { Game, GameController } from 'src/controllers/GameController';
 
 import PrizeStack from 'src/components/prizeStack';
+import { route } from 'preact-router';
 
 interface GameStartState {
   game: Game
@@ -25,13 +26,21 @@ export default class GameStart extends Component<UrlRouteProps, GameStartState> 
     let questionIdx = GameController.getNextQuestionIndex(state.game);
 
     return(
-      <div>
-        I am the start
+      <div class="game-start">
 
-        <a href={`/game/${state.game.id}/q/${questionIdx}`}>Start the next question</a>
+        <div class="prizes flex">
+          <div class="game-logo"></div>
+          <div class="prize-stack">
+            <PrizeStack game={state.game} questionIdx={questionIdx} />
+          </div>
+          <div class="big-prizes"></div>
+        </div>
 
-        <PrizeStack game={state.game} questionIdx={questionIdx} />
-
+        <div class="controls">
+          <button type="button" onClick={e => route(`/game/${state.game.id}/q/${questionIdx}`)}>
+            Start<br/>Game
+          </button>
+        </div>
       </div>
     );
   }

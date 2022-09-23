@@ -33,5 +33,7 @@ html, body {
 	}
 }
 
+@import "./routes/game/gameStart.scss";
 @import "./routes/game/q/questionShow.scss";
 @import "./components/prizeShow.scss";
+@import "./components/prizeStack.scss";
