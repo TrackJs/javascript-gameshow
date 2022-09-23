@@ -1362,6 +1362,10 @@ class _QuestionController {
     this.checkQuestions();
   }
 
+  getAllQuestions(): Question[] {
+    return QUESTIONS;
+  }
+
   getQuestion(gameId: string, questionIdx: number) : Question | undefined {
     let difficulty = INDEX_TO_DIFFICULTY[questionIdx];
     let usageRecords = this.getUsageRecords();
