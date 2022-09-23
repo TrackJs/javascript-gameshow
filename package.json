@@ -6,7 +6,7 @@
   "scripts": {
     "build": "preact build",
     "serve": "sirv build --cors --single",
-    "dev": "preact watch",
+    "dev": "preact watch --https --host gameshow.local --port 8443 --key /Users/todd/code/_certs/gameshow.local.key --cert /Users/todd/code/_certs/gameshow.local.crt",
     "lint": "eslint src",
     "test": "jest"
   },
