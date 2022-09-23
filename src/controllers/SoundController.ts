@@ -1,74 +1,56 @@
-export interface SoundOptions {
-  name: string,
-}
-
-const SOUND_PATH : { [key:string] : string } = {
-  "wait1":        "/assets/sounds/1.ogg",
-  "wait2":        "/assets/sounds/2.ogg",
-  "wait3":        "/assets/sounds/3.ogg",
-  "wait4":        "/assets/sounds/4.ogg",
-  "win":          "/assets/sounds/win.ogg",
-  "lose":         "/assets/sounds/lose.ogg",
-  "final_answer": "/assets/sounds/final_answer.ogg"
+export enum SOUND {
+  final_answer = "final_answer",
+  meet_contestant = "meet_contestant",
+  opening_theme = "opening_theme",
+  question_1 = "question_1",
+  question_2 = "question_2",
+  question_3 = "question_3",
+  question_4 = "question_4",
+  result_lose = "result_lose",
+  result_win = "result_win",
 };
+
+const BASE_SOUND_PATH = "/assets/sounds";
 
 class _SoundController {
 
-  private soundLookup : { [key:string]: {
-    arrayBuffer: ArrayBuffer
-    audioBuffer?: AudioBuffer
-    source?: AudioBufferSourceNode
-  } } = {};
+  private _audioContext: AudioContext;
+  private _sounds: { [key:string]: Promise<{
+    buffer: AudioBuffer,
+    lastSource?: AudioBufferSourceNode
+  }>} = {};
 
   constructor() {
-    // preload the audio data, but don't depend on context yet.
-    Object.keys(SOUND_PATH).forEach(key => {
-      fetch(SOUND_PATH[key])
-        .then((response) => response.arrayBuffer())
-        .then((arrayBuffer) => {
-          this.soundLookup[key] = { arrayBuffer };
-        });
-    })
+    this._audioContext = new AudioContext();
+
+    Object.keys(SOUND).forEach(sound => {
+      this._sounds[sound] = fetch(`${BASE_SOUND_PATH}/${sound}.mp3`)
+        .then((resp) => resp.arrayBuffer())
+        .then((buffer) => this._audioContext.decodeAudioData(buffer))
+        .then((buffer) => {
+          return { buffer };
+        })
+    });
   }
 
-  play(opts: SoundOptions) {
-    let context = this.getAudioContext();
-    let sound = this.soundLookup[opts.name];
-    if (!sound) { return; }
+  async play(sound: SOUND) {
+    let soundData = await this._sounds[sound];
 
-    if (sound.audioBuffer) {
-      sound.source = context.createBufferSource();
-      sound.source.buffer = sound.audioBuffer;
-      sound.source.connect(context.destination);
-      sound.source.start(0);
-    }
-    else {
-      context.decodeAudioData(sound.arrayBuffer)
-        .then((audioBuffer) => {
-          sound.audioBuffer = audioBuffer;
-          sound.source = context.createBufferSource();
-          sound.source.buffer = audioBuffer;
-          sound.source.connect(context.destination);
-          sound.source.start(0);
-        });
-    }
+    let source = this._audioContext.createBufferSource();
+    source.buffer = soundData.buffer;
+    source.connect(this._audioContext.destination);
+    source.start(0);
+
+    // only in case we need to stop it.
+    soundData.lastSource = source;
   }
 
-  stop(opts: SoundOptions) {
-    let sound = this.soundLookup[opts.name];
-    if (sound.source) {
-      sound.source.stop();
+  async stop(sound: SOUND) {
+    let soundData = await this._sounds[sound];
+    if (soundData.lastSource) {
+      soundData.lastSource.stop();
     }
   }
-
-  private _audioContext : AudioContext|undefined;
-  private getAudioContext() : AudioContext {
-    if (!this._audioContext) {
-      this._audioContext = new AudioContext();
-    }
-    return this._audioContext;
-  }
-
 }
 
 export const SoundController = new _SoundController();

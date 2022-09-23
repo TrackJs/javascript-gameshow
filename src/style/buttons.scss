@@ -1,0 +1,17 @@
+.btn {
+  padding: 12px 36px;
+  font-size: 1.4em;
+  border-radius: 16px;
+  cursor: pointer;
+
+  &.btn-purple {
+    background: radial-gradient(lighten($dark-purple, 20%), $dark-purple);
+    border: 4px solid $dark-purple;
+    color: white;
+    font-weight: 600;
+
+    &:hover,&:active,&:focus {
+      background: radial-gradient($dark-purple, darken($dark-purple, 5%));
+    }
+  }
+}

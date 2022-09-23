@@ -1,0 +1,28 @@
+.route-home {
+  height: 100vh;
+  width: 100vw;
+
+  .home-game-logo {
+    img {
+      animation: pulseGlow 3s linear infinite;
+    }
+  }
+
+  .controls {
+    & > * {
+      margin-left: 10px;
+    }
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+    }
+    50% {
+      filter: unset;
+    }
+    100% {
+      filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+    }
+  }
+}
