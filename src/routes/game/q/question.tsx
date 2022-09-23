@@ -31,6 +31,12 @@ export default class QuestionRoute extends Component<UrlRouteProps, QuestionRout
     super();
 
     this.state = this.getInitialState(props);
+
+    if (this.state.questionIdx === 0) {
+      setTimeout(() => {
+        this.onShowQuestion(new Event("x"));
+      }, 0)
+    }
   }
 
   componentWillReceiveProps(props: UrlRouteProps): void {
