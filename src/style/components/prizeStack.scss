@@ -15,8 +15,11 @@ ol.prize-stack {
     display: flex;
     justify-content: center;
     color: orange;
-
     padding: 5px 20px;
+
+    &.threshold {
+      color: white;
+    }
 
     .name {
       font-weight: 600;

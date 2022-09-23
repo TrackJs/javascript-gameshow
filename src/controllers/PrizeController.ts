@@ -5,6 +5,7 @@ export interface Prize {
   imageUrl: string
   sponsorName: string,
   sponsorImageUrl: string,
+  isThreshold?: boolean
 }
 
 interface InventoryPrize extends Prize {
@@ -36,6 +37,11 @@ class _PrizeController {
       }
 
       this.claimPrize(gameId, prize.id);
+
+      if (i === 2 || i === 6) {
+        prize.isThreshold = true;
+      }
+
       prizeStack[i] = prize
     }
 
