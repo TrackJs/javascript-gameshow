@@ -84,8 +84,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
       <li>
         <input type="radio" name="selectedAnswerId" value={answer.id} id={`q${question.id}-a${answer.id}`}
           checked={state.answerId === answer.id}
-          class={`${(state.showResult && question.correctId === answer.id) ? "correct" : ""}`}
-          required={true}></input>
+          class={`${(state.showResult && question.correctId === answer.id) ? "correct" : ""}`}></input>
         <label for={`q${question.id}-a${answer.id}`}>
           <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
             style={`transition: opacity 200ms ease-in-out ${index}s`}>
