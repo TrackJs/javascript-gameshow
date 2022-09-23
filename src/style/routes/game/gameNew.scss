@@ -16,31 +16,31 @@
       color: white;
     }
 
-    .controls {
+    .form-controls {
       height: 0;
       position: relative;
       left: 410px;
       top: -91px;
 
-      button {
-        max-width: 15vw;
-        line-height: 1em;
-        font-size: 1em;
-        height: 80px;
-        width: 80px;
-        text-align: center;
-        border-radius: 40px;
-        border: 4px solid #3d758c;
-        background: linear-gradient(-45deg, black, #470147);
-        color: white;
-        cursor: pointer;
+      // button {
+      //   max-width: 15vw;
+      //   line-height: 1em;
+      //   font-size: 1em;
+      //   height: 80px;
+      //   width: 80px;
+      //   text-align: center;
+      //   border-radius: 40px;
+      //   border: 4px solid #3d758c;
+      //   background: linear-gradient(-45deg, black, #470147);
+      //   color: white;
+      //   cursor: pointer;
 
-        &:active,&:hover,&:focus {
-          border: 4px solid orange;
-          background: linear-gradient(-45deg, white, #ddbb54);
-          color: black;
-        }
-      }
+      //   &:active,&:hover,&:focus {
+      //     border: 4px solid orange;
+      //     background: linear-gradient(-45deg, white, #ddbb54);
+      //     color: black;
+      //   }
+      // }
     }
   }
 

@@ -6,7 +6,7 @@ import { shuffleArray } from 'src/utils/shuffleArray';
 export interface AskQuestionProps {
   question: Question
   showAnswers?: boolean
-  onResult: (isCorrect: boolean) => void
+  onResult?: (isCorrect: boolean) => void
 }
 
 export interface AskQuestionState {
@@ -71,7 +71,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
         </ol>
         <div class="form-controls">
           <button class="btn btn-orange btn-round" hidden={state.showAnswers} type="button" onClick={e => this.onShowAnswers()}>Show<br/>Answers</button>
-          <button class="btn btn-orange btn-round" hidden={state.isFinal} type="submit">Final<br/>Answer</button>
+          <button class="btn btn-orange btn-round" hidden={state.isFinal || !state.showAnswers} type="submit">Final<br/>Answer</button>
         </div>
       </form>
     );
@@ -118,7 +118,9 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
     setTimeout(() => {
       this.setState({ showResult: true });
       SoundController.play(isCorrect ? SOUND.result_win : SOUND.result_lose);
-      this.props.onResult(isCorrect);
+      if (this.props.onResult) {
+        this.props.onResult(isCorrect);
+      }
     }, 5_000);
   }
 

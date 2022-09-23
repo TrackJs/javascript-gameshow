@@ -16,6 +16,8 @@
     +10x find-player
 */
 
+import { getRandomInteger } from "src/utils/getRandomInteger"
+
 export interface QuestionAnswer {
   id: string
   text: string
@@ -31,10 +33,9 @@ export interface Question {
   answers: QuestionAnswer[]
 }
 
-interface QuestionUsage {
-  questionId: string,
-  gameId: string,
-  questionIdx: number
+interface QuestionClaim {
+  claimKey: string
+  questionId: string
 }
 
 const QUESTIONS : Question[] = [
@@ -1382,30 +1383,35 @@ class _QuestionController {
     return QUESTIONS;
   }
 
-  getQuestion(gameId: string, questionIdx: number) : Question | undefined {
-    let difficulty = INDEX_TO_DIFFICULTY[questionIdx];
-    let usageRecords = this.getUsageRecords();
+  /**
+   * Get a random question at the specified difficulty for the game. If it has already been
+   * requested, the same question is returned.
+   */
+  getQuestion(gameId: string, questionIdx: number, difficulty: 0|1|2|3|9) : Question {
+    let claims = this.getClaimRecords();
+    let claimKey = `${gameId}${questionIdx}`;
 
-    let existingUsage = usageRecords.find(ur => ur.gameId === gameId && ur.questionIdx === questionIdx);
-    if (existingUsage) {
-      return QUESTIONS.find(q => q.id === existingUsage?.questionId);
+    let existingClaim = claims.find(claim => claim.claimKey === claimKey);
+    if (existingClaim) {
+      return QUESTIONS.find(question => question.id === existingClaim?.questionId) as Question;
     }
 
-    let usedQuestionIds = usageRecords.map(ur => ur.questionId);
-    let question = QUESTIONS
-      .filter(q => !usedQuestionIds.some(uqid => uqid === q.id))
-      .find(q => q.difficulty === difficulty);
+    let availableQuestions = QUESTIONS
+      .filter(question => !claims.some(claim => claim.questionId === question.id)) // remove existing claims
+      .filter(question => question.difficulty === difficulty); // match difficulty
 
-    if (question) {
-      usageRecords.push({
-        questionId: question.id,
-        gameId,
-        questionIdx
-      });
-      this.saveUsageRecords(usageRecords);
+    let question = availableQuestions[getRandomInteger(0, availableQuestions.length)];
 
-      return question;
+    if (!question) {
+      throw new Error(`No questions remaining for difficulty ${difficulty}.`);
     }
+
+    claims.push({
+      claimKey, questionId: question.id
+    });
+    this.saveClaimRecords(claims);
+
+    return question;
   }
 
   private checkQuestions() {
@@ -1421,12 +1427,12 @@ class _QuestionController {
     console.groupEnd();
   }
 
-  private getUsageRecords() : QuestionUsage[] {
+  private getClaimRecords() : QuestionClaim[] {
     let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
-  private saveUsageRecords(usageRecords: QuestionUsage[]) : void  {
+  private saveClaimRecords(usageRecords: QuestionClaim[]) : void  {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(usageRecords));
   }
 }

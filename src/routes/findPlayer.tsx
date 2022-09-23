@@ -1,8 +1,17 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
+import { UrlRouteProps } from 'src/app';
+import AskQuestion from 'src/components/askQuestion';
+import GameLogo from 'src/components/gameLogo';
+import { GameController } from 'src/controllers/GameController';
+import { Question, QuestionController } from 'src/controllers/QuestionController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
 
-export default class FindPlayer extends Component<any, any> {
+interface FindPlayerState {
+	question?: Question
+}
+
+export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState> {
 
 	componentDidMount(): void {
 		SoundController.play(SOUND.find_player, 0, 50);
@@ -12,7 +21,7 @@ export default class FindPlayer extends Component<any, any> {
 		SoundController.stop(SOUND.find_player);
 	}
 
-	render() : ComponentChild {
+	render(props: UrlRouteProps, state: FindPlayerState) : ComponentChild {
 		return (
 			<div class="route-find-player flex flex-column align-center">
 
@@ -23,10 +32,19 @@ export default class FindPlayer extends Component<any, any> {
           </div>
         </div>
 
+				{ this.state.question ? (
+					<div class="question-wrap">
+						<AskQuestion question={state.question as Question} />
+					</div>
+				) : "" }
+
 				<div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route("/")}>Home</button>
-					<button class="btn btn-purple" type="button" onClick={e => this.onShowQuestion()}>Show Question</button>
+					<button class="btn btn-purple" type="button" hidden={!!this.state.question} onClick={e => this.onShowQuestion()}>Show Question</button>
+					<button class="btn btn-purple" type="button" hidden={!this.state.question} onClick={e => this.onStartGame()}>Start Game</button>
 				</div>
+
+				<GameLogo />
 
 			</div>
 		);
@@ -35,6 +53,16 @@ export default class FindPlayer extends Component<any, any> {
   private onShowQuestion() : void {
     SoundController.stop(SOUND.find_player);
     SoundController.play(SOUND.find_player, 51.6);
+
+		let games = GameController.getAllGames();
+		let question = QuestionController.getQuestion("find-player", games.length, 9);
+
+		this.setState({ question });
   }
+
+	private onStartGame() : void {
+		SoundController.stop(SOUND.find_player);
+		route("/game/new");
+	}
 
 }

@@ -12,6 +12,21 @@
 	}
 }
 
+.glow {
+	animation: pulseGlow 3s linear infinite;
+	@keyframes pulseGlow {
+		0% {
+			filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+		}
+		50% {
+			filter: unset;
+		}
+		100% {
+			filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+		}
+	}
+}
+
 .container {
 	max-width: 800px;
 	margin: 0 auto;
@@ -32,7 +47,7 @@
 	position: fixed;
 	top: 20px;
 	left: 20px;
-
+	width: 220px;
 	display: flex;
 	flex-direction: column;
 

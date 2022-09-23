@@ -3,7 +3,7 @@
   width: 100vw;
 
   .box {
-    margin-top: 160px;
+    margin-top: 60px;
     width: 900px;
     text-align: center;
   }
@@ -27,4 +27,11 @@
     font-size: 3em;
     font-weight: 400;
   }
+
+  .question-wrap {
+    position: fixed;
+    bottom: 80px;
+    width: 100vw;
+  }
+
 }

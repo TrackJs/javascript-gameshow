@@ -17,7 +17,7 @@ export default class Home extends Component<any, any> {
 			<div class="route-home flex flex-column justify-center align-center">
 
 				<div class="home-game-logo">
-					<img src="/assets/images/logo.png" height="500" width="500"/>
+					<img class="glow" src="/assets/images/logo.png" height="500" width="500"/>
 				</div>
 
 				<div class="controls">

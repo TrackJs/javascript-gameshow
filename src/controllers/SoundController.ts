@@ -1,4 +1,5 @@
 export enum SOUND {
+  closing = "closing",
   final_answer = "final_answer",
   find_player = "find_player",
   meet_contestant = "meet_contestant",

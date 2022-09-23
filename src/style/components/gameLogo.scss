@@ -3,7 +3,7 @@
   position: fixed;
   left: 20px;
   bottom: 20px;
-  animation: rotateYAnimation 8s linear infinite;
+  // animation: rotateYAnimation 8s linear infinite;
 
   @keyframes rotateYAnimation {
     from {transform: rotateY(0deg);}
