@@ -12,9 +12,9 @@ $boxed-background: linear-gradient(45deg, black, $dark-purple);
 
 @import "./routes/home.scss";
 @import "./routes/findPlayer.scss";
+@import "./routes/game/gameDetails.scss";
 @import "./routes/game/gameList.scss";
 @import "./routes/game/gameNew.scss";
-@import "./routes/game/gameStart.scss";
 
 @import "./routes/game/q/questionDetails.scss";
 

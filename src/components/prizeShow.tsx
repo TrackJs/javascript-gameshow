@@ -5,7 +5,7 @@ export interface PrizeShowProps {
   prize: Prize
 }
 
-export default class PrizeStack extends Component<PrizeShowProps, any> {
+export default class PrizeShow extends Component<PrizeShowProps, any> {
 
   render(props: PrizeShowProps, state: any): ComponentChild {
     return(
