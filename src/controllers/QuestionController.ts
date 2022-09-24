@@ -191,7 +191,7 @@ const QUESTIONS : Question[] = [
     "correctId": "1",
     "answers": [
       { text: "Brendan Eich", "id": "1" },
-      { text: "Bill Gates", "id": "2" },
+      { text: "John Resig", "id": "2" },
       { text: "John Carmack", "id": "3" },
       { text: "Linus Torvalds", "id": "4" },
     ]
