@@ -90,14 +90,16 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private renderQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
+    let game = state.game;
     let question = state.question as Question;
     let questionAsked = state.questionAsked as GameQuestionAsked;
+    let prize = game.prizeStack[state.questionIdx];
 
     return (
       <div class="show-question">
 
         <div class={`prize-wrap ${(questionAsked.isCorrect) ? "show" : ""}`}>
-          <PrizeShow game={state.game} questionIdx={state.questionIdx} />
+          <PrizeShow prize={prize} />
         </div>
 
         <div class="question-wrap">
@@ -106,7 +108,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="controls">
-          <button hidden={!questionAsked.isCorrect} type="button" class="btn btn-purple" onClick={e => route(`/game/${state.game.id}/q/${state.questionIdx + 1}`)}>Next Question</button>
+          <button hidden={!questionAsked.isCorrect} type="button" class="btn btn-purple" onClick={e => route(`/game/${game.id}/q/${state.questionIdx + 1}`)}>Next Question</button>
           <button hidden={questionAsked.isCorrect !== false} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
         </div>
 
