@@ -82,7 +82,7 @@ class _GameController {
   }
 
   getDifficultyForIndex(questionIdx: number): 0|1|2|3 {
-    let difficultyMap = [0, 1, 1, 2, 3];
+    let difficultyMap = [0, 1, 2, 2, 3];
     return difficultyMap[questionIdx] as 0|1|2|3;
   }
 
