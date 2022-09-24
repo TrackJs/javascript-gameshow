@@ -5,8 +5,9 @@ import { shuffleArray } from 'src/utils/shuffleArray';
 
 export interface AskQuestionProps {
   question: Question
+  answerId?: string
   showAnswers?: boolean
-  onResult?: (isCorrect: boolean) => void
+  onResult?: (answerId: string, isCorrect: boolean) => void
 }
 
 export interface AskQuestionState {
@@ -24,11 +25,11 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
     super();
     this.state = {
       answers: shuffleArray(props.question.answers),
-      answerId: "",
-      isCorrect: false,
-      isFinal: false,
+      answerId: props.answerId || "",
+      isCorrect: props.question.correctId === props.answerId,
+      isFinal: !!props.answerId,
       showAnswers: props.showAnswers || false,
-      showResult: false
+      showResult: !!props.answerId
     };
   }
 
@@ -118,7 +119,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
       this.setState({ showResult: true });
       SoundController.play(isCorrect ? SOUND.result_win : SOUND.result_lose);
       if (this.props.onResult) {
-        this.props.onResult(isCorrect);
+        this.props.onResult(answerId, isCorrect);
       }
     }, 5_000);
   }

@@ -15,7 +15,8 @@ $boxed-background: linear-gradient(45deg, black, $dark-purple);
 @import "./routes/game/gameList.scss";
 @import "./routes/game/gameNew.scss";
 @import "./routes/game/gameStart.scss";
-@import "./routes/game/q/questionShow.scss";
+
+@import "./routes/game/q/questionDetails.scss";
 
 @import "./components/askQuestion.scss";
 @import "./components/gameLogo.scss";

@@ -8,22 +8,25 @@ export interface GameOptions {
 export interface GameQuestionAsked {
   questionIdx: number,
   questionId: string,
-  answerId: string|null,
-  isCorrect: boolean|null
+  answerId?: string,
+  isCorrect?: boolean
 }
 
 export interface Game {
-  id: string,
-  playerName: string,
-  startedOn: DateTime,
-  questionsAsked: GameQuestionAsked[],
+  id: string
+  playerName: string
+  startedOn: DateTime
+  questionsAsked: GameQuestionAsked[]
   prizeStack: Prize[]
+  isFinished: boolean
 }
 
 export interface GameState {
   game: Game | null
   hasStarted: boolean
 };
+
+const QUESTION_COUNT = 5;
 
 class _GameController {
 
@@ -34,19 +37,11 @@ class _GameController {
       playerName: options.playerName,
       startedOn: DateTime.now(),
       questionsAsked: [],
-      prizeStack:  PrizeController.getPrizeStack(id)
+      prizeStack: this.getPrizeStack(id),
+      isFinished: false
     }
     this.saveGame(game);
     return game;
-  }
-
-  getNextQuestionIndex(game : Game) : number {
-    return game.questionsAsked.length;
-  }
-
-  getNextGameId() : string {
-    let games = this.getAllGames();
-    return `${games.length}`;
   }
 
   getAllGames() : Game[] {
@@ -64,17 +59,42 @@ class _GameController {
     return games;
   }
 
-  getGame(gameId: string) : Game | null {
+  getGame(gameId: string) : Game {
     let gameString = localStorage.getItem(`game-${gameId}`);
     if (!gameString) {
-      return null;
+      throw new Error(`No game found for ${gameId}`);
     }
 
     return JSON.parse(gameString) as Game;
   }
 
+  getDifficultyForIndex(questionIdx: number): 0|1|2|3 {
+    let difficultyMap = [0, 1, 1, 2, 3];
+    return difficultyMap[questionIdx] as 0|1|2|3;
+  }
+
   saveGame(game: Game) {
     localStorage.setItem(`game-${game.id}`, JSON.stringify(game));
+  }
+
+  private getNextGameId() : string {
+    let games = this.getAllGames();
+    return `${games.length}`;
+  }
+
+  private getPrizeStack(gameId: string) : Prize[] {
+    let prizeStack = [];
+
+    for(let questionIdx = 0; questionIdx < QUESTION_COUNT; questionIdx++) {
+      let difficulty = this.getDifficultyForIndex(questionIdx);
+      prizeStack[questionIdx] = PrizeController.getPrize(gameId, difficulty);
+
+      if (questionIdx === 2) {
+        prizeStack[questionIdx].isThreshold = true;
+      }
+    }
+
+    return prizeStack;
   }
 
 }

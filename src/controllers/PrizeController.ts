@@ -1,7 +1,7 @@
 export interface Prize {
   id: string,
   name: string,
-  questionIdx: number,
+  difficulty: number,
   imageUrl: string
   sponsorName: string,
   sponsorImageUrl: string,
@@ -23,29 +23,62 @@ interface PrizeClaim {
 
 const STORAGE_KEY = "prize-claims";
 
+const PRIZE_INVENTORY : InventoryPrize[] = [
+  {
+    id: "60caf407890f4cb8a50ce146b00a833f",
+    name: "Sloth Squishtoy",
+    difficulty: 0,
+    quantity: 10,
+    imageUrl: "/assets/prizes/sloth_avatar.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  },
+  {
+    id: "b85def0e3d0f4955a1869da68e47bca0",
+    name: "Sloth Keychain",
+    difficulty: 1,
+    quantity: 10,
+    imageUrl: "/assets/prizes/sloth_avatar.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  },
+  {
+    id: "a5f8bf31314441fdbc637a9991534b31",
+    name: "Waterbottle",
+    difficulty: 2,
+    quantity: 20,
+    imageUrl: "/assets/prizes/sloth_avatar.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  },
+  {
+    id: "bbac1c32db4e4fd486998a9d3dea3b41",
+    name: "JavaScript Happens Tshirt",
+    difficulty: 3,
+    quantity: 10,
+    imageUrl: "/assets/prizes/sloth_avatar.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  }
+];
+
 class _PrizeController {
 
-  getPrizeStack(gameId: string) : Prize[] {
+  constructor() {
+    //this.checkPrizes();
+  }
 
-    let prizeStack: Prize[] = [];
+  getPrize(gameId: string, difficulty: number) : Prize {
     let claimedPrizeInventory = this.getClaimedPrizeInventory();
 
-    for(var i = 0; i < 10; i++) {
-      let prize = claimedPrizeInventory.find(p => p.questionIdx === i && p.claimedQty < p.quantity) as Prize;
-      if (!prize) {
-        alert("TODO No Prizes found");
-      }
-
-      this.claimPrize(gameId, prize.id);
-
-      if (i === 2 || i === 6) {
-        prize.isThreshold = true;
-      }
-
-      prizeStack[i] = prize
+    let prize = claimedPrizeInventory
+      .find(prize => prize.difficulty === difficulty && prize.claimedQty < prize.quantity);
+    if (!prize) {
+      throw new Error(`Could not get prize for game ${gameId} at difficulty ${difficulty}`);
     }
 
-    return prizeStack;
+    this.claimPrize(gameId, prize.id);
+    return prize;
   }
 
   private claimPrize(gameId: string, prizeId: string) {
@@ -72,108 +105,17 @@ class _PrizeController {
   private savePrizeClaims(prizeClaims: PrizeClaim[]) : void  {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prizeClaims));
   }
+
+  private checkPrizes() {
+    console.groupCollapsed("Prize Integrity Check");
+    console.info(`There are ${PRIZE_INVENTORY.reduce((count, p) => (count + p.quantity), 0)} prizes.`)
+    console.info(`${PRIZE_INVENTORY.filter(p => !!PRIZE_INVENTORY.find(pi => pi.id === p.id && pi !== p) ).length} have duplicate ids`);
+    console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 0).reduce((count, p) => (count + p.quantity), 0)} have difficulty 0`);
+    console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 0).reduce((count, p) => (count + p.quantity), 0)} have difficulty 1`);
+    console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 0).reduce((count, p) => (count + p.quantity), 0)} have difficulty 2`);
+    console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 0).reduce((count, p) => (count + p.quantity), 0)} have difficulty 3`);
+    console.groupEnd();
+  }
 }
 
 export const PrizeController = new _PrizeController();
-
-const PRIZE_INVENTORY : InventoryPrize[] = [
-  {
-    id: "60caf407890f4cb8a50ce146b00a833f",
-    name: "Sloth Squishtoy",
-    questionIdx: 0,
-    quantity: 1,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "b85def0e3d0f4955a1869da68e47bca0",
-    name: "Sloth Keychain",
-    questionIdx: 0,
-    quantity: 1,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "a5f8bf31314441fdbc637a9991534b31",
-    name: "Waterbottle",
-    questionIdx: 1,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "bbac1c32db4e4fd486998a9d3dea3b41",
-    name: "JavaScript Happens Tshirt",
-    questionIdx: 2,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "e8f284abac1e457283d283eefb4d868c",
-    name: "3",
-    questionIdx: 3,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "7ef31c6fce004410be685477acdac0d2",
-    name: "4",
-    questionIdx: 4,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "68fe0989d04c4a36aed85dfb619e2f21",
-    name: "5",
-    questionIdx: 5,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "9d19d0ce6b034dcf84b4f98d37f0b361",
-    name: "6",
-    questionIdx: 6,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "f08b9a1d6e0549b8b170547abd54c5f9",
-    name: "7",
-    questionIdx: 7,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "d554da71d3364b24af9046322e01a637",
-    name: "8",
-    questionIdx: 8,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-  {
-    id: "3b5f0a7c6fee4d2a9062cb7aa1243c65",
-    name: "9",
-    questionIdx: 9,
-    quantity: 2,
-    imageUrl: "/assets/prizes/sloth_avatar.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  }
-];

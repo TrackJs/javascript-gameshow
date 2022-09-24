@@ -33,7 +33,7 @@ export default class GameNew extends Component<any, any> {
       playerName: (data.get("name") || "anonymous") as string
     });
 
-    route(`/game/${game.id}`, false);
+    route(`/game/${game.id}/q/0`, false);
   }
 
 }
