@@ -1,7 +1,7 @@
 .c-ask-question {
   position: relative;
+  $question-height: 155px;
 
-  $question-height: 140px;
   .question-text-bg {
     background-image: url(/assets/images/question_bg.png);
     background-repeat: no-repeat;
@@ -49,7 +49,7 @@
     }
 
     li {
-      flex: 0 0 600px;
+      flex: 0 0 680px;
       margin: 5px 0 0;
 
       &:nth-child(even) {
@@ -64,7 +64,7 @@
         display: flex;
         background-image: url(/assets/images/answer_bg_sprite.webp);
         background-size: cover;
-        height: 68px;
+        height: 80px;
         cursor: pointer;
 
         .answer-text {
@@ -100,7 +100,7 @@
       }
 
       input[type=radio]:checked ~ label {
-        background-position: 0 -89px;
+        background-position: 0 -101px;
 
         .answer-text {
           color: black;
@@ -110,7 +110,7 @@
         }
       }
       input[type=radio].correct ~ label {
-        background-position: 0 -232px;
+        background-position: 0 -262px;
 
         .answer-text {
           color: black;
