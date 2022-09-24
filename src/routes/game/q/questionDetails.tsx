@@ -81,7 +81,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         <div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route('/')}>Home</button>
           <button class="btn btn-purple" type="button" onClick={e => this.onShowQuestion()}>Show Question</button>
-          <button hidden={state.questionIdx === 0} class="btn btn-purple" type="button" onClick={e => route(`/game/${this.props.gameId}/finish`)}>Take Prizes</button>
+          <button hidden={state.questionIdx === 0} class="btn btn-purple" type="button" onClick={e => this.onFinishGame()}>Take Prizes</button>
         </div>
 
         <GameLogo />
