@@ -1,25 +1,23 @@
 import { h, Component, ComponentChild } from 'preact';
-import { Game } from 'src/controllers/GameController';
+import { Prize } from 'src/controllers/PrizeController';
 
 export interface PrizeShowProps {
-  game: Game
-  questionIdx: number
+  prize: Prize
 }
 
 export default class PrizeStack extends Component<PrizeShowProps, any> {
 
   render(props: PrizeShowProps, state: any): ComponentChild {
-    let prize = props.game.prizeStack[props.questionIdx];
     return(
       <div class="prize-show">
         <div class="prize-show-bg">
           <div class="prize-show-text flex justify-center align-center">
-            <div class="prize-name">{prize.name}</div>
+            <div class="prize-name">{props.prize.name}</div>
             <div class="prize-image">
-              <img src={prize.imageUrl} alt={prize.name} />
+              <img src={props.prize.imageUrl} alt={props.prize.name} />
             </div>
             <div class="prize-sponsor">
-              <img src={prize.sponsorImageUrl} alt={prize.sponsorName} />
+              <img src={props.prize.sponsorImageUrl} alt={props.prize.sponsorName} />
             </div>
           </div>
         </div>

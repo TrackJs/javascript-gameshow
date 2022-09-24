@@ -1375,10 +1375,6 @@ const STORAGE_KEY = "question-usage";
 
 class _QuestionController {
 
-  constructor() {
-    this.checkQuestions();
-  }
-
   getAllQuestions(): Question[] {
     return QUESTIONS;
   }
@@ -1414,7 +1410,7 @@ class _QuestionController {
     return question;
   }
 
-  private checkQuestions() {
+  logQuestions() {
     console.groupCollapsed("Question Integrity Check");
     console.info(`There are ${QUESTIONS.length} questions.`)
     console.info(`${QUESTIONS.filter(q => !!QUESTIONS.find(qi => qi.id === q.id && q !== qi) ).length} have duplicate ids`);

@@ -5,6 +5,7 @@ import AskQuestion from 'src/components/askQuestion';
 export default class TestQuestions extends Component<any, any> {
 
   render(): ComponentChild {
+    QuestionController.logQuestions();
 		let questions = QuestionController.getAllQuestions();
 
     return (

@@ -1,6 +1,5 @@
 .prize-show {
 
-
   .prize-show-bg {
     background-image: url(/assets/images/prize_bg.png);
     background-repeat: no-repeat;
@@ -11,14 +10,17 @@
   }
   .prize-show-text {
     width: 920px;
-    margin: 0 auto;
+    margin: 180px auto;
     height: 120px;
     font-size: 2em;
     font-weight: 400;
   }
   .prize-name {
-    padding: 40px;
-    flex: 1
+    padding: 20px;
+    display: flex;
+    flex: 1;
+    text-align:center;
+    justify-content: center;
   }
   .prize-image {
     flex: 0 0 300px;
@@ -28,7 +30,12 @@
     }
   }
   .prize-sponsor {
-    padding: 40px;
-    flex: 1
+    padding: 0 40px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    img {
+      max-width: 100%;
+    }
   }
 }
