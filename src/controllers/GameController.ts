@@ -48,13 +48,11 @@ class _GameController {
   }
 
   finishGame(game: Game) {
+    game.prizeWon = this.getPrizesWon(game);
 
     game.prizeStack.forEach((prize, idx) => {
-      let questionAsked = game.questionsAsked[idx];
-      if (questionAsked && questionAsked.isCorrect === true) {
-        game.prizeWon.push(prize);
-      }
-      else {
+      let hasWon = game.prizeWon.some(p => p.id === prize.id);
+      if (!hasWon) {
         PrizeController.releasePrize(game.id, prize.id);
       }
     });
@@ -91,6 +89,34 @@ class _GameController {
     let difficultyMap = [0, 1, 2, 2, 3];
     return difficultyMap[questionIdx] as 0|1|2|3;
   }
+
+  getPrizesWon(game: Game): Prize[] {
+    let result : Prize[] = [];
+    let batch : Prize[] = []; // prizes within a threshold
+
+    game.questionsAsked.forEach((asked, idx) => {
+      let prize = game.prizeStack[idx];
+
+      if (asked.isCorrect) {
+        batch.push(prize);
+
+        if (prize.isThreshold) {
+          result.push.apply(result, batch);
+          batch.length = 0;
+        }
+      }
+      else if(asked.isCorrect === false) {
+        batch.length = 0;
+      }
+    });
+
+    result.push.apply(result, batch);
+    return result;
+  }
+
+  // getLargestPrizeIdx(game: Game): number {
+  //   return -1;
+  // }
 
   saveGame(game: Game) {
     localStorage.setItem(`game-${game.id}`, JSON.stringify(game));

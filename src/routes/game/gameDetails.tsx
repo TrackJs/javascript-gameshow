@@ -33,12 +33,7 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
   }
 
   render(props: UrlRouteProps, state: GameDetailsState) {
-    let largestPrizeIdx = -1;
-    state.game.questionsAsked.forEach(qa => {
-      if (qa.isCorrect && qa.questionIdx >= largestPrizeIdx) {
-        largestPrizeIdx = qa.questionIdx;
-      }
-    });
+    let largestPrizeIdx = state.game.prizeWon.length - 1;
 
     return (
       <div class="route-game-details">
