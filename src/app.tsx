@@ -7,7 +7,6 @@ import GameNew from './routes/game/gameNew';
 import GameDetails from './routes/game/gameDetails';
 // import GameFinish from './routes/game/gameFinish';
 import QuestionDetails from './routes/game/q/questionDetails';
-import Error404 from './routes/error/error404';
 import GameList from './routes/game/gameList';
 import FindPlayer from './routes/findPlayer';
 import TestQuestions from './routes/test/testQuestions';
@@ -33,7 +32,6 @@ const App = () => (
 
             <Route path="/test/questions" component={TestQuestions} />
 
-            <Route path="/error/404" component={Error404} />
             <Route default component={ErrorNotFound} />
         </Router>
     </main>
