@@ -89,7 +89,7 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
   },
   {
     id: "fc29aace5f5948cb927c400c4d18a4b7",
-    name: "Logitech Keyboard Mouse Combo",
+    name: "Logitech Keyboard Mouse",
     difficulty: 3, // 250
     quantity: 1,
     imageUrl: "/assets/prizes/logi_keyboard_mouse.png",

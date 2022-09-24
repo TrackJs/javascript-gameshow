@@ -18,7 +18,8 @@ export interface Game {
   playerName: string
   startedOn: DateTime
   questionsAsked: GameQuestionAsked[]
-  prizeStack: Prize[]
+  prizeStack: Prize[],
+  prizeWon: Prize[],
   isFinished: boolean
 }
 
@@ -39,6 +40,7 @@ class _GameController {
       startedOn: DateTime.now(),
       questionsAsked: [],
       prizeStack: this.getPrizeStack(id),
+      prizeWon: [],
       isFinished: false
     }
     this.saveGame(game);
@@ -46,9 +48,13 @@ class _GameController {
   }
 
   finishGame(game: Game) {
+
     game.prizeStack.forEach((prize, idx) => {
       let questionAsked = game.questionsAsked[idx];
-      if (!questionAsked || questionAsked.isCorrect === false) {
+      if (questionAsked && questionAsked.isCorrect === true) {
+        game.prizeWon.push(prize);
+      }
+      else {
         PrizeController.releasePrize(game.id, prize.id);
       }
     });

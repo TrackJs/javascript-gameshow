@@ -94,6 +94,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
     let question = state.question as Question;
     let questionAsked = state.questionAsked as GameQuestionAsked;
     let prize = game.prizeStack[state.questionIdx];
+    let lastQuestionIdx = game.prizeStack.length-1;
 
     return (
       <div class="show-question">
@@ -108,8 +109,8 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="controls">
-          <button hidden={!questionAsked.isCorrect} type="button" class="btn btn-purple" onClick={e => route(`/game/${game.id}/q/${state.questionIdx + 1}`)}>Next Question</button>
-          <button hidden={questionAsked.isCorrect !== false} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
+          <button hidden={!(questionAsked.isCorrect && state.questionIdx < lastQuestionIdx)} type="button" class="btn btn-purple" onClick={e => route(`/game/${game.id}/q/${state.questionIdx + 1}`)}>Next Question</button>
+          <button hidden={!(questionAsked.isCorrect === false || state.questionIdx >= lastQuestionIdx)} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
         </div>
 
         <GameLogo />

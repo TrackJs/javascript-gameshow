@@ -24,6 +24,8 @@ ol.prize-stack {
     &.current {
       background-color: orange;
       color: black;
+      padding: 4px 20px;
+      border-bottom: 1px solid black;
     }
 
     .name {

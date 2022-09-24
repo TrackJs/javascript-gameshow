@@ -6,15 +6,13 @@ import GameLogo from 'src/components/gameLogo';
 import PrizeStack from 'src/components/prizeStack';
 
 interface GameDetailsState {
-  game: Game,
-  questionIdx: number
+  game: Game
 }
 
 export default class GameDetails extends Component<UrlRouteProps, any> {
 
   componentWillMount() {
     let game = GameController.getGame(this.props.gameId);
-    let questionIdx = parseInt(this.props.questionIdx, 10);
 
     if (!game.isFinished) {
       let nextQuestion = 0;
@@ -29,15 +27,22 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
       route(`/game/${this.props.gameId}/q/${nextQuestion}`, true);
     }
 
-    this.setState({ game, questionIdx });
+    this.setState({ game });
   }
 
   render(props: UrlRouteProps, state: GameDetailsState) {
+    let largestPrizeIdx = -1;
+    state.game.questionsAsked.forEach(qa => {
+      if (qa.isCorrect && qa.questionIdx >= largestPrizeIdx) {
+        largestPrizeIdx = qa.questionIdx;
+      }
+    });
+
     return (
       <div class="route-game-details">
 
         <div class="prize-stack-wrap">
-          <PrizeStack game={state.game} questionIdx={state.questionIdx} />
+          <PrizeStack game={state.game} questionIdx={largestPrizeIdx} highlightLowerIdx={true} />
         </div>
 
         <div class="controls">

@@ -3,7 +3,8 @@ import { Game } from 'src/controllers/GameController';
 
 export interface PrizeStackProps {
   game: Game
-  questionIdx: number
+  questionIdx: number,
+  highlightLowerIdx?: boolean
 }
 
 export default class PrizeStack extends Component<PrizeStackProps, any> {
@@ -12,12 +13,18 @@ export default class PrizeStack extends Component<PrizeStackProps, any> {
     return(
       <ol class="prize-stack">
         {
-          props.game.prizeStack.map((prize, i) => (
-            <li class={`${prize.isThreshold === true ? "threshold" : ""} ${i === props.questionIdx ? "current" : ""}`}>
-              <div class="name">{i+1}.&nbsp;&nbsp;{prize.name}</div>
-              <div class="sponsor">{prize.sponsorName}</div>
-            </li>
-          )).reverse()
+          props.game.prizeStack.map((prize, i) => {
+            let isCurrent = props.highlightLowerIdx ?
+              (i <= props.questionIdx) :
+              (i === props.questionIdx);
+
+            return (
+              <li class={`${prize.isThreshold === true ? "threshold" : ""} ${isCurrent ? "current" : ""}`}>
+                <div class="name">{i+1}.&nbsp;&nbsp;{prize.name}</div>
+                <div class="sponsor">{prize.sponsorName}</div>
+              </li>
+            );
+          }).reverse()
         }
       </ol>
     );
