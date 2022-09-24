@@ -29,8 +29,8 @@ export default class GameList extends Component<any, any> {
                   <div class="status">{game.isFinished ? "Finished" : "In Progress"}</div>
                 </div>
                 { game.isFinished ?
-                  <button>Prizes</button> :
-                  <button type="button" onClick={e => this.resumeGame(game)}>Resume</button>
+                  <button type="button" onClick={e => route(`/game/${game.id}`)}>Prizes</button> :
+                  <button type="button" onClick={e => route(`/game/${game.id}/q/${game.questionsAsked.length}`)}>Resume</button>
                 }
               </li>
             ))}
@@ -43,10 +43,6 @@ export default class GameList extends Component<any, any> {
         <GameLogo />
 			</div>
 		);
-  }
-
-  private resumeGame(game: Game) : void {
-    route(`/game/${game.id}/q/${game.questionsAsked.length}`, false);
   }
 
   private clearGames() : void {
