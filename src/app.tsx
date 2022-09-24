@@ -5,7 +5,6 @@ import { Route, Router } from 'preact-router';
 import Home from './routes/home';
 import GameNew from './routes/game/gameNew';
 import GameDetails from './routes/game/gameDetails';
-// import GameFinish from './routes/game/gameFinish';
 import QuestionDetails from './routes/game/q/questionDetails';
 import GameList from './routes/game/gameList';
 import FindPlayer from './routes/findPlayer';
@@ -27,8 +26,6 @@ const App = () => (
             <Route path="/game/new" component={GameNew} />
             <Route path="/game/:gameId" component={GameDetails} />
             <Route path="/game/:gameId/q/:questionIdx" component={QuestionDetails} />
-
-            {/* <Route path="/game/:gameId/finish" component={GameFinish} /> */}
 
             <Route path="/test/questions" component={TestQuestions} />
 

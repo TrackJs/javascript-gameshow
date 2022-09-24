@@ -65,7 +65,7 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
 class _PrizeController {
 
   constructor() {
-    //this.checkPrizes();
+    this.checkPrizes();
   }
 
   getPrize(gameId: string, difficulty: number) : Prize {
@@ -79,6 +79,13 @@ class _PrizeController {
 
     this.claimPrize(gameId, prize.id);
     return prize;
+  }
+
+  releasePrize(gameId: string, prizeId: string) {
+    let prizeClaims = this.getPrizeClaims();
+    let claimIndex = prizeClaims.findIndex(pc => pc.gameId === gameId && pc.prizeId === prizeId);
+    prizeClaims.splice(claimIndex, 1);
+    this.savePrizeClaims(prizeClaims);
   }
 
   private claimPrize(gameId: string, prizeId: string) {

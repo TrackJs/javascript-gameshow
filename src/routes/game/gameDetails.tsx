@@ -7,20 +7,26 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
 
   componentWillMount() {
     let game = GameController.getGame(this.props.gameId);
-    let nextQuestion = 0;
 
-    if (game.questionsAsked.length) {
-      let unAnsweredQuestion = game.questionsAsked.find(qa => !qa.answerId);
-      if (unAnsweredQuestion) {
-        nextQuestion = unAnsweredQuestion.questionIdx;
+    if (!game.isFinished) {
+      let nextQuestion = 0;
+
+      if (game.questionsAsked.length) {
+        let unAnsweredQuestion = game.questionsAsked.find(qa => !qa.answerId);
+        if (unAnsweredQuestion) {
+          nextQuestion = unAnsweredQuestion.questionIdx;
+        }
       }
+
+      route(`/game/${this.props.gameId}/q/${nextQuestion}`, true);
     }
 
-    route(`/game/${this.props.gameId}/q/${nextQuestion}`, true);
   }
 
   render() {
-    return null;
+    return (
+      <div>Finished</div>
+    );
   }
 
 }

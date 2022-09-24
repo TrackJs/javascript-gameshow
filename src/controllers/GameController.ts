@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { Prize, PrizeController } from "./PrizeController";
+import { QuestionController } from "./QuestionController";
 
 export interface GameOptions {
   playerName: string;
@@ -42,6 +43,18 @@ class _GameController {
     }
     this.saveGame(game);
     return game;
+  }
+
+  finishGame(game: Game) {
+    game.prizeStack.forEach((prize, idx) => {
+      let questionAsked = game.questionsAsked[idx];
+      if (!questionAsked || questionAsked.isCorrect === false) {
+        PrizeController.releasePrize(game.id, prize.id);
+      }
+    });
+
+    game.isFinished = true;
+    this.saveGame(game);
   }
 
   getAllGames() : Game[] {
