@@ -2,8 +2,16 @@
   position: relative;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 
   .pre-question {
+    .prize-to-win {
+      width: 80vw;
+      position: absolute;
+      top: 30vh;
+      left: -1vw;
+    }
+
     .prize-stack-wrap {
       position: absolute;
       top: 20px;

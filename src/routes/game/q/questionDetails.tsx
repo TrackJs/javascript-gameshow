@@ -71,8 +71,14 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private renderPreQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
+    let prize = state.game.prizeStack[state.questionIdx];
+
     return(
       <div class="pre-question">
+
+        <div class="prize-to-win">
+          <PrizeShow prize={prize} />
+        </div>
 
         <div class="prize-stack-wrap glow">
           <PrizeStack game={state.game} questionIdx={state.questionIdx} />
