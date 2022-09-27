@@ -5,6 +5,8 @@ import { route } from 'preact-router';
 import GameLogo from 'src/components/gameLogo';
 import PrizeStack from 'src/components/prizeStack';
 import PrizeShow from 'src/components/prizeShow';
+import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 interface GameDetailsState {
   game: Game
@@ -12,6 +14,10 @@ interface GameDetailsState {
 }
 
 export default class GameDetails extends Component<UrlRouteProps, any> {
+
+  componentWillUnmount(): void {
+    SoundController.stopAll();
+  }
 
   componentWillMount() {
     let game = GameController.getGame(this.props.gameId);
@@ -29,6 +35,8 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
       route(`/game/${this.props.gameId}/q/${nextQuestion}`, true);
     }
 
+    SoundController.play(SOUND.closing);
+    VideoBackgroundController.playBackgroundLoop();
     this.setState({ game, showPrizes: false });
   }
 

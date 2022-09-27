@@ -1,8 +1,20 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
 import { GameController } from 'src/controllers/GameController';
+import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 export default class GameNew extends Component<any, any> {
+
+	componentDidMount(): void {
+		SoundController.play(SOUND.meet_contestant);
+		VideoBackgroundController.playBackgroundLoop();
+	}
+
+	componentWillUnmount(): void {
+		SoundController.stop(SOUND.meet_contestant);
+		VideoBackgroundController.pauseBackground();
+	}
 
   render(): ComponentChild {
     return (

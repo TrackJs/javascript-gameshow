@@ -1,7 +1,9 @@
 export enum SOUND {
   closing = "closing",
+  explain = "explain",
   final_answer = "final_answer",
   find_player = "find_player",
+  lifeline_friend = "lifeline_friend",
   meet_contestant = "meet_contestant",
   opening_theme = "opening_theme",
   question_1 = "question_1",
@@ -35,6 +37,21 @@ class _SoundController {
     });
   }
 
+  async playQuestionSound(questionIdx: number) {
+    if (questionIdx <= 1) {
+      this.play(SOUND.question_1);
+    }
+    else if (questionIdx === 2) {
+      this.play(SOUND.question_2);
+    }
+    else if (questionIdx === 3) {
+      this.play(SOUND.question_3);
+    }
+    else {
+      this.play(SOUND.question_4);
+    }
+  }
+
   async play(sound: SOUND, offset?: number, duration?: number) {
     let soundData = await this._sounds[sound];
 
@@ -52,6 +69,12 @@ class _SoundController {
     if (soundData.lastSource) {
       soundData.lastSource.stop();
     }
+  }
+
+  async stopAll() {
+    await Object.keys(SOUND).forEach(async sound => {
+      await this.stop(sound as SOUND);
+    });
   }
 }
 

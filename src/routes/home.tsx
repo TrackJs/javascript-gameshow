@@ -1,15 +1,18 @@
 import { h, Component, ComponentChild } from 'preact';
 import { route } from 'preact-router';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 export default class Home extends Component<any, any> {
 
 	componentDidMount(): void {
 		SoundController.play(SOUND.opening_theme);
+		VideoBackgroundController.playBackgroundLoop();
 	}
 
 	componentWillUnmount(): void {
-		SoundController.stop(SOUND.opening_theme);
+		SoundController.stopAll();
+		VideoBackgroundController.pauseBackground();
 	}
 
 	render() : ComponentChild {

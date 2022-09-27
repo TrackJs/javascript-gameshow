@@ -6,6 +6,7 @@ import GameLogo from 'src/components/gameLogo';
 import { GameController } from 'src/controllers/GameController';
 import { Question, QuestionController } from 'src/controllers/QuestionController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 interface FindPlayerState {
 	question?: Question
@@ -15,10 +16,12 @@ export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState
 
 	componentDidMount(): void {
 		SoundController.play(SOUND.find_player, 0, 50);
+		VideoBackgroundController.playBackgroundLoop();
 	}
 
 	componentWillUnmount(): void {
 		SoundController.stop(SOUND.find_player);
+		VideoBackgroundController.pauseBackground();
 	}
 
 	render(props: UrlRouteProps, state: FindPlayerState) : ComponentChild {
@@ -53,6 +56,7 @@ export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState
   private onShowQuestion() : void {
     SoundController.stop(SOUND.find_player);
     SoundController.play(SOUND.find_player, 51.6);
+		VideoBackgroundController.playFanfare();
 
 		let games = GameController.getAllGames();
 		let question = QuestionController.getQuestion("find-player", games.length, 9);
@@ -62,6 +66,7 @@ export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState
 
 	private onStartGame() : void {
 		SoundController.stop(SOUND.find_player);
+		SoundController.play(SOUND.result_win);
 		route("/game/new");
 	}
 

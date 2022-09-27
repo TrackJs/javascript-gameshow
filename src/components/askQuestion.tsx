@@ -111,6 +111,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
     let answerId = formData.get("selectedAnswerId") as string;
     let isCorrect = (answerId === this.props.question.correctId);
 
+    SoundController.stopAll();
     SoundController.play(SOUND.final_answer);
 
     this.setState({ answerId, isCorrect, isFinal: true });

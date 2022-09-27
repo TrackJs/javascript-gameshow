@@ -11,6 +11,7 @@ import FindPlayer from './routes/findPlayer';
 import TestQuestions from './routes/test/testQuestions';
 import ErrorNotFound from './routes/error/errorNotFound';
 import TestPrizes from './routes/test/testPrizes';
+import VideoBackground from './components/videoBackground';
 
 export interface UrlRouteProps {
     gameId: string,
@@ -33,6 +34,7 @@ const App = () => (
 
             <Route default component={ErrorNotFound} />
         </Router>
+        <VideoBackground />
     </main>
 );
 

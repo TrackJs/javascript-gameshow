@@ -9,6 +9,8 @@ import PrizeStack from 'src/components/prizeStack';
 import GameLogo from 'src/components/gameLogo';
 import AskQuestion from 'src/components/askQuestion';
 import LifeLines from 'src/components/lifeLines';
+import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 interface QuestionDetailsState {
   game: Game
@@ -24,10 +26,32 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
     this.state = this.getInitialState(props);
   }
 
+  componentDidMount(): void {
+    if (this.state.questionAsked) {
+      this.showQuestionAV();
+    } else {
+      this.showPreQuestionAV();
+    }
+	}
+
+	componentWillUnmount(): void {
+		SoundController.stopAll();
+		VideoBackgroundController.pauseBackground();
+	}
+
+
   componentWillReceiveProps(props: UrlRouteProps): void {
     let state = this.getInitialState(props);
     this.setState(state);
+
+    if (state.questionAsked) {
+      this.showQuestionAV();
+    } else {
+      this.showPreQuestionAV();
+    }
+
   }
+
 
   render(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
     return (
@@ -148,6 +172,8 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
     game.questionsAsked.push(questionAsked);
     GameController.saveGame(game);
 
+    this.showQuestionAV();
+
     this.setState({
       question,
       questionAsked
@@ -159,6 +185,9 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
     questionAsked.answerId = answerId;
     questionAsked.isCorrect = isCorrect;
 
+    SoundController.play(SOUND.final_answer);
+    VideoBackgroundController.playFanfare();
+
     GameController.saveGame(this.state.game);// persist that the question has been answered.
     this.setState({ questionAsked });
   }
@@ -166,6 +195,21 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   private onFinishGame() : void {
     GameController.finishGame(this.state.game);
     route(`/game/${this.state.game.id}`);
+  }
+
+  private showPreQuestionAV() {
+    SoundController.stopAll();
+    SoundController.play(SOUND.explain);
+    VideoBackgroundController.playBackgroundLoop();
+  }
+
+  private showQuestionAV() {
+    SoundController.stopAll();
+    SoundController.playQuestionSound(this.state.questionIdx);
+    VideoBackgroundController.playFanfare();
+    setTimeout(() => {
+      VideoBackgroundController.greenscreen();
+    }, 4_000);
   }
 }
 

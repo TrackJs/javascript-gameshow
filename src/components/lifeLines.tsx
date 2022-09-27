@@ -1,5 +1,6 @@
 import { h, Component, ComponentChild } from 'preact';
 import { Game, GameController, GameLifeLine } from 'src/controllers/GameController';
+import { SOUND, SoundController } from 'src/controllers/SoundController';
 
 export interface LifeLinesProps {
   game: Game,
@@ -50,6 +51,9 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     if (this.props.disabled === true) {
       return;
     }
+
+    SoundController.stopAll();
+    SoundController.play(SOUND.lifeline_friend);
 
     this.setState({ selectedLifeLine });
     selectedLifeLine.isUsed = true;

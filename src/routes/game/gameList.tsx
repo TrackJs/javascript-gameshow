@@ -7,11 +7,11 @@ import { SOUND, SoundController } from 'src/controllers/SoundController';
 export default class GameList extends Component<any, any> {
 
   componentDidMount(): void {
-    SoundController.play(SOUND.closing);
+    SoundController.play(SOUND.opening_theme);
   }
 
   componentWillUnmount(): void {
-    SoundController.play(SOUND.closing);
+    SoundController.stopAll();
   }
 
   render(): ComponentChild {

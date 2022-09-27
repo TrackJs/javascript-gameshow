@@ -1,0 +1,26 @@
+.c-video-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: black;
+
+  video {
+    filter: hue-rotate(45deg) brightness(0.5);
+  }
+
+  .video-react-button,
+  .video-react-has-started .video-react-control-bar {
+    display: none !important;
+  }
+
+  &.greenscreen {
+    background-color: #00FF00;
+
+    .video-react {
+      display: none;
+    }
+  }
+}
