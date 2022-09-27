@@ -13,10 +13,21 @@ export interface GameQuestionAsked {
   isCorrect?: boolean
 }
 
+export interface GameLifeLine {
+  name: string
+  iconUrl: string
+  isUsed: boolean
+  options: {
+    name: string
+    imageUrl: string
+  }[]
+}
+
 export interface Game {
   id: string
   playerName: string
   startedOn: DateTime
+  lifeLines: GameLifeLine[],
   questionsAsked: GameQuestionAsked[]
   prizeStack: Prize[],
   prizeWon: Prize[],
@@ -38,6 +49,23 @@ class _GameController {
       id,
       playerName: options.playerName,
       startedOn: DateTime.now(),
+      lifeLines: [{
+        name: "Ask a Speaker",
+        iconUrl: "/assets/images/ask_a_speaker.svg",
+        isUsed: false,
+        options: [
+          {
+            name: "Lemon",
+            imageUrl: "/assets/lifelines/lemon.webp"
+          },{
+            name: "Lemon",
+            imageUrl: "/assets/lifelines/lemon.webp"
+          },{
+            name: "Lemon",
+            imageUrl: "/assets/lifelines/lemon.webp"
+          }
+        ]
+      }],
       questionsAsked: [],
       prizeStack: this.getPrizeStack(id),
       prizeWon: [],

@@ -8,6 +8,7 @@ import PrizeShow from 'src/components/prizeShow';
 import PrizeStack from 'src/components/prizeStack';
 import GameLogo from 'src/components/gameLogo';
 import AskQuestion from 'src/components/askQuestion';
+import LifeLines from 'src/components/lifeLines';
 
 interface QuestionDetailsState {
   game: Game
@@ -84,6 +85,10 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
           <PrizeStack game={state.game} questionIdx={state.questionIdx} />
         </div>
 
+        <div class="life-line-wrap">
+          <LifeLines game={state.game} disabled={true} />
+        </div>
+
         <div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route('/')}>Home</button>
           <button class="btn btn-purple" type="button" onClick={e => this.onShowQuestion()}>Show Question</button>
@@ -112,6 +117,10 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         <div class="question-wrap">
           <AskQuestion question={question} onResult={this.onAnswer.bind(this)}
             showAnswers={!!questionAsked.answerId} answerId={questionAsked.answerId} />
+        </div>
+
+        <div class="life-line-wrap" hidden={!!questionAsked.answerId}>
+          <LifeLines game={state.game} disabled={!!questionAsked.answerId} />
         </div>
 
         <div class="controls">

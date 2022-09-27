@@ -26,10 +26,28 @@
     }
   }
 
+  &.btn-red {
+    background: radial-gradient(#790101, #d52828);
+    border: 4px solid #790101;
+    color: white;
+    font-weight: 600;
+
+    &:hover,&:active,&:focus {
+      background: radial-gradient(darken(#790101, 10%), darken(#d52828, 10%));
+    }
+  }
+
   &.btn-round {
     font-size: 1em;
     padding: 5px;
     height: 90px;
     width: 90px;
+  }
+
+  &.btn-square {
+    border-radius: 0;
+    height: 140px;
+    width: 140px;
+    padding: 12px;
   }
 }
