@@ -28,13 +28,13 @@ export default class VideoBackground extends Component<any, VideoBackgroundState
   render(props: any, state: VideoBackgroundState): ComponentChild {
     return(
       <div class={`c-video-background ${state.greenscreen ? "greenscreen" : ""}`}>
-        <Player ref={(player: any) => {
+
+          {/*
+  // @ts-ignore */}<Player loop={state.loop} ref={(player: any) => {
             this.player = player;
           }}
-          hidden={state.greenscreen}
           fluid={true}
-          videoId="video-1"
-          autoPlay={state.playing} muted={true} loop={state.loop}>
+          autoPlay={state.playing} muted={true} >
           <ControlBar disableCompletely={false} />
           <source src={state.sourceUrl} />
         </Player>
