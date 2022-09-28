@@ -25,7 +25,7 @@ export interface QuestionAnswer {
 
 export interface Question {
   id: string,
-  difficulty: 0|1|2|3|9,
+  difficulty: 0|1|2|3|4|9,
   type: "code"|"text",
   text: string,
   afterText: string,
@@ -347,59 +347,7 @@ const QUESTIONS : Question[] = [
     ]
   },
 
-  // Moderate (20)
-  {
-    "id": "d9651ed51f1a428990c61016e49fa1cd",
-    "difficulty": 2,
-    "type": "code",
-    "text": "function(){ return this; }.bind(window).call(document)",
-    "afterText": "Function.prototype.bind locks the value of `this` for all future invocations of a function, even if it has been specified otherwise.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "null"
-      },
-      {
-        "id": "2",
-        "text": "window"
-      },
-      {
-        "id": "3",
-        "text": "document"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
-  {
-    "id": "80881e3a14cd480f8073eea3ba7c8cef",
-    "difficulty": 2,
-    "type": "code",
-    "text": "Math.min()",
-    "afterText": "Called with no arguments, Math.min() returns the largest number in JavaScript.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "0"
-      },
-      {
-        "id": "2",
-        "text": "Infinity"
-      },
-      {
-        "id": "3",
-        "text": "-Infinity"
-      },
-      {
-        "id": "4",
-        "text": "10e1000"
-      }
-    ]
-  },
+  // Moderate (10)
   {
     "id": "75bbe984741a45489b23415966cf4819",
     "difficulty": 2,
@@ -479,32 +427,6 @@ const QUESTIONS : Question[] = [
     ]
   },
   {
-    "id": "81ad581cf6c84749afff796a05e57e8f",
-    "difficulty": 2,
-    "type": "code",
-    "text": "new Date(2016, 5, 31)",
-    "afterText": "Months are zero based with respect to Dates in JS.  This is really saying June 31st, which is coerced to Jul 1.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "Fri Jul 01 2016"
-      },
-      {
-        "id": "2",
-        "text": "Tue May 31 2016"
-      },
-      {
-        "id": "3",
-        "text": "Tue May 31 2017"
-      },
-      {
-        "id": "4",
-        "text": "Wed Jun 1 2016"
-      }
-    ]
-  },
-  {
     "id": "8930afdb93f344fe93c9333882944521",
     "difficulty": 2,
     "type": "code",
@@ -553,32 +475,6 @@ const QUESTIONS : Question[] = [
       {
         "id": "4",
         "text": "throw Error"
-      }
-    ]
-  },
-  {
-    "id": "07b701cbf7304ef48039125d19b81bf9",
-    "difficulty": 2,
-    "type": "code",
-    "text": "Math.max()",
-    "afterText": "Called with no arguments, Math.max() returns the smallest number in JavaScript.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "0"
-      },
-      {
-        "id": "2",
-        "text": "Infinity"
-      },
-      {
-        "id": "3",
-        "text": "-Infinity"
-      },
-      {
-        "id": "4",
-        "text": "10e1000"
       }
     ]
   },
@@ -661,136 +557,6 @@ const QUESTIONS : Question[] = [
     ]
   },
   {
-    "id": "dbfbc839ff4849bcad2ab77f041e7d02",
-    "difficulty": 2,
-    "type": "code",
-    "text": "[] == ![]",
-    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean false.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "[]"
-      }
-    ]
-  },
-  {
-    "id": "ebfbc839ff4849bcad2ab77f041e7d02",
-    "difficulty": 2,
-    "type": "code",
-    "text": "[] == []",
-    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean true.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "[]"
-      }
-    ]
-  },
-  {
-    "id": "bd4e32132c9d480fbf7c7acb4dddc605",
-    "difficulty": 2,
-    "type": "code",
-    "text": "parseInt(\"poop\", 26)",
-    "afterText": "The second parameter of parseint is a radix (base) specification.",
-    "correctId": "4",
-    "answers": [
-      {
-        "id": "1",
-        "text": "NaN"
-      },
-      {
-        "id": "2",
-        "text": "26"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "456273"
-      }
-    ]
-  },
-  {
-    "id": "81a16112bf584a5990db1a5b5f8bcf0c",
-    "difficulty": 2,
-    "type": "code",
-    "text": "\"poop\" instanceof String",
-    "afterText": "String literals have the type of string, but are not instances of String",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "\"poop\""
-      }
-    ]
-  },
-  {
-    "id": "c09fee8a1e8e4124aee216eae87b92f8",
-    "difficulty": 2,
-    "type": "code",
-    "text": "[,,,].length",
-    "afterText": "The final comma in the Array literal is considered trailing, so no fourth index is added.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "4"
-      },
-      {
-        "id": "2",
-        "text": "3"
-      },
-      {
-        "id": "3",
-        "text": "2"
-      },
-      {
-        "id": "4",
-        "text": "undefined"
-      }
-    ]
-  },
-  {
     "id": "397c80d1c9724965ba49958184ce2648",
     "difficulty": 2,
     "type": "code",
@@ -813,32 +579,6 @@ const QUESTIONS : Question[] = [
       {
         "id": "4",
         "text": "\"true\""
-      }
-    ]
-  },
-  {
-    "id": "6b886e2cb39a429ba96f7a8923468a62",
-    "difficulty": 2,
-    "type": "code",
-    "text": "undefined == 0",
-    "afterText": "Both undefined and 0 are falsy types and will equal with coerced equality.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "null"
       }
     ]
   },
@@ -869,11 +609,272 @@ const QUESTIONS : Question[] = [
     ]
   },
 
+  // Mod 2 (10)
+  {
+    "id": "6b886e2cb39a429ba96f7a8923468a62",
+    "difficulty": 3,
+    "type": "code",
+    "text": "undefined == 0",
+    "afterText": "Both undefined and 0 are falsy types and will equal with coerced equality.",
+    "correctId": "1",
+    "answers": [
+      {
+        "id": "1",
+        "text": "true"
+      },
+      {
+        "id": "2",
+        "text": "false"
+      },
+      {
+        "id": "3",
+        "text": "throw Error"
+      },
+      {
+        "id": "4",
+        "text": "null"
+      }
+    ]
+  },
+  {
+    "id": "c09fee8a1e8e4124aee216eae87b92f8",
+    "difficulty": 3,
+    "type": "code",
+    "text": "[,,,].length",
+    "afterText": "The final comma in the Array literal is considered trailing, so no fourth index is added.",
+    "correctId": "2",
+    "answers": [
+      {
+        "id": "1",
+        "text": "4"
+      },
+      {
+        "id": "2",
+        "text": "3"
+      },
+      {
+        "id": "3",
+        "text": "2"
+      },
+      {
+        "id": "4",
+        "text": "undefined"
+      }
+    ]
+  },
+  {
+    "id": "81a16112bf584a5990db1a5b5f8bcf0c",
+    "difficulty": 3,
+    "type": "code",
+    "text": "\"poop\" instanceof String",
+    "afterText": "String literals have the type of string, but are not instances of String",
+    "correctId": "2",
+    "answers": [
+      {
+        "id": "1",
+        "text": "true"
+      },
+      {
+        "id": "2",
+        "text": "false"
+      },
+      {
+        "id": "3",
+        "text": "throw Error"
+      },
+      {
+        "id": "4",
+        "text": "\"poop\""
+      }
+    ]
+  },
+  {
+    "id": "bd4e32132c9d480fbf7c7acb4dddc605",
+    "difficulty": 3,
+    "type": "code",
+    "text": "parseInt(\"poop\", 26)",
+    "afterText": "The second parameter of parseint is a radix (base) specification.",
+    "correctId": "4",
+    "answers": [
+      {
+        "id": "1",
+        "text": "NaN"
+      },
+      {
+        "id": "2",
+        "text": "26"
+      },
+      {
+        "id": "3",
+        "text": "throw Error"
+      },
+      {
+        "id": "4",
+        "text": "456273"
+      }
+    ]
+  },
+  {
+    "id": "07b701cbf7304ef48039125d19b81bf9",
+    "difficulty": 3,
+    "type": "code",
+    "text": "Math.max()",
+    "afterText": "Called with no arguments, Math.max() returns the smallest number in JavaScript.",
+    "correctId": "3",
+    "answers": [
+      {
+        "id": "1",
+        "text": "0"
+      },
+      {
+        "id": "2",
+        "text": "Infinity"
+      },
+      {
+        "id": "3",
+        "text": "-Infinity"
+      },
+      {
+        "id": "4",
+        "text": "10e1000"
+      }
+    ]
+  },
+  {
+    "id": "81ad581cf6c84749afff796a05e57e8f",
+    "difficulty": 3,
+    "type": "code",
+    "text": "new Date(2016, 5, 31)",
+    "afterText": "Months are zero based with respect to Dates in JS.  This is really saying June 31st, which is coerced to Jul 1.",
+    "correctId": "1",
+    "answers": [
+      {
+        "id": "1",
+        "text": "Fri Jul 01 2016"
+      },
+      {
+        "id": "2",
+        "text": "Tue May 31 2016"
+      },
+      {
+        "id": "3",
+        "text": "Tue May 31 2017"
+      },
+      {
+        "id": "4",
+        "text": "Wed Jun 1 2016"
+      }
+    ]
+  },
+  {
+    "id": "d9651ed51f1a428990c61016e49fa1cd",
+    "difficulty": 3,
+    "type": "code",
+    "text": "function(){ return this; }.bind(window).call(document)",
+    "afterText": "Function.prototype.bind locks the value of `this` for all future invocations of a function, even if it has been specified otherwise.",
+    "correctId": "2",
+    "answers": [
+      {
+        "id": "1",
+        "text": "null"
+      },
+      {
+        "id": "2",
+        "text": "window"
+      },
+      {
+        "id": "3",
+        "text": "document"
+      },
+      {
+        "id": "4",
+        "text": "throw Error"
+      }
+    ]
+  },
+  {
+    "id": "80881e3a14cd480f8073eea3ba7c8cef",
+    "difficulty": 3,
+    "type": "code",
+    "text": "Math.min()",
+    "afterText": "Called with no arguments, Math.min() returns the largest number in JavaScript.",
+    "correctId": "2",
+    "answers": [
+      {
+        "id": "1",
+        "text": "0"
+      },
+      {
+        "id": "2",
+        "text": "Infinity"
+      },
+      {
+        "id": "3",
+        "text": "-Infinity"
+      },
+      {
+        "id": "4",
+        "text": "10e1000"
+      }
+    ]
+  },
+  {
+    "id": "dbfbc839ff4849bcad2ab77f041e7d02",
+    "difficulty": 3,
+    "type": "code",
+    "text": "[] == ![]",
+    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean false.",
+    "correctId": "1",
+    "answers": [
+      {
+        "id": "1",
+        "text": "true"
+      },
+      {
+        "id": "2",
+        "text": "false"
+      },
+      {
+        "id": "3",
+        "text": "throw Error"
+      },
+      {
+        "id": "4",
+        "text": "[]"
+      }
+    ]
+  },
+  {
+    "id": "ebfbc839ff4849bcad2ab77f041e7d02",
+    "difficulty": 3,
+    "type": "code",
+    "text": "[] == []",
+    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean true.",
+    "correctId": "2",
+    "answers": [
+      {
+        "id": "1",
+        "text": "true"
+      },
+      {
+        "id": "2",
+        "text": "false"
+      },
+      {
+        "id": "3",
+        "text": "throw Error"
+      },
+      {
+        "id": "4",
+        "text": "[]"
+      }
+    ]
+  },
 
   // Hard (10)
   {
     "id": "0e428b04de4548ad8abf71b165749886",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "null == false",
     "afterText": "Despite null being a falsy value, it is not equal to false in the abstract equality comparison specification.",
@@ -899,7 +900,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "f693faf553424faf85875354fbcc6957",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "typeof null",
     "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
@@ -925,7 +926,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "3b42938c00c74921959b2d6a6c65c225",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "null instanceof Object",
     "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
@@ -951,7 +952,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "de86307d046c4be081d1659d01ea7199",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "return\n  { id: 42 };",
     "afterText": "Automatic Semicolon Insertion (ASI) sees a complete statement in `return` and inserts a semicolon, causing the function to return undefined.",
@@ -977,7 +978,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "9193639211a248e2bd782ba62eb26040",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "[] + []",
     "afterText": "Array.prototype.toString is used in the coercion, which results in an empty string. Both are concatenated.",
@@ -1003,7 +1004,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "eb54d2ced1984e21beb464fa26135f68",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "(function foo(a, b) {}).length",
     "afterText": "Function.prototype.length returns the number of arguments specified in the function definition.",
@@ -1029,7 +1030,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "08ec6fdf6da24e859e325bcd83f8bc9a",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "(\"js\", \"rocks\")",
     "afterText": "The comma operator evaluates each of its operands (from left to right) and returns the value of the last operand.",
@@ -1055,7 +1056,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "8cb65d51350b40af92836c466b48321d",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "!!~[1, 2, 3].indexOf(3)",
     "afterText": "Bitwise NOT operator (~) will convert any number x to -(x + 1).  Double negation yields answer for whether array contains item.",
@@ -1081,7 +1082,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "7b20efaf8ef8480aae80951ddbc76485",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "(() => arguments)(1, 2)",
     "afterText": "Fat arrow functions do not expose an instrinsic \"arguments\" property like normal functions.",
@@ -1107,7 +1108,7 @@ const QUESTIONS : Question[] = [
   },
   {
     "id": "1a1103afd92845b299ed9e6909f266d3",
-    "difficulty": 3,
+    "difficulty": 4,
     "type": "code",
     "text": "Array(0, 1, Array(2));",
     "afterText": "Instantiating an Array with multiple arguments creates an Array from those values. However a single argument only specifies the length.",
@@ -1383,7 +1384,7 @@ class _QuestionController {
    * Get a random question at the specified difficulty for the game. If it has already been
    * requested, the same question is returned.
    */
-  getQuestion(gameId: string, questionIdx: number, difficulty: 0|1|2|3|9) : Question {
+  getQuestion(gameId: string, questionIdx: number, difficulty: 0|1|2|3|4|9) : Question {
     let claims = this.getClaimRecords();
     let claimKey = `${gameId}${questionIdx}`;
 
@@ -1419,6 +1420,7 @@ class _QuestionController {
     console.info(`${QUESTIONS.filter(q => q.difficulty === 1).length} have difficulty 1`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 2).length} have difficulty 2`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 3).length} have difficulty 3`);
+    console.info(`${QUESTIONS.filter(q => q.difficulty === 4).length} have difficulty 4`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 9).length} have difficulty 9`);
     console.groupEnd();
   }

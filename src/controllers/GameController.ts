@@ -113,9 +113,9 @@ class _GameController {
     return JSON.parse(gameString) as Game;
   }
 
-  getDifficultyForIndex(questionIdx: number): 0|1|2|3 {
-    let difficultyMap = [0, 1, 2, 2, 3];
-    return difficultyMap[questionIdx] as 0|1|2|3;
+  getDifficultyForIndex(questionIdx: number): 0|1|2|3|4 {
+    let difficultyMap = [0, 1, 2, 3, 4];
+    return difficultyMap[questionIdx] as 0|1|2|3|4;
   }
 
   getPrizesWon(game: Game): Prize[] {
