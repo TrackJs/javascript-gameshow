@@ -83,6 +83,15 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
     sponsorImageUrl: "/assets/sponsors/elastic.svg"
   },
   {
+    id: "251e637c340942d389e8ab64cd421e63",
+    name: "Airpods",
+    difficulty: 3, // $180
+    quantity: 2,
+    imageUrl: "/assets/prizes/airpods.png",
+    sponsorName: "NDC Conferences",
+    sponsorImageUrl: "/assets/sponsors/ndc.png"
+  },
+  {
     id: "087f90ccd7ac48fcb31bc3eaab86e1a1",
     name: "Lego Trash Compactor",
     difficulty: 3, // $79
@@ -101,14 +110,23 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
     sponsorImageUrl: "/assets/sponsors/enso.png"
   },
   {
-    id: "e776911270e44e6085fb4055bed5c864",
-    name: "Gyldendal Stack",
-    difficulty: 3, // ?
-    quantity: 1,
-    imageUrl: "/assets/prizes/todo.png",
-    sponsorName: "Gyldendal",
-    sponsorImageUrl: "/assets/sponsors/todo.png"
+    id: "542abd0720f346ce9a5b11c790fb1fee",
+    name: "Apple TV",
+    difficulty: 3, // $180
+    quantity: 2,
+    imageUrl: "/assets/prizes/appletv.png",
+    sponsorName: "NDC Conferences",
+    sponsorImageUrl: "/assets/sponsors/ndc.png"
   },
+  // {
+  //   id: "e776911270e44e6085fb4055bed5c864",
+  //   name: "Gyldendal Stack",
+  //   difficulty: 3, // ?
+  //   quantity: 1,
+  //   imageUrl: "/assets/prizes/todo.png",
+  //   sponsorName: "Gyldendal",
+  //   sponsorImageUrl: "/assets/sponsors/todo.png"
+  // },
   {
     id: "e1fc408cc2b74fcc9186e204e35b6d27",
     name: "Jetbrains Product Pack",
