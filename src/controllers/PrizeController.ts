@@ -26,7 +26,7 @@ const STORAGE_KEY = "prize-claims";
 const PRIZE_INVENTORY : InventoryPrize[] = [
 
   {
-    id: "4f780b6e31d64c77a9d9ae19cea87342",
+    id: "ee2b4d37482543f0b2eeb651b8c4a4f8",
     name: "Hand Sanitizer",
     difficulty: 0,
     quantity: 5,
@@ -35,7 +35,7 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
     sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
   },
   {
-    id: "4f780b6e31d64c77a9d9ae19cea87342",
+    id: "5373650e5fe847d88b4f64ed0804207d",
     name: "Sloth Stressball",
     difficulty: 0,
     quantity: 5,
