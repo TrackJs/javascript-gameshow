@@ -53,7 +53,6 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     }
 
     SoundController.stopAll();
-    SoundController.play(SOUND.lifeline_friend);
 
     this.setState({ selectedLifeLine });
     selectedLifeLine.isUsed = true;
@@ -62,8 +61,10 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
 
   onDismiss(): void {
     this.setState({ dismissLifeline: true });
+
     setTimeout(() => {
       this.setState({ selectedLifeLine: undefined, dismissLifeline: undefined });
+      SoundController.play(SOUND.lifeline_friend);
     }, 2_000);
   }
 

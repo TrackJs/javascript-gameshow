@@ -55,14 +55,20 @@ class _GameController {
         isUsed: false,
         options: [
           {
+            name: "Amy Kapernick",
+            imageUrl: "/assets/lifelines/amy.webp"
+          },
+          {
+            name: "Lars Klint",
+            imageUrl: "/assets/lifelines/lars.webp"
+          },
+          {
             name: "Lemon",
             imageUrl: "/assets/lifelines/lemon.webp"
-          },{
-            name: "Lemon",
-            imageUrl: "/assets/lifelines/lemon.webp"
-          },{
-            name: "Lemon",
-            imageUrl: "/assets/lifelines/lemon.webp"
+          },
+          {
+            name: "Martine Dowden",
+            imageUrl: "/assets/lifelines/martine.webp"
           }
         ]
       }],
