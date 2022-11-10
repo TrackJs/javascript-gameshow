@@ -1,0 +1,11 @@
+{
+  "name": "audience-app",
+  "scripts": {
+    "start": "http-server -a localhost -p 8080 -c-1 ./",
+    "serve": "sirv . --cors --single --http2 --host gameshow.local --port 8443 --key /Users/todd/code/_certs/gameshow.local.key --cert /Users/todd/code/_certs/gameshow.local.crt"
+  },
+  "devDependencies": {
+    "http-server": "14.1.0",
+    "sirv-cli": "^2.0.2"
+  }
+}
