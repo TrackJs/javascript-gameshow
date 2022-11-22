@@ -17,3 +17,8 @@
 
 
 For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
+
+
+## DB Rules
+
+If you change your rules inside of the firebase console do not forget to copy them to the `database.rules.json` file otherwise when you deploy they will get blown away. The file is the law of the land.
