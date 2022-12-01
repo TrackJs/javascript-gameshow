@@ -3,7 +3,7 @@
     "rules": "../database.rules.json"
   },
   "hosting": {
-    "target": "audience-app",
+    "target": "admin-app",
     "public": "public",
     "ignore": [
       "firebase.json",

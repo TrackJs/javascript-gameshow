@@ -6,7 +6,7 @@ let question;
 function getUserId() {
   uid = localStorage.getItem("GAMESHOW_USER_ID");
   if (!uid) {
-    uid = `${Math.floor(Math.random() * 9999999999) + 1000000000}.${new Date().getTime()}`
+    uid = `${Math.floor(Math.random() * 9999999999) + 1000000000}-${new Date().getTime()}`
     localStorage.setItem("GAMESHOW_USER_ID", uid);
   }
   return uid;
@@ -17,9 +17,9 @@ function getUserId() {
   const questionRef = firebase.database().ref('/activeQuestion')
   const userId = getUserId();
   console.log(`userId: ${userId}`);
-  
+
   questionRef.on('value', snapshot => updateQuestion(snapshot.val()));
-  
+
   const form = document.getElementById('form')
   form.addEventListener('submit', event => submitAnswer(event))
 })();
@@ -41,13 +41,24 @@ function submitAnswer(event) {
   const payload = {
     uid,
     submitTime: Date.now(),
+    questionId: question.questionId
   }
   for (const [key, value] of formData) {
     if (value) { payload[key] = value; }
   }
-  console.log(payload)
-  //  TODO: Submit to Firebase
-} 
+
+  const answerRef = firebase.database().ref(`/answers/${question.eventId}/${question.questionId}/${uid}`)
+  answerRef.set(payload).then(() => {
+    alert('success!!!')
+    }, err => {
+      console.error(err)
+      alert('Epic Fail!')
+    }
+  )
+
+  console.log(payload);
+
+}
 
 (function (ready) {
   if (document.readyState === "complete" || document.readyState === "interactive") {

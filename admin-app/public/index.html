@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>My sweet admin app for JavaScriptær</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <h1>Who wants to be a JavaScriptær?</h1>
+
+      <button type="button" onclick="amITodd()"> I am Todd </button>
+      <section class="question" aria-atomic="true" aria-live="polite">
+        <h2 aria-relevant="text" id="question">
+          <!-- JS inserts question here -->
+        </h2>
+      </section>
+
+      <form id="form">
+        <h2>Is that your final answer?</h2>
+        <p class="instructions">All fields are required and remember the code of conduct applies!</p>
+        <label>
+          <span>Display Name</span>
+          <input name="displayName" type="text" maxlength="100" required>
+        </label>
+
+        <label>
+          <span>Answer</span>
+          <input name="answer" type="text" maxlength="100" required>
+        </label>
+
+        <button type="submit">Submit</button>
+      </form>
+    </body>
+
+    </main>
+  <script src="/__/firebase/9.13.0/firebase-app-compat.js"></script>
+  <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
+  <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <script src="scripts.js"></script>
+</html>

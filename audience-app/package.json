@@ -5,6 +5,7 @@
     "use:project": "firebase use javascript-gameshow && firebase target:clear hosting audience-app && firebase target:apply hosting audience-app javascript-gameshow",
     "deploy": "run use:project && firebase deploy"
   },
-  "devDependencies": {},
-  "dependencies": {}
+  "devDependencies": {
+    "firebase-tools": "11.16.1"
+  }
 }

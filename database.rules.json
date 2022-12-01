@@ -5,8 +5,10 @@
 		"answers": {
       "$eventId": {
         "$questionId": {
-          ".write": "!data.exists() && newData.child('uid').val() == auth.uid && newData.hasChildren(['uid', 'answer','displayName','shownOn','submitTime'])",
-          ".validate": "newData.child('submitTime').isNumber() && newData.child('shownOn').isNumber() && newData.child('answer').isString() && newData.child('answer').val().length < 100 && newData.child('displayName').val().length < 100"
+          "$user_id": {
+          	".write": "!data.exists() && newData.hasChildren(['uid', 'answer','displayName','submitTime'])",
+            ".validate": "newData.child('submitTime').isNumber() && newData.child('answer').isString() && newData.child('answer').val().length < 100 && newData.child('displayName').val().length < 100"
+          }
         }
       }
     },

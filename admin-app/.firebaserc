@@ -5,7 +5,7 @@
   "targets": {
     "javascript-gameshow": {
       "hosting": {
-        "audience-app": [
+        "admin-app": [
           "javascript-gameshow"
         ]
       }

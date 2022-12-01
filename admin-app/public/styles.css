@@ -1,0 +1,84 @@
+* { box-sizing: border-box; }
+
+html {
+  /** THEME **/
+  /** https://www.schemecolor.com/spend-like-a-millionaire.php **/
+  --primary: #13106D;
+  --accent: #1fcbff;
+  --success: #25693E;
+  --warning: #E18C1D;
+  --gold: #EDBF37;
+  --text: white;
+  --border: solid 1px var(--gold);
+  --font-family: Arial, Helvetica, sans-serif;
+  --gradient: linear-gradient(#1a14c7, #13106D, #1a14c7);
+
+  padding: 0;
+  margin: 0; 
+}
+
+body {
+  padding: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--primary);
+  color: white;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+h1, h2 { text-align: center; }
+
+.question, form { margin-bottom: 2rem; }
+.question h2 {
+  background: var(--gradient);
+  box-shadow: 0 0 40px  var(--accent);
+  padding: 2rem;
+  border: var(--border);
+  border-radius: 4rem;
+}
+
+.instructions {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+form h2 { margin-bottom: 0; }
+
+label, input, button {
+  display: block;
+  font-family: var(--font-family);
+  width: 100%;
+}
+label span {
+  display: inline-block;
+  margin-left: 2rem;
+}
+
+input {
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 4rem;
+  font-size: 1rem;
+  border: var(--border);
+  background: var(--gradient);
+  color: var(--text);
+}
+input:focus-visible, input:focus {
+  outline: var(--border)
+}
+
+button[type="submit"] {
+  margin-top: 2rem;
+  border-radius: 4rem;
+  padding: 1rem 2rem;
+  background: var(--gold);
+  color: var(--primary);
+  border: solid 1px var(--accent);
+  box-shadow: 0 0 40px  var(--accent);
+  font-size: 1rem;
+  font-weight: bold;
+}
+button:focus-visible, button:focus {
+  outline: solid 1px var(--accent);
+}
