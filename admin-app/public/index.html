@@ -1,4 +1,4 @@
-<!doctype html>
+  <!doctype html>
 <html lang="en">
   <head>
     <title>My sweet admin app for JavaScriptær</title>
@@ -13,28 +13,19 @@
     <main>
       <h1>Who wants to be a JavaScriptær?</h1>
 
-      <button type="button" onclick="amITodd()"> I am Todd </button>
-      <section class="question" aria-atomic="true" aria-live="polite">
-        <h2 aria-relevant="text" id="question">
-          <!-- JS inserts question here -->
-        </h2>
-      </section>
+      <button type="button" onclick="amITodd()" id="login"> I am Todd </button>
 
-      <form id="form">
-        <h2>Is that your final answer?</h2>
-        <p class="instructions">All fields are required and remember the code of conduct applies!</p>
-        <label>
-          <span>Display Name</span>
-          <input name="displayName" type="text" maxlength="100" required>
-        </label>
+      <h2 id="eventId">...</h2>
 
-        <label>
-          <span>Answer</span>
-          <input name="answer" type="text" maxlength="100" required>
-        </label>
-
-        <button type="submit">Submit</button>
+      <form id="selectQuestionForm">
+        <ul id="questionList" style="list-style: none;"></ul>
+        <button type="submit">Select Question</button>
       </form>
+
+      <h2>Current Question</h2>
+      <ul id="answerList"></ul>
+
+
     </body>
 
     </main>
