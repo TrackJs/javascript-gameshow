@@ -1,7 +1,7 @@
-  <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
-    <title>My sweet admin app for JavaScriptær</title>
+    <title>Gameshow Admin</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,10 +11,53 @@
   </head>
   <body>
     <main>
-      <h1>Who wants to be a JavaScriptær?</h1>
 
-      <button type="button" onclick="amITodd()" id="login"> I am Todd </button>
+      <header class="site-header flex">
+        <h1>Gameshow Admin</h1>
+      </header>
 
+      <div class="user">
+        <div class="authed" style="display:none;">
+        </div>
+        <div class="login" style="display:none;">
+          <button type="button" id="login-button">
+            login to continue
+          </button>
+        </div>
+      </div>
+
+      <div id="eventId"></div>
+
+      <div class="question-answer" style="display:none;">
+
+        <div class="active-question">
+          <h2>Active Question</h2>
+          <div class="active-question-text"></div>
+          <div class="active-question-answer"></div>
+        </div>
+
+        <div class="answers">
+          <h2>Answers</h2>
+          <ul id="answer-list"></ul>
+        </div>
+
+        <div class="controls">
+          <button type="button" id="active-question-clear">Clear Active Question</button>
+        </div>
+
+      </div>
+
+      <div class="questions" style="display:none;">
+        <h2>Question List</h2>
+        <form id="select-question-form">
+          <ul id="question-list"></ul>
+          <div class="controls">
+            <button type="submit">Show Question</button>
+          </div>
+        </form>
+      </div>
+
+<!--
       <h2 id="eventId">...</h2>
 
       <form id="selectQuestionForm">
@@ -23,16 +66,18 @@
       </form>
 
       <h2>Current Question</h2>
-      <ul id="answerList"></ul>
+      <ul id="answerList"></ul> -->
 
-
-    </body>
+      <div class="logo">
+        <img src="logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
+      </div>
 
     </main>
-  <script src="/__/firebase/9.13.0/firebase-app-compat.js"></script>
-  <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
-  <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
-  <script src="/__/firebase/init.js"></script>
 
-  <script src="scripts.js"></script>
+    <script src="/__/firebase/9.13.0/firebase-app-compat.js"></script>
+    <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
+    <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script src="scripts.js"></script>
+  </body>
 </html>

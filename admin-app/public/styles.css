@@ -13,72 +13,195 @@ html {
   --font-family: Arial, Helvetica, sans-serif;
   --gradient: linear-gradient(#1a14c7, #13106D, #1a14c7);
 
+  --border-color:#3d758c;
+  --dark-purple:#470147;
+  --orange: #e1a02e;
+
+
   padding: 0;
-  margin: 0; 
+  margin: 0;
 }
 
 body {
-  padding: 2rem;
+  padding: 1rem 2rem;
   font-family: Arial, Helvetica, sans-serif;
-  background: var(--primary);
+  background: linear-gradient(45deg, black, var(--dark-purple));
+  min-height: 100vh;
   color: white;
   max-width: 450px;
   margin: 0 auto;
 }
-
-h1, h2 { text-align: center; }
-
-.question, form { margin-bottom: 2rem; }
-.question h2 {
-  background: var(--gradient);
-  box-shadow: 0 0 40px  var(--accent);
-  padding: 2rem;
-  border: var(--border);
-  border-radius: 4rem;
+main {
+  padding-bottom: 100px;
 }
 
-.instructions {
+.flex {
+  display: flex;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 100px;
+  cursor: pointer;
+  background: radial-gradient(#e7dab6, var(--orange));
+  border: 4px solid var(--orange);
+  color: black;
+  font-weight: 600;
+}
+button:hover, button:active, button:focus {
+  background: radial-gradient(var(--orange), #bf7a00);
+}
+
+header.site-header {
+  justify-content: space-between;
+}
+header.site-header h1 {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.user .login {
+  position: absolute;
+  top: 40vh;
+  left: 2rem;
+  right: 2rem;
+}
+
+h2 {
   text-align: center;
-  margin-bottom: 2rem;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: var(--orange);
 }
 
-form h2 { margin-bottom: 0; }
+.active-question {
+  margin: 30px 0 0 0;
+  padding: 30px 0 0 0;
+  border-top: 2px solid var(--border-color);
+}
+.active-question-text {
+  text-align: center;
+}
+.active-question-text div {
+  font-size: 1.2em;
+  color: #ccc;
+}
+.active-question-text pre {
+  font-weight: bold;
+  font-size: 1.6em;
+  margin: 0.5em 0;
+}
+.active-question-answer {
+  margin: 40px 0 ;
+  text-align: center;
+}
+.active-question-answer div {
+  font-size: 1.0em;
+  color: #ccc;
+}
+.active-question-answer pre {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 0.5em 0;
+}
+.answers {
+  margin: 30px 0 0 0;
+  padding: 30px 0 0 0;
+  border-top: 2px solid var(--border-color);
+}
+#answer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+#answer-list li {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #7b417b;
+}
+#answer-list li div {
+  font-size: 1.0em;
+  color: #ccc;
+}
+#answer-list li pre {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 0;
+}
 
-label, input, button {
-  display: block;
-  font-family: var(--font-family);
+
+.questions {
+  margin: 30px 0 0 0;
+  padding: 30px 0 0 0;
+  border-top: 2px solid var(--border-color);
+}
+#question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+#question-list li {
+  border-bottom: 1px solid #7b417b;
+}
+#question-list li label {
+  display: flex;
+  padding: 20px 0;
+}
+#question-list li label.used {
+  color: #aaa;
+}
+#question-list li label input {
+  flex: 0 0;
+  margin-right: 10px;
+}
+#question-list li label:has(input:checked) {
+  background-color: var(--orange);
+}
+#question-list li label pre {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+
+
+
+
+
+.controls {
+  position: fixed;
+  bottom: 30px;
+  left: 110px;
+  right: 20px;
+}
+.controls button {
   width: 100%;
 }
-label span {
-  display: inline-block;
-  margin-left: 2rem;
+.logo {
+  position: fixed;
+  max-width: 80px;
+  bottom: 10px;
+  left: 10px;
 }
-
-input {
-  margin-bottom: 1rem;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 4rem;
-  font-size: 1rem;
-  border: var(--border);
-  background: var(--gradient);
-  color: var(--text);
+.logo img {
+  max-width: 100%;
+  height: auto;
+  animation: pulseGlow 3s linear infinite;
 }
-input:focus-visible, input:focus {
-  outline: var(--border)
-}
-
-button[type="submit"] {
-  margin-top: 2rem;
-  border-radius: 4rem;
-  padding: 1rem 2rem;
-  background: var(--gold);
-  color: var(--primary);
-  border: solid 1px var(--accent);
-  box-shadow: 0 0 40px  var(--accent);
-  font-size: 1rem;
-  font-weight: bold;
-}
-button:focus-visible, button:focus {
-  outline: solid 1px var(--accent);
+@keyframes pulseGlow {
+  0% {
+    filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+  }
+  50% {
+    filter: unset;
+  }
+  100% {
+    filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+  }
 }

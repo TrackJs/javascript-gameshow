@@ -1,111 +1,144 @@
 'use strict';
 
-let user;
-let answers;
-let questions;
-let activeEventId;
-let activeQuestionId;
-
 (async () => {
-  console.log('loaded');
 
-  firebase.auth().onAuthStateChanged((_user) => {
-    console.log("user", _user);
-    user = _user
-    const loginButton = document.querySelector('#login');
+  // global refs
+  let activeQuestionRef;
+  let answersRef;
+  let questionRef;
+
+  // global state
+  let user;
+  let activeEventId;
+  let activeQuestion;
+  let questions;
+
+  // global dom
+  const questionsEl = document.querySelector(".questions");
+  const questionsList = questionsEl.querySelector("#question-list");
+  const questionAnswerEl = document.querySelector(".question-answer");
+  const answerList = questionAnswerEl.querySelector("#answer-list");
+
+  document.querySelector("#login-button").addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider()
+    await firebase.auth().signInWithPopup(provider);
+  });
+
+  document.querySelector("#active-question-clear").addEventListener("click", (evt) => {
+    evt.preventDefault();
+    if (!confirm("Are you sure you want to clear the question?")) { return; }
+    if (!activeQuestionRef) { return; }
+
+    activeQuestionRef.remove();
+  });
+
+  document.querySelector("#select-question-form").addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    if (!activeQuestionRef) { return; }
+
+    const questionId = new FormData(evt.target).get("questionId");
+
+    const questionRef = firebase.database().ref(`questions/${questionId}`)
+    questionRef.update({ used: true });
+
+    activeQuestionRef.set({
+      eventId: activeEventId,
+      questionId,
+      ...questions[questionId]
+    });
+  });
+
+  firebase.auth().onAuthStateChanged(async (_user) => {
+    const userAuthEl = document.querySelector(".authed");
+    const userLoginEl = document.querySelector(".login");
+
+    user = _user;
+
     if (!user) {
-      loginButton.innerText = "Are you Cool?";
-    } else {
-      loginButton.innerText = `Hi ${user.displayName}!`;
-      handleListeners();
+      console.log("no logged in user");
+      userLoginEl.style.display = "block"
+      userAuthEl.style.display = "none"
     }
-  })
+    else {
+      console.log("user logged in", user);
+      userLoginEl.style.display = "none"
+      userAuthEl.style.display = "block"
+      userAuthEl.innerText = `${user.displayName}`;
 
-  async function handleListeners() {
-    console.log("starting listeners");
-    const form = document.querySelector("#selectQuestionForm");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const values = new FormData(form);
-      selectQuestion(values.get("question"));
-    })
+      const activeEventRef = firebase.database().ref('activeEventId');
+      activeEventId = (await activeEventRef.get()).val();
+      document.querySelector("#eventId").innerHTML = `${activeEventId}`;
 
-    const questionRef = firebase.database().ref('questions')
-    const activeEventRef = firebase.database().ref('activeEventId')
+      startup();
+    }
+  });
 
-    activeEventId = (await activeEventRef.get()).val()
-    // questionRef.get().then(snapshot => {
-    //   console.log(snapshot)
-    // })
+  async function startup() {
+    activeQuestionRef = firebase.database().ref('activeQuestion');
+    activeQuestionRef.on('value', async (snapshot) => {
+      activeQuestion = snapshot.val();
+      console.log("Active Question Updated", activeQuestion);
 
-    document.querySelector("#eventId").innerHTML = `${activeEventId}`;
+      if (!activeQuestion) {
+        await showQuestionList();
+      }
+      else {
+        await showAnswerList();
+      }
+    });
+  }
 
-    questionRef.on('value', snapshot => {
+  async function showQuestionList() {
+    questionsEl.style.display = "block"
+    questionAnswerEl.style.display = "none";
+
+    if (questionRef) { questionRef.off(); }
+    questionRef = firebase.database().ref('questions');
+    questionRef.on('value', (snapshot) => {
       questions = snapshot.val();
-      const questionList = document.querySelector('#questionList');
-      questionList.innerHTML = "";
-      Object.keys(questions).forEach(questionId => {
+      questionsList.innerHTML = "";
+
+      Object.keys(questions).forEach((questionId) => {
         const question = questions[questionId];
-
-        questionList.innerHTML += `
-        <li>
-          <label>
-            <input type="radio" value="${questionId}" name="question" />
-            <span>${question.questionText}</span>
-          </label>
-        </li>`;
-      });
-    })
-
-    const answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestionId}`)
-    answersRef.on('value', snapshot => {
-      answers = snapshot.val();
-
-      if (!answers) { return; }
-
-      const answerList = document.querySelector("#answerList");
-      answerList.innerHTML = "";
-      Object.keys(answers).forEach(a => {
-        const answer = questions[questionId];
-
-        answerList.innerHTML += `
+        questionsList.innerHTML += `
           <li>
-            <div>${answer.displayName}</div>
-            <div>${answer.answer}</div>
+            <label class="${question.used ? "used" : ''}">
+              <input type="radio" value="${questionId}" name="questionId" required />
+              <div><pre>${question.questionText}</pre></div>
+            </label>
           </li>`;
       });
     });
+  }
 
+  async function showAnswerList() {
+    questionsEl.style.display = "none"
+    questionAnswerEl.style.display = "block";
+
+    questionAnswerEl.querySelector(".active-question-text").innerHTML = `
+      <div>What is the result of this JavaScript?</div>
+      <pre>${activeQuestion.questionText}</pre>`;
+    questionAnswerEl.querySelector(".active-question-answer").innerHTML = `
+      <div>Answer</div>
+      <pre>${activeQuestion.answer}</pre>`;
+
+    if (answersRef) { questionRef.off(); }
+    answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
+    answersRef.on('value', (snapshot) => {
+      const answers = snapshot.val();
+      answerList.innerHTML = "";
+      if (!answers) { return; }
+
+      Object.keys(answers).forEach((uid) => {
+        const answer = answers[uid];
+        answerList.innerHTML += `
+          <li>
+            <div>${answer.displayName}</div>
+            <pre>${answer.answer}</pre>
+          </li>`;
+      });
+    });
   }
 
 })();
-
-async function selectQuestion(questionId) {
-  console.log("questionId", questionId);
-
-  const questionRef = firebase.database().ref(`questions/${questionId}`)
-  questionRef.update({ used: true })
-  const activeQuestionRef = firebase.database().ref('activeQuestion')
-  activeQuestionRef.set({...questions[questionId], eventId: activeEventId})
-  activeQuestionId = questionId
-}
-
-async function amITodd() {
-  const provider = new firebase.auth.GoogleAuthProvider()
-  await firebase.auth().signInWithPopup(provider);
-}
-
-(function (ready) {
-  if (document.readyState === "complete" || document.readyState === "interactive") {
-      ready();
-  }
-  else {
-      document.addEventListener("DOMContentLoaded", ready);
-  }
-})(function () {
-  /* the document is now ready. */
-
-
-
-
-});
