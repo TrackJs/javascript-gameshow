@@ -117,7 +117,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
-      <pre>${question.questionText}</pre>`;
+      <pre>${escapeHtml(question.questionText)}</pre>`;
 
     const activeAnswer = tryGet(`${ANSWER_KEY}_${question.questionId}`);
     if (activeAnswer) {
@@ -141,7 +141,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   }
 
   function showAnswerFormResult(answer) {
-    answerFormResultEl.querySelector("#answer-text").innerHTML = `<pre>${answer}</pre>`;
+    answerFormResultEl.querySelector("#answer-text").innerHTML = `<pre>${escapeHtml(answer)}</pre>`;
     trySet(`${ANSWER_KEY}_${question.questionId}`, answer);
 
     answerFormEl.reset();
@@ -166,6 +166,14 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       isAsshole = true;
       trySet(ASSHOLE_KEY, true);
     }
+  }
+  function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
   }
 
   // fuck you safari.
