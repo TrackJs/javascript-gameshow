@@ -31,3 +31,5 @@ Todo's with Martine:
 - [] make sure we don't have any memory leaks
 - [] deployment
 - [] playtest
+- [] sponsor
+- [] billing/usage

@@ -22,6 +22,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   const answerFormEl = activeQuestionSectionEl.querySelector("#answer-form");
   const answerFormLoadingEl = activeQuestionSectionEl.querySelector("#form-loading");
   const answerFormResultEl = activeQuestionSectionEl.querySelector("#form-result");
+  const sponsorsEl = document.querySelector(".sponsors");
 
   document.querySelector("#user-login-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
@@ -104,16 +105,19 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     userInfoEl.style.display = "none";
     authedContentEl.style.display = "none";
     userLoginSectionEl.style.display = "block";
+    sponsorsEl.style.display = "block";
   }
 
   function showWaitingSpinner() {
     waitingSpinnerSectionEl.style.display = "block";
     activeQuestionSectionEl.style.display = "none";
+    sponsorsEl.style.display = "block";
   }
 
   function showActiveQuestion() {
     waitingSpinnerSectionEl.style.display = "none";
     activeQuestionSectionEl.style.display = "block";
+    sponsorsEl.style.display = "none";
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
@@ -132,12 +136,14 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormEl.style.display = "block";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "none";
+    sponsorsEl.style.display = "none";
   }
 
   function showAnswerFormLoading() {
     answerFormEl.style.display = "none";
     answerFormLoadingEl.style.display = "block";
     answerFormResultEl.style.display = "none";
+    sponsorsEl.style.display = "none";
   }
 
   function showAnswerFormResult(answer) {
@@ -148,6 +154,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormEl.style.display = "none";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "block";
+    sponsorsEl.style.display = "block";
   }
 
   function getUserId() {
