@@ -25,3 +25,9 @@ NOTE: You do not need to run `npm install` this project does not have any depend
 ```bash
 $ npm run deploy
 ```
+
+Todo's with Martine:
+- [] codereview
+- [] make sure we don't have any memory leaks
+- [] deployment
+- [] playtest

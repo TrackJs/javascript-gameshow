@@ -93,7 +93,7 @@
           <li>
             <label class="flex align-center ${question.used ? "used" : ''}">
               <input type="radio" value="${questionId}" name="questionId" required />
-              <div><pre>${question.questionText}</pre></div>
+              <div><pre>${escapeHtml(question.questionText)}</pre></div>
               ${question.used ? "<div>&nbsp;(used)</div>" : ""}
             </label>
           </li>`;
@@ -126,9 +126,9 @@
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
-      <pre>${activeQuestion.questionText}</pre>`;
+      <pre>${escapeHtml(activeQuestion.questionText)}</pre>`;
     activeQuestionSectionEl.querySelector("#active-question-answer").innerHTML = `
-      <pre>${questions[activeQuestion.questionId].answer}</pre>`;
+      <pre>${escapeHtml(questions[activeQuestion.questionId].answer)}</pre>`;
 
     if (answersRef) { questionRef.off(); }
     answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
@@ -142,12 +142,21 @@
         .forEach((answer) => {
           answerListEl.innerHTML += `
             <li>
-              <div>${answer.displayName}</div>
-              <pre>${answer.answer}</pre>
+              <div>${escapeHtml(answer.displayName)}</div>
+              <pre>${escapeHtml(answer.answer)}</pre>
               <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
             </li>`;
       });
     });
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
   }
 
 })();
