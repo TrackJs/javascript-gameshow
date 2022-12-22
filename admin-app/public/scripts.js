@@ -45,7 +45,8 @@
     activeQuestionRef.set({
       eventId: activeEventId,
       questionId,
-      ...questions[questionId]
+      questionText: questions[questionId].questionText,
+      submitTime: firebase.database.ServerValue.TIMESTAMP
     });
   });
 
@@ -75,6 +76,25 @@
   });
 
   async function startup() {
+    // Get questions and keep them up to date.
+    questionRef = firebase.database().ref('questions');
+    questionRef.on('value', (snapshot) => {
+      questions = snapshot.val();
+      questionsList.innerHTML = "";
+      Object.keys(questions).forEach((questionId) => {
+        const question = questions[questionId];
+        questionsList.innerHTML += `
+          <li>
+            <label class="flex align-center ${question.used ? "used" : ''}">
+              <input type="radio" value="${questionId}" name="questionId" required />
+              <div><pre>${question.questionText}</pre></div>
+              ${question.used ? "<div>&nbsp;(used)</div>" : ""}
+            </label>
+          </li>`;
+      });
+    });
+
+    // Get activeQuestion and keep it up to date. Toggle the UI based on this.
     activeQuestionRef = firebase.database().ref('activeQuestion');
     activeQuestionRef.on('value', async (snapshot) => {
       activeQuestion = snapshot.val();
@@ -89,30 +109,12 @@
     });
   }
 
-  async function showQuestionList() {
+  function showQuestionList() {
     questionsEl.style.display = "block"
     questionAnswerEl.style.display = "none";
-
-    if (questionRef) { questionRef.off(); }
-    questionRef = firebase.database().ref('questions');
-    questionRef.on('value', (snapshot) => {
-      questions = snapshot.val();
-      questionsList.innerHTML = "";
-
-      Object.keys(questions).forEach((questionId) => {
-        const question = questions[questionId];
-        questionsList.innerHTML += `
-          <li>
-            <label class="${question.used ? "used" : ''}">
-              <input type="radio" value="${questionId}" name="questionId" required />
-              <div><pre>${question.questionText}</pre></div>
-            </label>
-          </li>`;
-      });
-    });
   }
 
-  async function showAnswerList() {
+  function showAnswerList() {
     questionsEl.style.display = "none"
     questionAnswerEl.style.display = "block";
 
@@ -120,8 +122,8 @@
       <div>What is the result of this JavaScript?</div>
       <pre>${activeQuestion.questionText}</pre>`;
     questionAnswerEl.querySelector(".active-question-answer").innerHTML = `
-      <div>Answer</div>
-      <pre>${activeQuestion.answer}</pre>`;
+      <div>Correct Answer</div>
+      <pre>${questions[activeQuestion.questionId].answer}</pre>`;
 
     if (answersRef) { questionRef.off(); }
     answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
@@ -130,13 +132,15 @@
       answerList.innerHTML = "";
       if (!answers) { return; }
 
-      Object.keys(answers).forEach((uid) => {
-        const answer = answers[uid];
-        answerList.innerHTML += `
-          <li>
-            <div>${answer.displayName}</div>
-            <pre>${answer.answer}</pre>
-          </li>`;
+      Object.values(answers)
+        .sort((a,b) => a.submitTime - b.submitTime)
+        .forEach((answer) => {
+          answerList.innerHTML += `
+            <li>
+              <div>${answer.displayName}</div>
+              <pre>${answer.answer}</pre>
+              <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
+            </li>`;
       });
     });
   }

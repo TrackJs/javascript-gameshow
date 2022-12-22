@@ -1,30 +1,17 @@
 * { box-sizing: border-box; }
 
 html {
-  /** THEME **/
-  /** https://www.schemecolor.com/spend-like-a-millionaire.php **/
-  --primary: #13106D;
-  --accent: #1fcbff;
-  --success: #25693E;
-  --warning: #E18C1D;
-  --gold: #EDBF37;
-  --text: white;
-  --border: solid 1px var(--gold);
   --font-family: Arial, Helvetica, sans-serif;
-  --gradient: linear-gradient(#1a14c7, #13106D, #1a14c7);
-
   --border-color:#3d758c;
   --dark-purple:#470147;
   --orange: #e1a02e;
-
-
   padding: 0;
   margin: 0;
 }
 
 body {
   padding: 1rem 2rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family);
   background: linear-gradient(45deg, black, var(--dark-purple));
   min-height: 100vh;
   color: white;
@@ -42,6 +29,9 @@ main {
   display: flex;
   flex-direction: column;
 }
+.align-center {
+  align-items: center;
+}
 
 button {
   padding: 12px 24px;
@@ -57,19 +47,19 @@ button:hover, button:active, button:focus {
   background: radial-gradient(var(--orange), #bf7a00);
 }
 
-header.site-header {
-  justify-content: space-between;
+header {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border-color);
 }
-header.site-header h1 {
-  margin: 0;
-  font-size: 1.4em;
+header #eventId,
+header .authed {
+  font-size: 1.1em;
+  color: var(--orange);
 }
-
-.user .login {
-  position: absolute;
-  top: 40vh;
-  left: 2rem;
-  right: 2rem;
+h1 {
+  margin-bottom: 0;
+  font-size: 1.6em;
 }
 
 h2 {
@@ -79,11 +69,7 @@ h2 {
   color: var(--orange);
 }
 
-.active-question {
-  margin: 30px 0 0 0;
-  padding: 30px 0 0 0;
-  border-top: 2px solid var(--border-color);
-}
+section.active-question {}
 .active-question-text {
   text-align: center;
 }
@@ -92,9 +78,14 @@ h2 {
   color: #ccc;
 }
 .active-question-text pre {
-  font-weight: bold;
-  font-size: 1.6em;
-  margin: 0.5em 0;
+  background: #efefef;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 1.8em;
+  color: black;
+  user-select: none;
+  overflow: scroll;
 }
 .active-question-answer {
   margin: 40px 0 ;
@@ -136,11 +127,7 @@ h2 {
 }
 
 
-.questions {
-  margin: 30px 0 0 0;
-  padding: 30px 0 0 0;
-  border-top: 2px solid var(--border-color);
-}
+section.questions {}
 #question-list {
   list-style: none;
   margin: 0;

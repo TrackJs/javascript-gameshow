@@ -1,0 +1,60 @@
+{
+  "activeEventId": "london2023",
+  "admins": {
+    "57MrWonzPRNLuDlAw3GHPJ81H4M2": "Todd",
+    "6fgpAQCVh0XnENhSWeILL0oPWQy1": "Martine"
+  },
+  "answers": {},
+  "questions": {
+    "q0": {
+      "questionText": "\"💩\" - \"💩\"",
+      "answer": "NaN",
+      "used": false
+    },
+    "q1": {
+      "questionText": "\"💩\".length",
+      "answer": "2",
+      "used": false
+    },
+    "q2": {
+      "questionText": "0.1 + 0.2",
+      "answer": "0.30000000000000004",
+      "used": false
+    },
+    "q3": {
+      "questionText": "[1, 2, 3] + [4, 5, 6]",
+      "answer": "1,2,34,5,6",
+      "used": false
+    },
+    "q4": {
+      "questionText": "1 / 0",
+      "answer": "Infinity",
+      "used": false
+    },
+    "q5": {
+      "questionText": "+\"42\"",
+      "answer": "42",
+      "used": false
+    },
+    "q6": {
+      "questionText": "[10, 5, 1].sort()",
+      "answer": "[1, 10, 5]",
+      "used": false
+    },
+    "q7": {
+      "questionText": "NaN == NaN",
+      "answer": "false",
+      "used": false
+    },
+    "q8": {
+      "questionText": "3 > 2 > 1",
+      "answer": "false",
+      "used": false
+    },
+    "q9": {
+      "questionText": "typeof typeof 1",
+      "answer": "string",
+      "used": false
+    }
+  }
+}

@@ -1,76 +1,68 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Gameshow Admin</title>
+    <title>JavaScriptær Admin</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
 
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main>
 
-      <header class="site-header flex">
-        <h1>Gameshow Admin</h1>
+      <header class="site-header flex-column align-center">
+        <h1>JavaScriptær Admin</h1>
+        <div class="user">
+          <div class="authed" style="display:none;"><!-- JS inserts here --></div>
+          <div class="login controls" style="display:none;">
+            <button type="button" id="login-button">
+              Login
+            </button>
+          </div>
+        </div>
+
+        <div id="eventId"><!-- JS inserts here --></div>
       </header>
 
-      <div class="user">
-        <div class="authed" style="display:none;">
-        </div>
-        <div class="login" style="display:none;">
-          <button type="button" id="login-button">
-            login to continue
-          </button>
-        </div>
-      </div>
-
-      <div id="eventId"></div>
-
-      <div class="question-answer" style="display:none;">
+      <section class="question-answer" style="display:none;">
 
         <div class="active-question">
           <h2>Active Question</h2>
-          <div class="active-question-text"></div>
-          <div class="active-question-answer"></div>
+          <div class="active-question-text"><!-- JS inserts here --></div>
+          <div class="active-question-answer"><!-- JS inserts here --></div>
         </div>
 
         <div class="answers">
           <h2>Answers</h2>
-          <ul id="answer-list"></ul>
+          <ul id="answer-list"><!-- JS inserts here --></ul>
         </div>
 
         <div class="controls">
           <button type="button" id="active-question-clear">Clear Active Question</button>
         </div>
 
-      </div>
+      </section>
 
-      <div class="questions" style="display:none;">
+      <section class="questions" style="display:none;">
         <h2>Question List</h2>
         <form id="select-question-form">
-          <ul id="question-list"></ul>
+          <ul id="question-list"><!-- JS inserts here --></ul>
           <div class="controls">
             <button type="submit">Show Question</button>
           </div>
         </form>
-      </div>
+      </section>
 
-<!--
-      <h2 id="eventId">...</h2>
-
-      <form id="selectQuestionForm">
-        <ul id="questionList" style="list-style: none;"></ul>
-        <button type="submit">Select Question</button>
-      </form>
-
-      <h2>Current Question</h2>
-      <ul id="answerList"></ul> -->
-
-      <div class="logo">
+      <section class="logo">
         <img src="logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
-      </div>
+      </section>
 
     </main>
 

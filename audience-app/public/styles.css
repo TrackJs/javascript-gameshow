@@ -1,41 +1,245 @@
-* { box-sizing: border-box; }
 
 html {
-  /** THEME **/
-  /** https://www.schemecolor.com/spend-like-a-millionaire.php **/
-  --primary: #13106D;
-  --accent: #1fcbff;
-  --success: #25693E;
-  --warning: #E18C1D;
-  --gold: #EDBF37;
-  --text: white;
-  --border: solid 1px var(--gold);
   --font-family: Arial, Helvetica, sans-serif;
-  --gradient: linear-gradient(#1a14c7, #13106D, #1a14c7);
-
+  --border-color:#3d758c;
+  --dark-purple:#470147;
+  --orange: #e1a02e;
   padding: 0;
-  margin: 0; 
+  margin: 0;
 }
 
 body {
-  padding: 2rem;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--primary);
+  padding: 1rem 2rem;
+  font-family: var(--font-family);
+  background: linear-gradient(45deg, black, var(--dark-purple));
+  min-height: 100vh;
   color: white;
   max-width: 450px;
   margin: 0 auto;
 }
-
-h1, h2 { text-align: center; }
-
-.question, form { margin-bottom: 2rem; }
-.question h2 {
-  background: var(--gradient);
-  box-shadow: 0 0 40px  var(--accent);
-  padding: 2rem;
-  border: var(--border);
-  border-radius: 4rem;
+main {
+  padding-bottom: 100px;
 }
+
+.flex {
+  display: flex;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.align-center {
+  align-items: center;
+}
+
+form label {
+  margin: 20px 0;
+}
+form label span {
+  color: #CCC;
+}
+form label input {
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 1.4em;
+}
+form .instructions {
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 100px;
+  cursor: pointer;
+  background: radial-gradient(#e7dab6, var(--orange));
+  border: 4px solid var(--orange);
+  color: black;
+  font-weight: 600;
+}
+button:hover, button:active, button:focus {
+  background: radial-gradient(var(--orange), #bf7a00);
+}
+h1 {
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+h2 {
+  text-align: center;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+header {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border-color);
+}
+header #user-name {
+  font-size: 1.2em;
+  color: var(--orange);
+  margin: 10px 0 0 0;
+}
+
+section.login {}
+
+section.active-question {}
+.active-question .waiting {
+  margin: 30px 0;
+}
+.active-question-text {
+  text-align: center;
+}
+.active-question-text div {
+  font-size: 1.2em;
+  color: #ccc;
+}
+.active-question-text pre {
+  background: #efefef;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 1.8em;
+  color: black;
+  user-select: none;
+  overflow: scroll;
+}
+
+section.answer {
+  margin: 30px 0 0 0;
+  padding: 30px 0 0 0;
+  border-top: 2px solid var(--border-color);
+}
+.answer label {
+  margin: 20px 0;
+}
+.answer label span {
+  color: #CCC;
+}
+.answer label input {
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 1.4em;
+}
+.answer .form-result {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.controls {
+  position: fixed;
+  bottom: 30px;
+  left: 110px;
+  right: 20px;
+}
+.controls button {
+  width: 100%;
+}
+.logo {
+  position: fixed;
+  max-width: 80px;
+  bottom: 10px;
+  left: 10px;
+}
+.logo img {
+  max-width: 100%;
+  height: auto;
+  animation: pulseGlow 3s linear infinite;
+}
+@keyframes pulseGlow {
+  0% {
+    filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+  }
+  50% {
+    filter: unset;
+  }
+  100% {
+    filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
+  }
+}
+
+/* spinner */
+.lds-grid {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  animation: lds-grid 1.2s linear infinite;
+}
+.lds-grid div:nth-child(1) {
+  top: 8px;
+  left: 8px;
+  animation-delay: 0s;
+}
+.lds-grid div:nth-child(2) {
+  top: 8px;
+  left: 32px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(3) {
+  top: 8px;
+  left: 56px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(4) {
+  top: 32px;
+  left: 8px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(5) {
+  top: 32px;
+  left: 32px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(6) {
+  top: 32px;
+  left: 56px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(7) {
+  top: 56px;
+  left: 8px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(8) {
+  top: 56px;
+  left: 32px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(9) {
+  top: 56px;
+  left: 56px;
+  animation-delay: -1.6s;
+}
+@keyframes lds-grid {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+
+
+
+
+
+
+/*
+
+
+
 
 .instructions {
   text-align: center;
@@ -81,4 +285,4 @@ button[type="submit"] {
 }
 button:focus-visible, button:focus {
   outline: solid 1px var(--accent);
-}
+} */
