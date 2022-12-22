@@ -3,6 +3,7 @@
 const USERNAME_KEY = "GAMESHOW_USER_NAME";
 const USERID_KEY = "GAMESHOW_USER_ID";
 const ANSWER_KEY = "GAMESHOW_ANSWER";
+const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
 
 (async () => {
 
@@ -10,6 +11,7 @@ const ANSWER_KEY = "GAMESHOW_ANSWER";
   let uid;
   let displayName;
   let question;
+  let isAsshole = tryGet(ASSHOLE_KEY) || false;
 
   // global dom
   const userInfoEl = document.querySelector("#user-info");
@@ -24,7 +26,7 @@ const ANSWER_KEY = "GAMESHOW_ANSWER";
   document.querySelector("#user-login-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
     displayName = new FormData(evt.target).get("displayName");
-    // Todo security check
+    checkInputBan(displayName);
     trySet(USERNAME_KEY, displayName);
     showAuthContent();
   });
@@ -39,7 +41,12 @@ const ANSWER_KEY = "GAMESHOW_ANSWER";
 
     const form = evt.target;
     const answer = new FormData(form).get("answer");
-    // TODO Security check
+    checkInputBan(answer);
+    if (isAsshole) {
+      // shadow ban, don't submit, but don't tell them
+      showAnswerFormResult(answer);
+      return;
+    }
 
     const payload = {
       uid,
@@ -83,35 +90,6 @@ const ANSWER_KEY = "GAMESHOW_ANSWER";
   }
   else {
     showLogin();
-  }
-
-  function startup() {
-
-    const questionRef = firebase.database().ref('/activeQuestion')
-    questionRef.on('value', (snapshot) => {
-      question = snapshot.val();
-      console.log("question", question);
-
-      if (!question) {
-        spinnerEl.style.display = "flex";
-        activeQuestionTextEl.style.display = "none"
-        answerSectionEl.style.display = "none";
-      }
-      else {
-        spinnerEl.style.display = "none";
-        activeQuestionTextEl.style.display = "block"
-        activeQuestionTextEl.innerHTML = `
-          <div>What is the result of this JavaScript?</div>
-          <pre>${question.questionText}</pre>`;
-
-        const activeAnswer = tryGet(`${ANSWER_KEY}_${question.questionId}`);
-        if (activeAnswer) {
-          showAnswerResult(activeAnswer);
-        }
-        answerSectionEl.style.display = "block";
-      }
-    });
-
   }
 
   function showAuthContent() {
@@ -179,6 +157,15 @@ const ANSWER_KEY = "GAMESHOW_ANSWER";
       trySet(USERID_KEY, uid);
     }
     return uid;
+  }
+
+  // asshole prevention
+  function checkInputBan(input) {
+    const matches = /[<>&]/gi.exec(input);
+    if (matches) {
+      isAsshole = true;
+      trySet(ASSHOLE_KEY, true);
+    }
   }
 
   // fuck you safari.
