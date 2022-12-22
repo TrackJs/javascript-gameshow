@@ -14,15 +14,21 @@
   let questions;
 
   // global dom
-  const questionsEl = document.querySelector(".questions");
-  const questionsList = questionsEl.querySelector("#question-list");
-  const questionAnswerEl = document.querySelector(".question-answer");
-  const answerList = questionAnswerEl.querySelector("#answer-list");
+  const activeQuestionSectionEl = document.querySelector("section#active-question");
+  const answerListEl = activeQuestionSectionEl.querySelector("#answer-list");
+  const questionsSectionEl = document.querySelector("section#questions");
+  const questionsList = questionsSectionEl.querySelector("#question-list");
 
   document.querySelector("#login-button").addEventListener("click", async (evt) => {
     evt.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
+  });
+
+  document.querySelector("#logout-button").addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    await firebase.auth().signOut();
+    location.reload();
   });
 
   document.querySelector("#active-question-clear").addEventListener("click", (evt) => {
@@ -64,12 +70,12 @@
     else {
       console.log("user logged in", user);
       userLoginEl.style.display = "none"
-      userAuthEl.style.display = "block"
-      userAuthEl.innerText = `${user.displayName}`;
+      userAuthEl.style.display = "flex"
+      userAuthEl.querySelector("#display-name").innerText = `${user.displayName}`;
 
       const activeEventRef = firebase.database().ref('activeEventId');
       activeEventId = (await activeEventRef.get()).val();
-      document.querySelector("#eventId").innerHTML = `${activeEventId}`;
+      document.querySelector("#event-id").innerHTML = `${activeEventId}`;
 
       startup();
     }
@@ -110,32 +116,31 @@
   }
 
   function showQuestionList() {
-    questionsEl.style.display = "block"
-    questionAnswerEl.style.display = "none";
+    questionsSectionEl.style.display = "block"
+    activeQuestionSectionEl.style.display = "none";
   }
 
   function showAnswerList() {
-    questionsEl.style.display = "none"
-    questionAnswerEl.style.display = "block";
+    questionsSectionEl.style.display = "none"
+    activeQuestionSectionEl.style.display = "block";
 
-    questionAnswerEl.querySelector(".active-question-text").innerHTML = `
+    activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
       <pre>${activeQuestion.questionText}</pre>`;
-    questionAnswerEl.querySelector(".active-question-answer").innerHTML = `
-      <div>Correct Answer</div>
+    activeQuestionSectionEl.querySelector("#active-question-answer").innerHTML = `
       <pre>${questions[activeQuestion.questionId].answer}</pre>`;
 
     if (answersRef) { questionRef.off(); }
     answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
     answersRef.on('value', (snapshot) => {
       const answers = snapshot.val();
-      answerList.innerHTML = "";
+      answerListEl.innerHTML = "";
       if (!answers) { return; }
 
       Object.values(answers)
         .sort((a,b) => a.submitTime - b.submitTime)
         .forEach((answer) => {
-          answerList.innerHTML += `
+          answerListEl.innerHTML += `
             <li>
               <div>${answer.displayName}</div>
               <pre>${answer.answer}</pre>

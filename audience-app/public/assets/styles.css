@@ -1,7 +1,7 @@
-
 html {
   --font-family: Arial, Helvetica, sans-serif;
   --border-color:#3d758c;
+  --link-color: #77b0c7;
   --dark-purple:#470147;
   --orange: #e1a02e;
   padding: 0;
@@ -17,6 +17,11 @@ body {
   max-width: 450px;
   margin: 0 auto;
 }
+
+a, a:visited {
+  color: var(--link-color);
+}
+
 main {
   padding-bottom: 100px;
 }
@@ -64,13 +69,19 @@ button:hover, button:active, button:focus {
 }
 h1 {
   text-align: center;
-  margin: 10px 0 0 0;
+  margin: 10px 0;
 }
 h2 {
   text-align: center;
   font-size: 1em;
+  margin: 30px 0 20px 0;
   text-transform: uppercase;
   color: var(--orange);
+}
+hr {
+  margin: 40px 0;
+  border-color: var(--border-color);
+  border-width: 2px;
 }
 
 header {
@@ -78,26 +89,23 @@ header {
   margin-bottom: 30px;
   border-bottom: 2px solid var(--border-color);
 }
-header #user-name {
+header .info {
   font-size: 1.2em;
   color: var(--orange);
-  margin: 10px 0 0 0;
 }
 
 section.login {}
 
-section.active-question {}
-.active-question .waiting {
-  margin: 30px 0;
-}
-.active-question-text {
+
+section#active-question {}
+section#active-question #active-question-text {
   text-align: center;
 }
-.active-question-text div {
+section#active-question #active-question-text div {
   font-size: 1.2em;
   color: #ccc;
 }
-.active-question-text pre {
+section#active-question #active-question-text pre {
   background: #efefef;
   padding: 6px 12px;
   border-radius: 4px;
@@ -107,26 +115,65 @@ section.active-question {}
   user-select: none;
   overflow: scroll;
 }
-
-section.answer {
-  margin: 30px 0 0 0;
-  padding: 30px 0 0 0;
-  border-top: 2px solid var(--border-color);
+section#active-question #active-question-answer {
+  margin: 20px 0 ;
+  text-align: center;
 }
-.answer label {
-  margin: 20px 0;
+section#active-question #active-question-answer div {
+  font-size: 1.0em;
+  color: #ccc;
 }
-.answer label span {
-  color: #CCC;
-}
-.answer label input {
-  padding: 10px 16px;
-  border-radius: 4px;
-  font-size: 1.4em;
-}
-.answer .form-result {
-  font-size: 1.4em;
+section#active-question #active-question-answer pre,
+section#active-question #answer-text pre {
   font-weight: bold;
+  font-size: 1.8em;
+  margin: 0.5em 0;
+}
+section#active-question #answer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+section#active-question #answer-list li {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #7b417b;
+}
+section#active-question #answer-list li div {
+  font-size: 1.0em;
+  color: #ccc;
+}
+section#active-question #answer-list li pre {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+
+section#questions {}
+section#questions #question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+section#questions #question-list li {
+  border-bottom: 1px solid #7b417b;
+}
+section#questions #question-list li label.used {
+  color: #aaa;
+}
+section#questions #question-list li label input {
+  flex: 0 0;
+  margin-right: 10px;
+}
+section#questions #question-list li label:has(input:checked) {
+  background-color: var(--orange);
+}
+section#questions #question-list li label pre {
+  font-weight: bold;
+  font-size: 1.4em;
 }
 
 .controls {
@@ -229,60 +276,3 @@ section.answer {
     opacity: 0.5;
   }
 }
-
-
-
-
-
-
-
-/*
-
-
-
-
-.instructions {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-form h2 { margin-bottom: 0; }
-
-label, input, button {
-  display: block;
-  font-family: var(--font-family);
-  width: 100%;
-}
-label span {
-  display: inline-block;
-  margin-left: 2rem;
-}
-
-input {
-  margin-bottom: 1rem;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 4rem;
-  font-size: 1rem;
-  border: var(--border);
-  background: var(--gradient);
-  color: var(--text);
-}
-input:focus-visible, input:focus {
-  outline: var(--border)
-}
-
-button[type="submit"] {
-  margin-top: 2rem;
-  border-radius: 4rem;
-  padding: 1rem 2rem;
-  background: var(--gold);
-  color: var(--primary);
-  border: solid 1px var(--accent);
-  box-shadow: 0 0 40px  var(--accent);
-  font-size: 1rem;
-  font-weight: bold;
-}
-button:focus-visible, button:focus {
-  outline: solid 1px var(--accent);
-} */

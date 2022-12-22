@@ -8,37 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/styles.css">
   </head>
   <body>
     <main>
 
       <header class="site-header flex-column align-center">
         <h1>JavaScriptær Admin</h1>
+
         <div class="user">
-          <div class="authed" style="display:none;"><!-- JS inserts here --></div>
-          <div class="login controls" style="display:none;">
-            <button type="button" id="login-button">
-              Login
-            </button>
+          <div class="authed flex align-center" style="display:none">
+            <div id="display-name" class="info"><!-- JS inserts here --></div>
+            &nbsp;<a href="javascript:void()" id="logout-button">Logout</a>
+          </div>
+          <div class="login controls" style="display:none">
+            <button type="button" id="login-button">Login</button>
           </div>
         </div>
 
-        <div id="eventId"><!-- JS inserts here --></div>
+        <div id="event-id" class="info"><!-- JS inserts here --></div>
       </header>
 
-      <section class="question-answer" style="display:none;">
+      <section id="active-question" style="display:none">
 
-        <div class="active-question">
+        <div class="question">
           <h2>Active Question</h2>
-          <div class="active-question-text"><!-- JS inserts here --></div>
-          <div class="active-question-answer"><!-- JS inserts here --></div>
+          <div id="active-question-text"><!-- JS inserts here --></div>
+          <h2>Correct Answer</h2>
+          <div id="active-question-answer"><!-- JS inserts here --></div>
         </div>
 
+        <hr />
         <div class="answers">
           <h2>Answers</h2>
           <ul id="answer-list"><!-- JS inserts here --></ul>
@@ -50,7 +54,7 @@
 
       </section>
 
-      <section class="questions" style="display:none;">
+      <section id="questions" style="display:none;">
         <h2>Question List</h2>
         <form id="select-question-form">
           <ul id="question-list"><!-- JS inserts here --></ul>
@@ -61,7 +65,7 @@
       </section>
 
       <section class="logo">
-        <img src="logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
+        <img src="/assets/logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
       </section>
 
     </main>
@@ -70,6 +74,6 @@
     <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
     <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
     <script src="/__/firebase/init.js"></script>
-    <script src="scripts.js"></script>
+    <script src="/assets/admin.js"></script>
   </body>
 </html>
