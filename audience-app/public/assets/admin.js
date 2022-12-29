@@ -73,9 +73,15 @@
       userAuthEl.style.display = "flex"
       userAuthEl.querySelector("#display-name").innerText = `${user.displayName}`;
 
-      const activeEventRef = firebase.database().ref('activeEventId');
-      activeEventId = (await activeEventRef.get()).val();
-      document.querySelector("#event-id").innerHTML = `${activeEventId}`;
+      try {
+        const activeEventRef = firebase.database().ref('activeEventId');
+        activeEventId = (await activeEventRef.get()).val();
+        document.querySelector("#event-id").innerHTML = `${activeEventId}`;
+      }
+      catch(e) {
+        alert("Couldn't talk to database. You probably left it locked.");
+      }
+
 
       startup();
     }
@@ -105,7 +111,7 @@
     activeQuestionRef.on('value', async (snapshot) => {
       activeQuestion = snapshot.val();
       console.log("Active Question Updated", activeQuestion);
-
+      if (answersRef) { answersRef.off(); }
       if (!activeQuestion) {
         await showQuestionList();
       }
@@ -130,7 +136,6 @@
     activeQuestionSectionEl.querySelector("#active-question-answer").innerHTML = `
       <pre>${escapeHtml(questions[activeQuestion.questionId].answer)}</pre>`;
 
-    if (answersRef) { questionRef.off(); }
     answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
     answersRef.on('value', (snapshot) => {
       const answers = snapshot.val();
@@ -152,11 +157,11 @@
 
   function escapeHtml(unsafe) {
     return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+         .replaceAll(/&/gmi, "&amp;")
+         .replaceAll(/</gmi, "&lt;")
+         .replaceAll(/>/gmi, "&gt;")
+         .replaceAll(/"/gmi, "&quot;")
+         .replaceAll(/'/gmi, "&#039;");
   }
 
 })();

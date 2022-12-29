@@ -42,54 +42,60 @@
         </form>
       </section>
 
-      <div id="authed-content" style="display:none">
+      <section title="the game" aria-live="assertive" aria-atomic="true">
+        <div id="authed-content" style="display:none">
 
-        <section id="waiting-spinner">
-          <div class="flex-column align-center">
-            <div class="lds-grid spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            <div>Waiting for question...</div>
-          </div>
-        </section>
-
-        <section id="active-question" style="display:none">
-          <div id="active-question-text"><!-- JS inserts here --></div>
-
-          <hr />
-          <h2>Your Final Answer</h2>
-          <form id="answer-form">
-            <label class="flex-column">
-              <span>Your Answer</span>
-              <input name="answer" type="text" maxlength="100" required placeholder="null">
-            </label>
-            <p class="instructions">Please remember the code of conduct.</p>
-            <div class="controls">
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-
-          <div id="form-loading" style="display:none">
+          <section id="waiting-spinner">
             <div class="flex-column align-center">
               <div class="lds-grid spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-              <div>Submitting your answer...</div>
+              <div>Waiting for question...</div>
             </div>
-          </div>
+          </section>
 
-          <div id="form-result" style="display:none">
-            <div id="answer-text" class="flex-column align-center"><!-- JS inserts here --></div>
-          </div>
-        </section>
+          <section id="active-question" style="display:none">
+            <div id="active-question-text"><!-- JS inserts here --></div>
 
-      </div>
+            <hr />
+            <h2>Your Final Answer</h2>
+            <form id="answer-form">
+              <label class="flex-column">
+                <span>Your Answer</span>
+                <input name="answer" type="text" maxlength="100" required placeholder="null">
+              </label>
+              <p class="instructions">Please remember the code of conduct.</p>
+              <div class="controls">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+
+            <div id="form-loading" style="display:none">
+              <div class="flex-column align-center">
+                <div class="lds-grid spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                <div>Submitting your answer...</div>
+              </div>
+            </div>
+
+            <div id="form-result" style="display:none">
+              <div id="answer-text" class="flex-column align-center"><!-- JS inserts here --></div>
+            </div>
+          </section>
+
+        </div>
+      </section>
 
       <div class="sponsors" style="display:none">
         <h2>Sponsored By</h2>
         <div class="flex align-center">
-          <a href="https://trackjs.com/" title="TrackJS JavaScript Error Monitoring">
-            <img src="/assets/trackjs.svg" alt="TrackJS JavaScript Error Monitoring" width="300" height="60" />
-          </a>
           <a href="https://requestmetrics.com/" title="Request Metrics Clientside Observability">
             <img src="/assets/requestmetrics.svg" alt="Request Metrics Clientside Observability" width="300" height="102" />
           </a>
+          <a href="https://andromedagalactic.com/" title="Andromeda Galactic Solutions">
+            <img src="/assets/andromeda.svg" alt="Andromeda Galactic Solutions" width="300" height="99" />
+          </a>
+          <a href="https://trackjs.com/" title="TrackJS JavaScript Error Monitoring">
+            <img src="/assets/trackjs.svg" alt="TrackJS JavaScript Error Monitoring" width="300" height="60" />
+          </a>
+
         </div>
       </div>
 

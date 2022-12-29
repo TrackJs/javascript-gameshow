@@ -3,7 +3,9 @@
   "scripts": {
     "start": "firebase serve",
     "use:project": "firebase use javascript-gameshow && firebase target:clear hosting audience-app && firebase target:apply hosting audience-app javascript-gameshow",
-    "deploy": "run use:project && firebase deploy"
+    "deploy": "npm run use:project && firebase deploy",
+    "deployReset": "npm run deploy && npm run data",
+    "data": "firebase database:set / ./database.template.json"
   },
   "devDependencies": {
     "firebase-tools": "11.16.1"

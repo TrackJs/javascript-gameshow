@@ -176,11 +176,11 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   }
   function escapeHtml(unsafe) {
     return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+         .replaceAll(/&/gmi, "&amp;")
+         .replaceAll(/</gmi, "&lt;")
+         .replaceAll(/>/gmi, "&gt;")
+         .replaceAll(/"/gmi, "&quot;")
+         .replaceAll(/'/gmi, "&#039;");
   }
 
   // fuck you safari.
