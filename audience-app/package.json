@@ -5,7 +5,8 @@
     "use:project": "firebase use javascript-gameshow && firebase target:clear hosting audience-app && firebase target:apply hosting audience-app javascript-gameshow",
     "deploy": "npm run use:project && firebase deploy",
     "deployReset": "npm run deploy && npm run data",
-    "data": "firebase database:set / ./database.template.json"
+    "data": "firebase database:set / ./database.template.json",
+    "lock": "firebase --config firebase.lockdown.json deploy"
   },
   "devDependencies": {
     "firebase-tools": "11.16.1"
