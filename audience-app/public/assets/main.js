@@ -120,6 +120,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     waitingSpinnerSectionEl.style.display = "none";
     activeQuestionSectionEl.style.display = "block";
     sponsorsEl.style.display = "none";
+    correctAnswerSectionEl.style.display = "none";
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
