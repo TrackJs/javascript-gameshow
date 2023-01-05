@@ -37,7 +37,19 @@
     if (!activeQuestionRef) { return; }
 
     activeQuestionRef.remove();
+    document.querySelector("#active-question-show-answer").removeAttribute("disabled");
   });
+
+  document.querySelector("#active-question-show-answer").addEventListener("click", (evt) => {
+    evt.preventDefault();
+    if (!confirm("Are you sure you want to show the answer?")) { return; }
+    if (!activeQuestionRef) { return; }
+
+    activeQuestionRef.update({
+      answer: questions[activeQuestion.questionId].answer
+    });
+    evt.target.setAttribute("disabled", "disabled");
+  })
 
   document.querySelector("#select-question-form").addEventListener("submit", (evt) => {
     evt.preventDefault();

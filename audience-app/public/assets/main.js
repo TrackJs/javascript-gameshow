@@ -19,6 +19,8 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   const authedContentEl = document.querySelector("#authed-content");
   const waitingSpinnerSectionEl = document.querySelector("section#waiting-spinner");
   const activeQuestionSectionEl = document.querySelector("section#active-question");
+  const correctAnswerSectionEl = document.querySelector("#correct-answer");
+  const correctAnswerTextEl = document.querySelector("#active-question-answer");
   const answerFormEl = activeQuestionSectionEl.querySelector("#answer-form");
   const answerFormLoadingEl = activeQuestionSectionEl.querySelector("#form-loading");
   const answerFormResultEl = activeQuestionSectionEl.querySelector("#form-result");
@@ -154,7 +156,12 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormEl.style.display = "none";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "block";
-    sponsorsEl.style.display = "block";
+    sponsorsEl.style.display = "none";
+
+    if (question.answer) {
+      correctAnswerSectionEl.style.display = "block";
+      correctAnswerTextEl.innerHTML = `<pre>${escapeHtml(question.answer)}</pre>`;
+    }
   }
 
   function getUserId() {

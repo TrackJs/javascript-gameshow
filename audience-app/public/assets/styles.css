@@ -67,6 +67,12 @@ button {
 button:hover, button:active, button:focus {
   background: radial-gradient(var(--orange), #bf7a00);
 }
+button:disabled {
+  color: #333;
+  border-color: #777;
+  background: radial-gradient(#ccc, #777);
+  cursor: default;
+}
 h1 {
   text-align: center;
   margin: 10px 0;
