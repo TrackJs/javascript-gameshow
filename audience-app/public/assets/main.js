@@ -108,12 +108,14 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     authedContentEl.style.display = "none";
     userLoginSectionEl.style.display = "block";
     sponsorsEl.style.display = "block";
+    correctAnswerSectionEl.style.display = "none";
   }
 
   function showWaitingSpinner() {
     waitingSpinnerSectionEl.style.display = "block";
     activeQuestionSectionEl.style.display = "none";
     sponsorsEl.style.display = "block";
+    correctAnswerSectionEl.style.display = "none";
   }
 
   function showActiveQuestion() {
