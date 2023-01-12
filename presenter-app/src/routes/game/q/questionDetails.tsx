@@ -140,11 +140,11 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
 
         <div class="question-wrap">
           <AskQuestion question={question} onResult={this.onAnswer.bind(this)}
-            showAnswers={!!questionAsked.answerId} answerId={questionAsked.answerId} />
+            showAnswers={!!questionAsked.answerId} answerId={questionAsked.answerId} game={state.game} />
         </div>
 
         <div class="life-line-wrap" hidden={!!questionAsked.answerId}>
-          <LifeLines game={state.game} disabled={!!questionAsked.answerId} />
+          <LifeLines game={state.game} question={question} disabled={!!questionAsked.answerId} onUsed={this.onLifelineUsed.bind(this)} />
         </div>
 
         <div class="controls">
@@ -178,6 +178,10 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
       question,
       questionAsked
     });
+  }
+
+  private onLifelineUsed(game: Game, question: Question): void {
+    this.setState({ game, question });
   }
 
   private onAnswer(answerId: string, isCorrect: boolean): void {

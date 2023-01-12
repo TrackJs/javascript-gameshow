@@ -17,7 +17,8 @@ export interface GameLifeLine {
   name: string
   iconUrl: string
   isUsed: boolean
-  options: {
+  questionUsed?: string
+  options?: {
     name: string
     imageUrl: string
   }[]
@@ -39,7 +40,7 @@ export interface GameState {
   hasStarted: boolean
 };
 
-const QUESTION_COUNT = 5;
+const QUESTION_COUNT = 4;
 
 class _GameController {
 
@@ -49,29 +50,13 @@ class _GameController {
       id,
       playerName: options.playerName,
       startedOn: DateTime.now(),
-      lifeLines: [{
-        name: "Ask a Speaker",
-        iconUrl: "/assets/images/ask_a_speaker.svg",
-        isUsed: false,
-        options: [
-          {
-            name: "Amy Kapernick",
-            imageUrl: "/assets/lifelines/amy.webp"
-          },
-          {
-            name: "Lars Klint",
-            imageUrl: "/assets/lifelines/lars.webp"
-          },
-          {
-            name: "Lemon",
-            imageUrl: "/assets/lifelines/lemon.webp"
-          },
-          {
-            name: "Martine Dowden",
-            imageUrl: "/assets/lifelines/martine.webp"
-          }
-        ]
-      }],
+      lifeLines: [
+        {
+          name: "50-50",
+          iconUrl: "/assets/images/5050.svg",
+          isUsed: false,
+        }
+      ],
       questionsAsked: [],
       prizeStack: this.getPrizeStack(id),
       prizeWon: [],
@@ -84,12 +69,13 @@ class _GameController {
   finishGame(game: Game) {
     game.prizeWon = this.getPrizesWon(game);
 
-    game.prizeStack.forEach((prize, idx) => {
-      let hasWon = game.prizeWon.some(p => p.id === prize.id);
-      if (!hasWon) {
-        PrizeController.releasePrize(game.id, prize.id);
-      }
-    });
+    // Removing this to setup the giveaway.
+    // game.prizeStack.forEach((prize, idx) => {
+    //   let hasWon = game.prizeWon.some(p => p.id === prize.id);
+    //   if (!hasWon) {
+    //     PrizeController.releasePrize(game.id, prize.id);
+    //   }
+    // });
 
     game.isFinished = true;
     this.saveGame(game);
@@ -120,7 +106,7 @@ class _GameController {
   }
 
   getDifficultyForIndex(questionIdx: number): 0|1|2|3|4 {
-    let difficultyMap = [0, 1, 2, 3, 4];
+    let difficultyMap = [0, 1, 2, 3];
     return difficultyMap[questionIdx] as 0|1|2|3|4;
   }
 

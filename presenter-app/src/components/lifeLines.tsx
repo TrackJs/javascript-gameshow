@@ -1,10 +1,14 @@
 import { h, Component, ComponentChild } from 'preact';
 import { Game, GameController, GameLifeLine } from 'src/controllers/GameController';
+import { Question } from 'src/controllers/QuestionController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
+import { getRandomInteger } from 'src/utils/getRandomInteger';
 
 export interface LifeLinesProps {
   game: Game,
-  disabled?: boolean
+  question: Question,
+  disabled?: boolean,
+  onUsed: (game: Game, question: Question) => void
 }
 
 interface LifeLinesState {
@@ -31,7 +35,7 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
           <div class="lifeline-bar flex flex-column justify-center">
             <h2>{state.selectedLifeLine?.name}</h2>
             <div class="lifeline-options flex justify-center">
-              { state.selectedLifeLine?.options.map(o => (
+              { state.selectedLifeLine?.options?.map(o => (
                 <div class="lifeline-option">
                   <img src={o.imageUrl} alt={o.name} />
                   <div class="option-name">{o.name}</div>
@@ -52,11 +56,24 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
       return;
     }
 
-    SoundController.stopAll();
-
-    this.setState({ selectedLifeLine });
     selectedLifeLine.isUsed = true;
+    selectedLifeLine.questionUsed = this.props.question.id;
+
+    if (selectedLifeLine.name === "50-50") {
+      for(var i=0; i<2; i++)  {
+        let shownWrongAnswers = this.props.question.answers
+          .filter(a => !a.hide && a.id !== this.props.question.correctId);
+        let index = getRandomInteger(0, shownWrongAnswers.length);
+        shownWrongAnswers[index].hide = true;
+      }
+    }
+
+    SoundController.stopAll();
+    SoundController.play(SOUND.lifeline_friend);
+    this.setState({ selectedLifeLine });
     GameController.saveGame(this.props.game);
+
+    this.props.onUsed(this.props.game, this.props.question);
   }
 
   onDismiss(): void {
@@ -64,7 +81,6 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
 
     setTimeout(() => {
       this.setState({ selectedLifeLine: undefined, dismissLifeline: undefined });
-      SoundController.play(SOUND.lifeline_friend);
     }, 2_000);
   }
 

@@ -4,7 +4,7 @@
   width: 100vw;
   overflow: hidden;
 
-  .prizes-won {
+  .prizes {
     max-width: 80vw;
     display: flex;
     flex-direction: column-reverse;
@@ -13,7 +13,7 @@
     height: 100vh;
     justify-content: space-evenly;
 
-    .prize-won-wrap {
+    .prize-wrap {
       margin: -100px 0;
       transform: translateX(110vw); // hide off to the right
 

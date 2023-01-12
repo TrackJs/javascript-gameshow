@@ -21,6 +21,7 @@ import { getRandomInteger } from "src/utils/getRandomInteger"
 export interface QuestionAnswer {
   id: string
   text: string
+  hide?: boolean
 }
 
 export interface Question {

@@ -31,7 +31,8 @@ export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState
         <div class="box flex flex-column align-center">
           <h1><span class="sub">Who&apos;s ready to be a</span> <span class="main">JavaScriptær?</span></h1>
           <div class="instruction">
-            Fastest Tweet to <strong>@ToddHGardner</strong> with the correct answer
+						<img src="/assets/images/audience-app-qr.png" width="500" height="500" />
+						<p><strong>javascript-gameshow.web.app</strong></p>
           </div>
         </div>
 
@@ -43,8 +44,8 @@ export default class FindPlayer extends Component<UrlRouteProps, FindPlayerState
 
 				<div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route("/")}>Home</button>
-					<button class="btn btn-purple" type="button" hidden={!!this.state.question} onClick={e => this.onShowQuestion()}>Show Question</button>
-					<button class="btn btn-purple" type="button" hidden={!this.state.question} onClick={e => this.onStartGame()}>Start Game</button>
+					{/* <button class="btn btn-purple" type="button" hidden={!!this.state.question} onClick={e => this.onShowQuestion()}>Show Question</button> */}
+					<button class="btn btn-purple" type="button" hidden={false} onClick={e => this.onStartGame()}>Start Game</button>
 				</div>
 
 				<GameLogo />

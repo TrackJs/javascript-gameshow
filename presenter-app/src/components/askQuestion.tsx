@@ -1,9 +1,11 @@
 import { h, Component, ComponentChild } from 'preact';
+import { Game } from 'src/controllers/GameController';
 import { Question, QuestionAnswer } from 'src/controllers/QuestionController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
 import { shuffleArray } from 'src/utils/shuffleArray';
 
 export interface AskQuestionProps {
+  game: Game
   question: Question
   answerId?: string
   showAnswers?: boolean
@@ -90,9 +92,10 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
           <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
             style={`transition: opacity 200ms ease-in-out ${index}s`}>
             <span class="letter">{ANSWER_LABEL[index]}:</span>&nbsp;
-            {question.type === "code" ?
-              <pre class={answer.text.length >= 20 ? "small" : "" }>{answer.text}</pre> :
-              <span>{answer.text}</span>
+            {answer.hide === true ? "" :
+              question.type === "code" ?
+                <pre class={answer.text.length >= 20 ? "small" : "" }>{answer.text}</pre> :
+                <span>{answer.text}</span>
             }
           </div>
         </label>
