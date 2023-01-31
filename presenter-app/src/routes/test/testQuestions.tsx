@@ -1,6 +1,7 @@
 import { h, Component, ComponentChild } from 'preact';
 import { QuestionController } from 'src/controllers/QuestionController';
 import AskQuestion from 'src/components/askQuestion';
+import { Game } from 'src/controllers/GameController';
 
 export default class TestQuestions extends Component<any, any> {
 
@@ -14,7 +15,7 @@ export default class TestQuestions extends Component<any, any> {
           let isComplete = false;
           return (
             <div class="ask-question-wrap" style="margin: 20px 0">
-              <AskQuestion question={question} showAnswers={true} onResult={(isCorrect) => console.log(`result: ${isCorrect}`)} />
+              <AskQuestion game={{} as Game} question={question} showAnswers={true} onResult={(isCorrect) => console.log(`result: ${isCorrect}`)} />
             </div>
           );
         })}

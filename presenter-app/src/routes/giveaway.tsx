@@ -4,7 +4,7 @@ import { UrlRouteProps } from 'src/app';
 import AskQuestion from 'src/components/askQuestion';
 import GameLogo from 'src/components/gameLogo';
 import PrizeShow from 'src/components/prizeShow';
-import { GameController } from 'src/controllers/GameController';
+import { Game, GameController } from 'src/controllers/GameController';
 import { Prize, PrizeController } from 'src/controllers/PrizeController';
 import { Question, QuestionController } from 'src/controllers/QuestionController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
@@ -46,7 +46,7 @@ export default class Giveaway extends Component<UrlRouteProps, FindPlayerState> 
 
 				{ this.state.question ? (
 					<div class="question-wrap">
-						<AskQuestion question={state.question as Question} />
+						<AskQuestion question={state.question as Question} game={{} as Game} />
 					</div>
 				) : "" }
 

@@ -110,7 +110,8 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="life-line-wrap">
-          <LifeLines game={state.game} disabled={true} />
+          { !!state.question ? (<LifeLines game={state.game} question={state.question as Question} disabled={true} />) : undefined }
+
         </div>
 
         <div class="controls">

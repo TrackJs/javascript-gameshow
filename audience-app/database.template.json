@@ -6,54 +6,94 @@
   },
   "answers": {},
   "questions": {
-    "q0": {
+    "q00": {
       "questionText": "\"💩\" - \"💩\"",
       "answer": "NaN",
       "used": false
     },
-    "q1": {
+    "q01": {
       "questionText": "\"💩\".length",
       "answer": "2",
       "used": false
     },
-    "q2": {
+    "q02": {
       "questionText": "0.1 + 0.2",
       "answer": "0.30000000000000004",
       "used": false
     },
-    "q3": {
+    "q03": {
       "questionText": "[1, 2, 3] + [4, 5, 6]",
       "answer": "1,2,34,5,6",
       "used": false
     },
-    "q4": {
+    "q04": {
       "questionText": "1 / 0",
       "answer": "Infinity",
       "used": false
     },
-    "q5": {
+    "q05": {
       "questionText": "+\"42\"",
       "answer": "42",
       "used": false
     },
-    "q6": {
+    "q06": {
       "questionText": "[10, 5, 1].sort()",
       "answer": "[1, 10, 5]",
       "used": false
     },
-    "q7": {
+    "q07": {
       "questionText": "NaN == NaN",
       "answer": "false",
       "used": false
     },
-    "q8": {
+    "q08": {
       "questionText": "3 > 2 > 1",
       "answer": "false",
       "used": false
     },
-    "q9": {
+    "q09": {
       "questionText": "typeof typeof 1",
       "answer": "string",
+      "used": false
+    },
+    "q10": {
+      "questionText": "typeof null",
+      "answer": "\"object\"",
+      "used": false
+    },
+    "q11": {
+      "questionText": "null instanceof Object",
+      "answer": "false",
+      "used": false
+    },
+    "q12": {
+      "questionText": "return\n  { id: 42 };",
+      "answer": "undefined",
+      "used": false
+    },
+    "q13": {
+      "questionText": "[] + []",
+      "answer": "\"\"",
+      "used": false
+    },
+    "q14": {
+      "questionText": "(function foo(a, b) {}).length",
+      "answer": "2",
+      "used": false
+    },
+    "q15": {
+      "questionText": "(\"js\", \"rocks\")",
+      "answer": "\"rocks\"",
+      "used": false
+    },
+    "q16": {
+      "questionText": "!!~[1, 2, 3].indexOf(3)",
+      "answer": "true",
+      "used": false
+    },
+    "q17": {
+      "questionText": "Array(0, 1, Array(2))",
+      "answer": "[0, 1, [undefined, undefined]]",
       "used": false
     }
   }

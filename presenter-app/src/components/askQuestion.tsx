@@ -26,9 +26,9 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
   constructor(props: AskQuestionProps) {
     super();
     this.state = {
-      answers: shuffleArray(props.question.answers),
+      answers: shuffleArray(props.question?.answers || []),
       answerId: props.answerId || "",
-      isCorrect: props.question.correctId === props.answerId,
+      isCorrect: props.question?.correctId === props.answerId,
       isFinal: !!props.answerId,
       showAnswers: props.showAnswers || false,
       showResult: !!props.answerId
@@ -43,12 +43,12 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
       <form class="c-ask-question flex flex-column align-center" onSubmit={e => this.onFinalAnswer(e)}>
         <div class="question-text-bg">
           <div class="flex question-text justify-center align-center">
-            {question.type === "code" ?
+            {question && question.type === "code" ?
               <div class="flex flex-column">
                 <span class="code-result">What is the result of this JavaScript?</span>
                 <pre class={question.text.length >= 30 ? "small" : "" }>{question.text}</pre>
               </div> :
-              <span>{question.text}</span>
+              <span>{question?.text}</span>
             }
           </div>
         </div>

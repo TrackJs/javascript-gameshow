@@ -8,7 +8,7 @@ export interface LifeLinesProps {
   game: Game,
   question: Question,
   disabled?: boolean,
-  onUsed: (game: Game, question: Question) => void
+  onUsed?: (game: Game, question: Question) => void
 }
 
 interface LifeLinesState {
@@ -73,7 +73,10 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     this.setState({ selectedLifeLine });
     GameController.saveGame(this.props.game);
 
-    this.props.onUsed(this.props.game, this.props.question);
+    if (this.props.onUsed !== undefined) {
+      this.props.onUsed(this.props.game, this.props.question);
+    }
+
   }
 
   onDismiss(): void {

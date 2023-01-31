@@ -25,89 +25,136 @@ const STORAGE_KEY = "prize-claims";
 
 const PRIZE_INVENTORY : InventoryPrize[] = [
 
+  // {
+  //   id: "ee2b4d37482543f0b2eeb651b8c4a4f8",
+  //   name: "Hand Sanitizer",
+  //   difficulty: 0,
+  //   quantity: 5,
+  //   imageUrl: "/assets/prizes/hand_sanitizer.png",
+  //   sponsorName: "Request Metrics",
+  //   sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  // },
+  // {
+  //   id: "ee2b4d37482543f0b2eeb651b8c4a4f9",
+  //   name: "Squeaky Sloth Keychain",
+  //   difficulty: 0,
+  //   quantity: 5,
+  //   imageUrl: "/assets/prizes/sloth_keychain.png",
+  //   sponsorName: "Request Metrics",
+  //   sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+  // },
   {
-    id: "ee2b4d37482543f0b2eeb651b8c4a4f8",
-    name: "Hand Sanitizer",
-    difficulty: 0,
-    quantity: 5,
-    imageUrl: "/assets/prizes/hand_sanitizer.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  },
-    {
     id: "b85def0e3d0f4955a1869da68e47bca0",
     name: "At Least I'm Wearing Pants",
-    difficulty: 1,
+    difficulty: 0,
     quantity: 5,
     imageUrl: "/assets/prizes/jogger.png",
     sponsorName: "TrackJS",
     sponsorImageUrl: "/assets/sponsors/trackjs.svg"
   },
+
+  {
+    id: "b85def0e3d0f4955a1869da68e47bcb2",
+    name: "Signed Pro .NET on AWS",
+    difficulty: 1, //50gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/prodotnet_aws_book.png",
+    sponsorName: "AWS",
+    sponsorImageUrl: "/assets/sponsors/aws.png"
+  },
   {
     id: "5373650e5fe847d88b4f64ed0804207d",
-    name: "Sloth Stressball",
-    difficulty: 2,
-    quantity: 5,
-    imageUrl: "/assets/prizes/sloth_stressball.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+    name: "￡50 Secretlab GC",
+    difficulty: 1,
+    quantity: 1,
+    imageUrl: "/assets/prizes/secretlab.png",
+    sponsorName: "Couchbase",
+    sponsorImageUrl: "/assets/sponsors/couchbase.png"
+  },
+  {
+    id: "087f90ccd7ac48fcb31bc3eaab86e1a1",
+    name: "￡25 Amazon GC",
+    difficulty: 1,
+    quantity: 1,
+    imageUrl: "/assets/prizes/amazongc.png",
+    sponsorName: "Octopus Deploy",
+    sponsorImageUrl: "/assets/sponsors/octopus_deploy.svg"
   },
   {
     id: "5373650e5fe847d88b4f64ed0804207e",
-    name: "Sloth Stressball 2",
-    difficulty: 3,
-    quantity: 5,
-    imageUrl: "/assets/prizes/sloth_stressball.png",
-    sponsorName: "Request Metrics",
-    sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
+    name: "Lego Galaxy Explorer",
+    difficulty: 2, //90gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/lego_galaxy_explorer.png",
+    sponsorName: "Honeycomb",
+    sponsorImageUrl: "/assets/sponsors/honeycomb.svg"
+  },
+  {
+    id: "ba6ed21c72cb4d3dbe56aa23dd84ff1d",
+    name: "Lego Infinity Glove & Light",
+    difficulty: 2, // $65gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/lego_infinity_glove.png",
+    sponsorName: "RavenDB",
+    sponsorImageUrl: "/assets/sponsors/ravendb.png"
+  },
+  {
+    id: "ba6ed21c72cb4d3dbe56aa23dd84ff0c",
+    name: "Lego Star Wars Mandalorian Helmet",
+    difficulty: 2, // $60gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/lego_mandalorian.png",
+    sponsorName: "Vonage",
+    sponsorImageUrl: "/assets/sponsors/vonage.png"
   },
 
-  // {
-  //   id: "4f780b6e31d64c77a9d9ae19cea87342",
-  //   name: "NDC Hat",
-  //   difficulty: 1,
-  //   quantity: 10,
-  //   imageUrl: "/assets/prizes/ndc_hat.png",
-  //   sponsorName: "NDC Conferences",
-  //   sponsorImageUrl: "/assets/sponsors/ndc.png"
-  // },
+  {
+    id: "9d312ed5f25a47469748f62f9eeab225",
+    name: "Nintendo Switch",
+    difficulty: 3, // 250
+    quantity: 1,
+    imageUrl: "/assets/prizes/nintendo_switch.png",
+    sponsorName: "Text Control",
+    sponsorImageUrl: "/assets/sponsors/text_control.svg"
+  },
+  {
+    id: "251e637c340942d389e8ab64cd421e63",
+    name: "Surface Headphones 2",
+    difficulty: 3, // 240gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/surfaceheadphones2.png",
+    sponsorName: "Microsoft",
+    sponsorImageUrl: "/assets/sponsors/microsoft.png"
+  },
+  {
+    id: "4f780b6e31d64c77a9d9ae19cea87342",
+    name: "RODE NT-USB microphone",
+    difficulty: 3, //130gbp
+    quantity: 1,
+    imageUrl: "/assets/prizes/rode_mic.png",
+    sponsorName: "Kontent.ai",
+    sponsorImageUrl: "/assets/sponsors/kontentai.png"
+  },
 
-  // {
-  //   id: "b85def0e3d0f4955a1869da68e47bca0",
-  //   name: "At Least I'm Wearing Pants",
-  //   difficulty: 2,
-  //   quantity: 4,
-  //   imageUrl: "/assets/prizes/jogger.png",
-  //   sponsorName: "TrackJS",
-  //   sponsorImageUrl: "/assets/sponsors/trackjs.svg"
-  // },
-  // {
-  //   id: "d8fa0d9610ba4c94a9ed3c5339fdb36e",
-  //   name: "JavaScript Happens TShirt",
-  //   difficulty: 2,
-  //   quantity: 5,
-  //   imageUrl: "/assets/prizes/tshirt.png",
-  //   sponsorName: "TrackJS",
-  //   sponsorImageUrl: "/assets/sponsors/trackjs.svg"
-  // },
+
 
   // {
   //   id: "087f90ccd7ac48fcb31bc3eaab86e1a1",
-  //   name: "Lego Trash Compactor",
-  //   difficulty: 3, // $79
+  //   name: "TBD",
+  //   difficulty: 3,
   //   quantity: 1,
-  //   imageUrl: "/assets/prizes/lego_trash_compactor.png",
+  //   imageUrl: "/assets/prizes/TBD.png",
   //   sponsorName: "Octopus Deploy",
   //   sponsorImageUrl: "/assets/sponsors/octopus_deploy.svg"
   // },
   // {
-  //   id: "251e637c340942d389e8ab64cd421e63",
-  //   name: "Airpods",
-  //   difficulty: 3, // $180
-  //   quantity: 2,
-  //   imageUrl: "/assets/prizes/airpods.png",
-  //   sponsorName: "NDC Conferences",
-  //   sponsorImageUrl: "/assets/sponsors/ndc.png"
+  //   id: "5373650e5fe847d88b4f64ed0804207d",
+  //   name: "TBD",
+  //   difficulty: 2,
+  //   quantity: 1,
+  //   imageUrl: "/assets/prizes/TBD.png",
+  //   sponsorName: "Couchbase",
+  //   sponsorImageUrl: "/assets/sponsors/couchbase.png"
   // },
   // {
   //   id: "ae65d72882c842c6ab9c926727d44ef2",
