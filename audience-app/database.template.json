@@ -5,6 +5,40 @@
     "6fgpAQCVh0XnENhSWeILL0oPWQy1": "Martine"
   },
   "answers": {},
+  "lastStandingQuestions": {
+    "lsq0": {
+        "answers": [
+          {
+            "answerText": "nope",
+            "correct": true
+          },
+          {
+            "answerText": "I am  Genius!",
+            "correct": false
+          }
+        ],
+        "questionText": "Do you know JS?",
+        "used": false
+    },
+    "lsq1": {
+      "answers": [
+        {
+          "answerText": "I know how to exit vim",
+          "correct": true
+        },
+        {
+          "answerText": "I can use ChatGPT to code",
+          "correct": false
+        },
+        {
+          "answerText": "I can Copy Paste from StackOverflow",
+          "correct": false
+        }
+      ],
+      "questionText": "Are you even a developer bro?",
+      "used": false
+    }
+  },
   "questions": {
     "q00": {
       "questionText": "\"💩\" - \"💩\"",

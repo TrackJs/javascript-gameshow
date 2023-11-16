@@ -18,8 +18,8 @@
     <main>
 
       <header class="site-header flex-column align-center">
-        <h1>JavaScriptær Admin</h1>
-        <a href="./last-standing.html">Last Standing</a>
+        <h1>JavaScriptær Last Player Standing</h1>
+
         <div class="user">
           <div class="authed flex align-center" style="display:none">
             <div id="display-name" class="info"><!-- JS inserts here --></div>
@@ -48,9 +48,8 @@
           <ul id="answer-list"><!-- JS inserts here --></ul>
         </div>
 
-        <div class="controls flex">
-          <button type="button" id="active-question-clear">Clear</button>
-          <button type="button" id="active-question-show-answer">Show Answer</button>
+        <div class="controls">
+          <button type="button" id="active-question-clear">Clear Active Question</button>
         </div>
 
       </section>
@@ -75,6 +74,6 @@
     <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
     <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
     <script src="/__/firebase/init.js"></script>
-    <script src="/assets/admin.js"></script>
+    <script src="/assets/last-standing.js"></script>
   </body>
 </html>

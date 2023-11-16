@@ -129,6 +129,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       <pre>${escapeHtml(question.questionText)}</pre>`;
 
     const activeAnswer = tryGet(`${ANSWER_KEY}_${question.questionId}`);
+    console.log('activeAnser', activeAnswer)
     if (activeAnswer) {
       showAnswerFormResult(activeAnswer);
     }
@@ -142,6 +143,27 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "none";
     sponsorsEl.style.display = "none";
+    debugger
+    if (question.answers) {
+      document.getElementById("answer-text").style.display = "none";
+      let multipleChoiceAnswerEl = document.getElementById("multiple-choice");
+      multipleChoiceAnswerEl.style.display = "block";
+          
+      let htmlContent = "";
+      question.answers.forEach((answer) => {
+        htmlContent += `<label><input type="radio" name="answer" value="${answer.correct}"/>${answer.answerText}</label>`;
+      })
+
+      multipleChoiceAnswerEl.innerHTML = htmlContent;
+      
+
+    }
+    else {
+      document.getElementById("multiple-choice").style.display = "none";
+      document.getElementById("answer-text").style.display = "block";
+    }
+
+
   }
 
   function showAnswerFormLoading() {
@@ -196,6 +218,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   // fuck you safari.
   function tryGet(key) {
     try {
+      console.log(localStorage.getItem(key))
       return localStorage.getItem(key);
     }
     catch(e) {
