@@ -63,18 +63,14 @@
             <hr />
 
             <h2>Your Answer</h2>
-            <form id="answer-form">
+            <form id="answer-form" novalidate>
               <div id="answer-text">
+                <!-- Render Question markup by JS -->
                 <label class="flex-column">
                   <span>Your Answer</span>
                   <input name="answer" type="text" maxlength="100" required placeholder="null">
                 </label>
                 <p class="instructions">Please remember the code of conduct.</p>
-              </div>
-              
-              <div id="multiple-choice">
-                HELLO MULTIPLE CHOICE
-                <!-- by JS -->
               </div>
               <div class="controls">
                 <button type="submit">Submit</button>

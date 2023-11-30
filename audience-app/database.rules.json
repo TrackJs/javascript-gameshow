@@ -12,6 +12,16 @@
         }
       }
     },
+    "answersLastStanding": {
+      "$eventId": {
+        "$questionId": {
+          "$user_id": {
+          	".write": "!data.exists() && newData.hasChildren(['uid', 'answer','displayName','submitTime'])",
+            ".validate": "newData.child('submitTime').isNumber() && newData.child('answer').isString() && newData.child('answer').val().length < 100 && newData.child('displayName').val().length < 100"
+          }
+        }
+      }
+    },
     "activeQuestion": {
       ".read": true
     }

@@ -11,7 +11,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   let uid;
   let displayName;
   let question;
-  let isAsshole = tryGet(ASSHOLE_KEY) || false;
+  let isAsshole = false;//tryGet(ASSHOLE_KEY) || false;
 
   // global dom
   const userInfoEl = document.querySelector("#user-info");
@@ -39,9 +39,10 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   });
 
   answerFormEl.addEventListener("submit", (evt) => {
+    debugger;
     evt.preventDefault();
     showAnswerFormLoading();
-
+    
     const form = evt.target;
     const answer = new FormData(form).get("answer");
     checkInputBan(answer);
@@ -59,7 +60,9 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       submitTime: firebase.database.ServerValue.TIMESTAMP
     };
 
-    const answerRef = firebase.database().ref(`/answers/${question.eventId}/${question.questionId}/${uid}`);
+    let rootPath = question.questionMode === "lastStanding" ? 'answersLastStanding' : 'answers';
+
+    const answerRef = firebase.database().ref(`/${rootPath}/${question.eventId}/${question.questionId}/${uid}`);
     answerRef.set(payload).then(() => {
       console.log("answer submitted", payload);
       showAnswerFormResult(answer);
@@ -129,7 +132,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       <pre>${escapeHtml(question.questionText)}</pre>`;
 
     const activeAnswer = tryGet(`${ANSWER_KEY}_${question.questionId}`);
-    console.log('activeAnser', activeAnswer)
+    console.log('activeAnswer', activeAnswer)
     if (activeAnswer) {
       showAnswerFormResult(activeAnswer);
     }
@@ -143,27 +146,20 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "none";
     sponsorsEl.style.display = "none";
-    debugger
-    if (question.answers) {
-      document.getElementById("answer-text").style.display = "none";
-      let multipleChoiceAnswerEl = document.getElementById("multiple-choice");
-      multipleChoiceAnswerEl.style.display = "block";
-          
+    
+    const answerTextContainerEl = document.getElementById("answer-text");
+
+    if (question.answers) {         
       let htmlContent = "";
       question.answers.forEach((answer) => {
-        htmlContent += `<label><input type="radio" name="answer" value="${answer.correct}"/>${answer.answerText}</label>`;
+        htmlContent += `<label class="flex"><input type="radio" name="answer" required value="${answer.id}"/><span>${answer.answerText}</span></label>`;
       })
-
-      multipleChoiceAnswerEl.innerHTML = htmlContent;
       
-
+      answerTextContainerEl.innerHTML = htmlContent;      
     }
     else {
-      document.getElementById("multiple-choice").style.display = "none";
-      document.getElementById("answer-text").style.display = "block";
+      answerTextContainerEl.innerHTML = `<label class="flex-column"><span>Your Answer</span><input name="answer" type="text" maxlength="100" required placeholder="null"></label>`;
     }
-
-
   }
 
   function showAnswerFormLoading() {
