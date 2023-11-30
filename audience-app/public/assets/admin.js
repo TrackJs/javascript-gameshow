@@ -12,12 +12,21 @@
   let activeEventId;
   let activeQuestion;
   let questions;
+  let questionMode = "text";
 
   // global dom
   const activeQuestionSectionEl = document.querySelector("section#active-question");
   const answerListEl = activeQuestionSectionEl.querySelector("#answer-list");
   const questionsSectionEl = document.querySelector("section#questions");
   const questionsList = questionsSectionEl.querySelector("#question-list");
+
+  window.toggleQuestionMode = function (mode) {
+    if (mode === questionMode) { return; }
+    document.querySelector("#question-mode-toggle-text").classList.toggle("active");
+    document.querySelector("#question-mode-toggle-choice").classList.toggle("active");
+    questionMode = mode;
+    renderQuestionList();
+  };
 
   document.querySelector("#login-button").addEventListener("click", async (evt) => {
     evt.preventDefault();
@@ -45,9 +54,20 @@
     if (!confirm("Are you sure you want to show the answer?")) { return; }
     if (!activeQuestionRef) { return; }
 
-    activeQuestionRef.update({
-      answer: questions[activeQuestion.questionId].answer
-    });
+    let answer;
+    if (questionMode === "text") {
+      answer = questions[questionMode][activeQuestion.questionId].answer;
+    }
+    else if (questionMode === "choice") {
+      Object.keys(questions[questionMode][activeQuestion.questionId].answers).forEach((answerId) => {
+        let a = questions[questionMode][activeQuestion.questionId].answers[answerId];
+        if (a.correct) {
+          answer = { answerId, ...a };
+        }
+      })
+    }
+
+    activeQuestionRef.update({ answer });
     evt.target.setAttribute("disabled", "disabled");
   })
 
@@ -57,13 +77,15 @@
 
     const questionId = new FormData(evt.target).get("questionId");
 
-    const questionRef = firebase.database().ref(`questions/${questionId}`)
+    const questionRef = firebase.database().ref(`questions/${questionMode}/${questionId}`);
     questionRef.update({ used: true });
 
     activeQuestionRef.set({
       eventId: activeEventId,
       questionId,
-      questionText: questions[questionId].questionText,
+      questionMode,
+      questionText: questions[questionMode][questionId].questionText,
+      answers: questions[questionMode][questionId].answers ?? null,
       submitTime: firebase.database.ServerValue.TIMESTAMP
     });
   });
@@ -90,7 +112,7 @@
         activeEventId = (await activeEventRef.get()).val();
         document.querySelector("#event-id").innerHTML = `${activeEventId}`;
       }
-      catch(e) {
+      catch (e) {
         alert("Couldn't talk to database. You probably left it locked.");
       }
 
@@ -104,18 +126,7 @@
     questionRef = firebase.database().ref('questions');
     questionRef.on('value', (snapshot) => {
       questions = snapshot.val();
-      questionsList.innerHTML = "";
-      Object.keys(questions).forEach((questionId) => {
-        const question = questions[questionId];
-        questionsList.innerHTML += `
-          <li>
-            <label class="flex align-center ${question.used ? "used" : ''}">
-              <input type="radio" value="${questionId}" name="questionId" required />
-              <div><pre>${escapeHtml(question.questionText)}</pre></div>
-              ${question.used ? "<div>&nbsp;(used)</div>" : ""}
-            </label>
-          </li>`;
-      });
+      renderQuestionList();
     });
 
     // Get activeQuestion and keep it up to date. Toggle the UI based on this.
@@ -128,8 +139,26 @@
         await showQuestionList();
       }
       else {
+        // we might start up with a previous state, so check the active question for a mode
+        window.toggleQuestionMode(activeQuestion.questionMode);
+
         await showAnswerList();
       }
+    });
+  }
+
+  function renderQuestionList() {
+    questionsList.innerHTML = "";
+    Object.keys(questions[questionMode]).forEach((questionId) => {
+      const question = questions[questionMode][questionId];
+      questionsList.innerHTML += `
+        <li>
+          <label class="flex align-center ${question.used ? "used" : ''}">
+            <input type="radio" value="${questionId}" name="questionId" required />
+            <div><pre>${escapeHtml(question.questionText)}</pre></div>
+            ${question.used ? "<div>&nbsp;(used)</div>" : ""}
+          </label>
+        </li>`;
     });
   }
 
@@ -145,8 +174,21 @@
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
       <div>What is the result of this JavaScript?</div>
       <pre>${escapeHtml(activeQuestion.questionText)}</pre>`;
+
+    let correctAnswerText;
+    if (activeQuestion.questionMode === "text") {
+      correctAnswerText = questions[questionMode][activeQuestion.questionId].answer;
+    }
+    else if (activeQuestion.questionMode === "choice") {
+      Object.values(questions[questionMode][activeQuestion.questionId].answers).forEach((answer) => {
+        if (answer.correct) {
+          correctAnswerText = answer.answerText;
+        }
+      })
+    }
+
     activeQuestionSectionEl.querySelector("#active-question-answer").innerHTML = `
-      <pre>${escapeHtml(questions[activeQuestion.questionId].answer)}</pre>`;
+        <pre>${escapeHtml(correctAnswerText)}</pre>`;
 
     answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
     answersRef.on('value', (snapshot) => {
@@ -155,7 +197,7 @@
       if (!answers) { return; }
 
       Object.values(answers)
-        .sort((a,b) => a.submitTime - b.submitTime)
+        .sort((a, b) => a.submitTime - b.submitTime)
         .forEach((answer) => {
           answerListEl.innerHTML += `
             <li>
@@ -163,17 +205,17 @@
               <pre>${escapeHtml(answer.answer)}</pre>
               <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
             </li>`;
-      });
+        });
     });
   }
 
   function escapeHtml(unsafe) {
     return unsafe
-         .replaceAll(/&/gmi, "&amp;")
-         .replaceAll(/</gmi, "&lt;")
-         .replaceAll(/>/gmi, "&gt;")
-         .replaceAll(/"/gmi, "&quot;")
-         .replaceAll(/'/gmi, "&#039;");
+      .replaceAll(/&/gmi, "&amp;")
+      .replaceAll(/</gmi, "&lt;")
+      .replaceAll(/>/gmi, "&gt;")
+      .replaceAll(/"/gmi, "&quot;")
+      .replaceAll(/'/gmi, "&#039;");
   }
 
 })();

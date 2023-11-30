@@ -39,10 +39,9 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   });
 
   answerFormEl.addEventListener("submit", (evt) => {
-    debugger;
     evt.preventDefault();
     showAnswerFormLoading();
-    
+
     const form = evt.target;
     const answer = new FormData(form).get("answer");
     checkInputBan(answer);
@@ -53,10 +52,8 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     }
 
     const payload = {
-      uid,
       displayName,
       answer,
-      questionId: question.questionId,
       submitTime: firebase.database.ServerValue.TIMESTAMP
     };
 
@@ -67,11 +64,11 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       console.log("answer submitted", payload);
       showAnswerFormResult(answer);
     },
-    (rej) => {
-      console.error(rej);
-      alert(`Failed to submit answer ${rej}. Try again?`);
-      showAnswerForm();
-    });
+      (rej) => {
+        console.error(rej);
+        alert(`Failed to submit answer ${rej}. Try again?`);
+        showAnswerForm();
+      });
   });
 
   // startup listeners
@@ -146,18 +143,19 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "none";
     sponsorsEl.style.display = "none";
-    
+
     const answerTextContainerEl = document.getElementById("answer-text");
 
-    if (question.answers) {         
+    if (question.questionMode === "choice") {
       let htmlContent = "";
-      question.answers.forEach((answer) => {
-        htmlContent += `<label class="flex"><input type="radio" name="answer" required value="${answer.id}"/><span>${answer.answerText}</span></label>`;
+      Object.keys(question.answers).forEach((answerId) => {
+        let answer = { answerId, ...question.answers[answerId] };
+        htmlContent += `<label class="flex"><input type="radio" name="answer" required value="${answer.answerId}"/><span>${answer.answerText}</span></label>`;
       })
-      
-      answerTextContainerEl.innerHTML = htmlContent;      
+
+      answerTextContainerEl.innerHTML = htmlContent;
     }
-    else {
+    else if (question.questionMode === "text") {
       answerTextContainerEl.innerHTML = `<label class="flex-column"><span>Your Answer</span><input name="answer" type="text" maxlength="100" required placeholder="null"></label>`;
     }
   }
@@ -204,11 +202,11 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
   }
   function escapeHtml(unsafe) {
     return unsafe
-         .replaceAll(/&/gmi, "&amp;")
-         .replaceAll(/</gmi, "&lt;")
-         .replaceAll(/>/gmi, "&gt;")
-         .replaceAll(/"/gmi, "&quot;")
-         .replaceAll(/'/gmi, "&#039;");
+      .replaceAll(/&/gmi, "&amp;")
+      .replaceAll(/</gmi, "&lt;")
+      .replaceAll(/>/gmi, "&gt;")
+      .replaceAll(/"/gmi, "&quot;")
+      .replaceAll(/'/gmi, "&#039;");
   }
 
   // fuck you safari.
@@ -217,7 +215,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       console.log(localStorage.getItem(key))
       return localStorage.getItem(key);
     }
-    catch(e) {
+    catch (e) {
       return undefined;
     }
   }
@@ -225,7 +223,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
     try {
       localStorage.setItem(key, value);
     }
-    catch(e) {}
+    catch (e) { }
   }
 
 })();

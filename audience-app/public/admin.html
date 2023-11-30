@@ -1,80 +1,90 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>JavaScriptær Admin</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <title>JavaScriptær Admin</title>
 
-    <!-- favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/styles.css">
-  </head>
-  <body>
-    <main>
+  <!-- favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
 
-      <header class="site-header flex-column align-center">
-        <h1>JavaScriptær Admin</h1>
-        <a href="./last-standing.html">Last Standing</a>
-        <div class="user">
-          <div class="authed flex align-center" style="display:none">
-            <div id="display-name" class="info"><!-- JS inserts here --></div>
-            &nbsp;<a href="javascript:void()" id="logout-button">Logout</a>
-          </div>
-          <div class="login controls" style="display:none">
-            <button type="button" id="login-button">Login</button>
-          </div>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+
+<body>
+  <main>
+
+    <header class="site-header flex-column align-center">
+      <h1>JavaScriptær Admin</h1>
+      <div class="user">
+        <div class="authed flex align-center" style="display:none">
+          <div id="display-name" class="info"><!-- JS inserts here --></div>
+          &nbsp;<a href="javascript:void()" id="logout-button">Logout</a>
         </div>
-
-        <div id="event-id" class="info"><!-- JS inserts here --></div>
-      </header>
-
-      <section id="active-question" style="display:none">
-
-        <div class="question">
-          <h2>Active Question</h2>
-          <div id="active-question-text"><!-- JS inserts here --></div>
-          <h2>Correct Answer</h2>
-          <div id="active-question-answer"><!-- JS inserts here --></div>
+        <div class="login controls" style="display:none">
+          <button type="button" id="login-button">Login</button>
         </div>
+      </div>
 
-        <hr />
-        <div class="answers">
-          <h2>Answers</h2>
-          <ul id="answer-list"><!-- JS inserts here --></ul>
+      <div id="event-id" class="info"><!-- JS inserts here --></div>
+    </header>
+
+    <section id="toggle-question-mode" class="flex align-center justify-center">
+      <a href="javascript:void(0);" onclick="toggleQuestionMode('text')" id="question-mode-toggle-text"
+        class="active">Player
+        Picker</a>
+      <a href="javascript:void(0);" onclick="toggleQuestionMode('choice')" id="question-mode-toggle-choice">Last
+        Standing</a>
+    </section>
+
+    <section id="active-question" style="display:none">
+
+      <div class="question">
+        <h2>Active Question</h2>
+        <div id="active-question-text"><!-- JS inserts here --></div>
+        <h2>Correct Answer</h2>
+        <div id="active-question-answer"><!-- JS inserts here --></div>
+      </div>
+
+      <hr />
+      <div class="answers">
+        <h2>Answers</h2>
+        <ul id="answer-list"><!-- JS inserts here --></ul>
+      </div>
+
+      <div class="controls flex">
+        <button type="button" id="active-question-clear">Clear</button>
+        <button type="button" id="active-question-show-answer">Show Answer</button>
+      </div>
+
+    </section>
+
+    <section id="questions" style="display:none;">
+      <h2>Question List</h2>
+      <form id="select-question-form">
+        <ul id="question-list"><!-- JS inserts here --></ul>
+        <div class="controls">
+          <button type="submit">Show Question</button>
         </div>
+      </form>
+    </section>
 
-        <div class="controls flex">
-          <button type="button" id="active-question-clear">Clear</button>
-          <button type="button" id="active-question-show-answer">Show Answer</button>
-        </div>
+    <section class="logo">
+      <img src="/assets/logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
+    </section>
 
-      </section>
+  </main>
 
-      <section id="questions" style="display:none;">
-        <h2>Question List</h2>
-        <form id="select-question-form">
-          <ul id="question-list"><!-- JS inserts here --></ul>
-          <div class="controls">
-            <button type="submit">Show Question</button>
-          </div>
-        </form>
-      </section>
+  <script src="/__/firebase/9.13.0/firebase-app-compat.js"></script>
+  <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
+  <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="/assets/admin.js"></script>
+</body>
 
-      <section class="logo">
-        <img src="/assets/logo.png" alt="Who wants to be a JavaScriptær?" width="3061" height="3061" />
-      </section>
-
-    </main>
-
-    <script src="/__/firebase/9.13.0/firebase-app-compat.js"></script>
-    <script src="/__/firebase/9.13.0/firebase-database-compat.js"></script>
-    <script src="/__/firebase/9.13.0/firebase-auth-compat.js"></script>
-    <script src="/__/firebase/init.js"></script>
-    <script src="/assets/admin.js"></script>
-  </body>
 </html>

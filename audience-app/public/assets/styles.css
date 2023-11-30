@@ -1,8 +1,8 @@
 html {
   --font-family: Arial, Helvetica, sans-serif;
-  --border-color:#3d758c;
+  --border-color: #3d758c;
   --link-color: #77b0c7;
-  --dark-purple:#470147;
+  --dark-purple: #470147;
   --orange: #e1a02e;
   padding: 0;
   margin: 0;
@@ -18,7 +18,8 @@ body {
   margin: 0 auto;
 }
 
-a, a:visited {
+a,
+a:visited {
   color: var(--link-color);
 }
 
@@ -29,25 +30,34 @@ main {
 .flex {
   display: flex;
 }
+
 .flex-column {
   display: flex;
   flex-direction: column;
 }
+
 .align-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 form label {
   margin: 20px 0;
 }
+
 form label span {
   color: #CCC;
 }
+
 form label input {
   padding: 10px 16px;
   border-radius: 4px;
   font-size: 1.4em;
 }
+
 form .instructions {
   text-align: center;
   font-size: 0.9em;
@@ -64,19 +74,25 @@ button {
   color: black;
   font-weight: 600;
 }
-button:hover, button:active, button:focus {
+
+button:hover,
+button:active,
+button:focus {
   background: radial-gradient(var(--orange), #bf7a00);
 }
+
 button:disabled {
   color: #333;
   border-color: #777;
   background: radial-gradient(#ccc, #777);
   cursor: default;
 }
+
 h1 {
   text-align: center;
   margin: 10px 0;
 }
+
 h2 {
   text-align: center;
   font-size: 1em;
@@ -84,6 +100,7 @@ h2 {
   text-transform: uppercase;
   color: var(--orange);
 }
+
 hr {
   margin: 40px 0;
   border-color: var(--border-color);
@@ -95,6 +112,7 @@ header {
   margin-bottom: 30px;
   border-bottom: 2px solid var(--border-color);
 }
+
 header .info {
   font-size: 1.2em;
   color: var(--orange);
@@ -102,15 +120,41 @@ header .info {
 
 section.login {}
 
+section#toggle-question-mode {
+  border-radius: 100px;
+  overflow: hidden;
+  width: fit-content;
+  margin: 0 auto;
+
+  & a {
+    padding: 12px 24px;
+    font-size: 1em;
+    cursor: pointer;
+    background: radial-gradient(#e7dab6, var(--orange));
+    border: 4px solid var(--orange);
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+
+    &.active {
+      border: 4px solid #8000ff;
+      background: radial-gradient(var(--dark-purple), #8000ff);
+      color: white;
+    }
+  }
+}
 
 section#active-question {}
+
 section#active-question #active-question-text {
   text-align: center;
 }
+
 section#active-question #active-question-text div {
   font-size: 1.2em;
   color: #ccc;
 }
+
 section#active-question #active-question-text pre {
   background: #efefef;
   padding: 6px 12px;
@@ -121,35 +165,42 @@ section#active-question #active-question-text pre {
   user-select: none;
   overflow: auto
 }
+
 section#active-question #active-question-answer {
-  margin: 20px 0 ;
+  margin: 20px 0;
   text-align: center;
 }
+
 section#active-question #active-question-answer div {
   font-size: 1.0em;
   color: #ccc;
 }
+
 section#active-question #active-question-answer pre,
 section#active-question #answer-text pre {
   font-weight: bold;
   font-size: 1.8em;
   margin: 0.5em 0;
 }
+
 section#active-question #answer-list {
   list-style: none;
   margin: 0;
   padding: 0;
   text-align: center;
 }
+
 section#active-question #answer-list li {
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #7b417b;
 }
+
 section#active-question #answer-list li div {
   font-size: 1.0em;
   color: #ccc;
 }
+
 section#active-question #answer-list li pre {
   font-weight: bold;
   font-size: 1.4em;
@@ -158,25 +209,31 @@ section#active-question #answer-list li pre {
 
 
 section#questions {}
+
 section#questions #question-list {
   list-style: none;
   margin: 0;
   padding: 0;
   text-align: center;
 }
+
 section#questions #question-list li {
   border-bottom: 1px solid #7b417b;
 }
+
 section#questions #question-list li label.used {
   color: #aaa;
 }
+
 section#questions #question-list li label input {
   flex: 0 0;
   margin-right: 10px;
 }
+
 section#questions #question-list li label:has(input:checked) {
   background-color: var(--orange);
 }
+
 section#questions #question-list li label pre {
   font-weight: bold;
   font-size: 1.4em;
@@ -188,6 +245,7 @@ section#questions #question-list li label pre {
   left: 110px;
   right: 20px;
 }
+
 .controls button {
   width: 100%;
 }
@@ -198,17 +256,21 @@ section#questions #question-list li label pre {
   left: 10px;
   right: 10px;
 }
+
 .sponsors .flex {
   flex-wrap: wrap;
   justify-content: center;
 }
-.sponsors .flex > * {
+
+.sponsors .flex>* {
   flex: 0 1 calc(50% - 10px);
   padding: 20px 5px 0 0;
 }
+
 .sponsors a {
   text-align: center;
 }
+
 .sponsors img {
   max-width: 100%;
   height: auto;
@@ -220,18 +282,22 @@ section#questions #question-list li label pre {
   bottom: 10px;
   left: 10px;
 }
+
 .logo img {
   max-width: 100%;
   height: auto;
   animation: pulseGlow 3s linear infinite;
 }
+
 @keyframes pulseGlow {
   0% {
     filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
   }
+
   50% {
     filter: unset;
   }
+
   100% {
     filter: drop-shadow(0 0 4px #fff) drop-shadow(-4px 0 10px rgb(128, 0, 255)) drop-shadow(4px 0 10px #0ff);
   }
@@ -244,6 +310,7 @@ section#questions #question-list li label pre {
   width: 80px;
   height: 80px;
 }
+
 .lds-grid div {
   position: absolute;
   width: 16px;
@@ -252,55 +319,68 @@ section#questions #question-list li label pre {
   background: #fff;
   animation: lds-grid 1.2s linear infinite;
 }
+
 .lds-grid div:nth-child(1) {
   top: 8px;
   left: 8px;
   animation-delay: 0s;
 }
+
 .lds-grid div:nth-child(2) {
   top: 8px;
   left: 32px;
   animation-delay: -0.4s;
 }
+
 .lds-grid div:nth-child(3) {
   top: 8px;
   left: 56px;
   animation-delay: -0.8s;
 }
+
 .lds-grid div:nth-child(4) {
   top: 32px;
   left: 8px;
   animation-delay: -0.4s;
 }
+
 .lds-grid div:nth-child(5) {
   top: 32px;
   left: 32px;
   animation-delay: -0.8s;
 }
+
 .lds-grid div:nth-child(6) {
   top: 32px;
   left: 56px;
   animation-delay: -1.2s;
 }
+
 .lds-grid div:nth-child(7) {
   top: 56px;
   left: 8px;
   animation-delay: -0.8s;
 }
+
 .lds-grid div:nth-child(8) {
   top: 56px;
   left: 32px;
   animation-delay: -1.2s;
 }
+
 .lds-grid div:nth-child(9) {
   top: 56px;
   left: 56px;
   animation-delay: -1.6s;
 }
+
 @keyframes lds-grid {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }

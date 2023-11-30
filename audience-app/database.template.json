@@ -1,134 +1,199 @@
 {
-  "activeEventId": "london2023",
+  "activeEventId": "testing2023",
   "admins": {
     "57MrWonzPRNLuDlAw3GHPJ81H4M2": "Todd",
     "6fgpAQCVh0XnENhSWeILL0oPWQy1": "Martine"
   },
-  "answers": {},
-  "lastStandingQuestions": {
-    "lsq0": {
-        "answers": [
-          {
-            "answerText": "nope",
-            "correct": true
-          },
-          {
-            "answerText": "I am  Genius!",
-            "correct": false
-          }
-        ],
-        "questionText": "Do you know JS?",
-        "used": false
-    },
-    "lsq1": {
-      "answers": [
-        {
-          "answerText": "I know how to exit vim",
-          "correct": true
-        },
-        {
-          "answerText": "I can use ChatGPT to code",
-          "correct": false
-        },
-        {
-          "answerText": "I can Copy Paste from StackOverflow",
-          "correct": false
+  "answers": {
+    "exampleEventId": {
+      "exampleQuestionId": {
+        "exampleUserId": {
+          "answer": "<answerText OR answerId>",
+          "displayName": "Jane Doe",
+          "submitTime": 1701369481152
         }
-      ],
-      "questionText": "Are you even a developer bro?",
-      "used": false
+      }
     }
   },
   "questions": {
-    "q00": {
-      "questionText": "\"💩\" - \"💩\"",
-      "answer": "NaN",
-      "used": false
+    "text": {
+      "qt00": {
+        "questionText": "\"💩\" - \"💩\"",
+        "answer": "NaN",
+        "used": false
+      },
+      "qt01": {
+        "questionText": "\"💩\".length",
+        "answer": "2",
+        "used": false
+      },
+      "qt02": {
+        "questionText": "0.1 + 0.2",
+        "answer": "0.30000000000000004",
+        "used": false
+      },
+      "qt03": {
+        "questionText": "+\"42\"",
+        "answer": "42",
+        "used": false
+      },
+      "qt04": {
+        "questionText": "[10, 5, 1].sort()",
+        "answer": "[1, 10, 5]",
+        "used": false
+      },
+      "qt05": {
+        "questionText": "NaN == NaN",
+        "answer": "false",
+        "used": false
+      },
+      "qt06": {
+        "questionText": "3 > 2 > 1",
+        "answer": "false",
+        "used": false
+      },
+      "qt07": {
+        "questionText": "typeof typeof 1",
+        "answer": "string",
+        "used": false
+      },
+      "qt08": {
+        "questionText": "null instanceof Object",
+        "answer": "false",
+        "used": false
+      },
+      "qt09": {
+        "questionText": "return\n  { id: 42 };",
+        "answer": "undefined",
+        "used": false
+      },
+      "qt10": {
+        "questionText": "(\"js\", \"rocks\")",
+        "answer": "\"rocks\"",
+        "used": false
+      },
+      "qt11": {
+        "questionText": "!!~[1, 2, 3].indexOf(3)",
+        "answer": "true",
+        "used": false
+      },
+      "qt12": {
+        "questionText": "Array(0, 1, Array(2))",
+        "answer": "[0, 1, [undefined, undefined]]",
+        "used": false
+      }
     },
-    "q01": {
-      "questionText": "\"💩\".length",
-      "answer": "2",
-      "used": false
-    },
-    "q02": {
-      "questionText": "0.1 + 0.2",
-      "answer": "0.30000000000000004",
-      "used": false
-    },
-    "q03": {
-      "questionText": "[1, 2, 3] + [4, 5, 6]",
-      "answer": "1,2,34,5,6",
-      "used": false
-    },
-    "q04": {
-      "questionText": "1 / 0",
-      "answer": "Infinity",
-      "used": false
-    },
-    "q05": {
-      "questionText": "+\"42\"",
-      "answer": "42",
-      "used": false
-    },
-    "q06": {
-      "questionText": "[10, 5, 1].sort()",
-      "answer": "[1, 10, 5]",
-      "used": false
-    },
-    "q07": {
-      "questionText": "NaN == NaN",
-      "answer": "false",
-      "used": false
-    },
-    "q08": {
-      "questionText": "3 > 2 > 1",
-      "answer": "false",
-      "used": false
-    },
-    "q09": {
-      "questionText": "typeof typeof 1",
-      "answer": "string",
-      "used": false
-    },
-    "q10": {
-      "questionText": "typeof null",
-      "answer": "\"object\"",
-      "used": false
-    },
-    "q11": {
-      "questionText": "null instanceof Object",
-      "answer": "false",
-      "used": false
-    },
-    "q12": {
-      "questionText": "return\n  { id: 42 };",
-      "answer": "undefined",
-      "used": false
-    },
-    "q13": {
-      "questionText": "[] + []",
-      "answer": "\"\"",
-      "used": false
-    },
-    "q14": {
-      "questionText": "(function foo(a, b) {}).length",
-      "answer": "2",
-      "used": false
-    },
-    "q15": {
-      "questionText": "(\"js\", \"rocks\")",
-      "answer": "\"rocks\"",
-      "used": false
-    },
-    "q16": {
-      "questionText": "!!~[1, 2, 3].indexOf(3)",
-      "answer": "true",
-      "used": false
-    },
-    "q17": {
-      "questionText": "Array(0, 1, Array(2))",
-      "answer": "[0, 1, [undefined, undefined]]",
-      "used": false
+    "choice": {
+      "qc00": {
+        "questionText": "1 / 0",
+        "used": false,
+        "answers": {
+          "a": {
+            "answerText": "Infinity",
+            "correct": true
+          },
+          "b": {
+            "answerText": "NaN",
+            "correct": false
+          },
+          "c": {
+            "answerText": "Number.MAX_VALUE",
+            "correct": false
+          },
+          "d": {
+            "answerText": "undefined",
+            "correct": false
+          }
+        }
+      },
+      "qc01": {
+        "questionText": "[1, 2, 3] + [4, 5, 6]",
+        "used": false,
+        "answers": {
+          "a": {
+            "answerText": "\"1,2,34,5,6\"",
+            "correct": true
+          },
+          "b": {
+            "answerText": "\"1,2,3,4,5,6\"",
+            "correct": false
+          },
+          "c": {
+            "answerText": "[1,2,3,4,5,6]",
+            "correct": false
+          },
+          "d": {
+            "answerText": "\"123456\"",
+            "correct": false
+          }
+        }
+      },
+      "qc02": {
+        "questionText": "[] + []",
+        "used": false,
+        "answers": {
+          "a": {
+            "answerText": "\"\"",
+            "correct": true
+          },
+          "b": {
+            "answerText": "NaN",
+            "correct": false
+          },
+          "c": {
+            "answerText": "undefined",
+            "correct": false
+          },
+          "d": {
+            "answerText": "[]",
+            "correct": false
+          }
+        }
+      },
+      "qc03": {
+        "questionText": "typeof null",
+        "used": false,
+        "answers": {
+          "a00": {
+            "answerText": "\"object\"",
+            "correct": true
+          },
+          "a01": {
+            "answerText": "\"null\"",
+            "correct": false
+          },
+          "a02": {
+            "answerText": "null",
+            "correct": false
+          },
+          "a03": {
+            "answerText": "undefined",
+            "correct": false
+          }
+        }
+      },
+      "qc04": {
+        "questionText": "(function foo(a, b) {}).length",
+        "used": false,
+        "answers": {
+          "a00": {
+            "answerText": "2",
+            "correct": true
+          },
+          "a01": {
+            "answerText": "undefined",
+            "correct": false
+          },
+          "a02": {
+            "answerText": "23",
+            "correct": false
+          },
+          "a03": {
+            "answerText": "21",
+            "correct": false
+          }
+        }
+      }
     }
   }
 }

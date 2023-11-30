@@ -1,6 +1,42 @@
-Stuff to change/update since London 2023 Show:
+# Showing Answer Text to Player:
 
-1. Integrate the Audience App and the Presenter app so that we show the question on the big screen.
-2. Find some way to show/explain the answers. Especially after game questions so there is a good transition.
-3. Questions should be harder, and maybe back to 5.
-4. Maybe have "themed" games--all equality questions, all math questions.
+When player answers a "choice" question, the "Your Answer" should display the answer Text instead of the answerId.
+
+# Player Choice Randomize
+
+When displaying "choice" questions to the player, randomize the order they are displayed in.
+
+# Admin Last Standing Answer Ordering
+
+When showing a "last standing/choice" question, the answers from users should display the answerText instead of the Id. It should also show whether it is correct or not.
+The list should be sorted by correctness first, then by time.
+
+# Player Answer Feedback
+
+After the admin "shows the answer", players that got it correct and incorrect should see some fanfare on their device. Confetti? Big Sad Emoji?
+This should happen in either Mode.
+
+# Player Last Standing Status
+
+When answering "last standing/choice" questions, the player should have some status in the header on how far they have progressed.
+"Answered 1 of 5 questions correctly". This can be based on local storage, it's not enforced.
+
+# Player Last Standing Elimination
+
+When a player gets a "last standing" question wrong, they no longer get new active questions displayed. Instead, they get a "you have been eliminated" UI.
+
+# Admin Last Standing Status
+
+The admin should see how many players are still eligible in the last standing round, based on who has answered all the choice questions displayed so far correctly.
+
+# How to handle complete elimination
+
+When 0 players answer a last standing question correctly, we need to have a "redo" and let everyone answer another question
+
+# How to handle a tie (stretch goal)
+
+When more than 1 player answer all the last standing questions, what do we do? Show a text question? Show a bonus choice question? Just go off of time?
+
+# Styling the things
+
+Styling choice answers
