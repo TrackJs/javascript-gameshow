@@ -50,7 +50,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       showAnswerFormResult(answer);
       return;
     }
-    // debugger;
+
     const payload = {
       displayName,
       answer,
@@ -148,7 +148,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
 
     if (question.questionMode === "choice") {
       let htmlContent = "";
-      Object.keys(question.answers).forEach((answerId) => {
+      shuffleArray(Object.keys(question.answers)).forEach((answerId) => {
         let answer = { answerId, ...question.answers[answerId] };
         htmlContent += `<label class="flex"><input type="radio" name="answer" required value="${answer.answerId}"/><span>${answer.answerText}</span></label>`;
       })
@@ -224,6 +224,23 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       localStorage.setItem(key, value);
     }
     catch (e) { }
+  }
+  function shuffleArray(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
   }
 
 })();
