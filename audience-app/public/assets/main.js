@@ -50,19 +50,19 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       showAnswerFormResult(answer);
       return;
     }
-
+    // debugger;
     const payload = {
       displayName,
       answer,
+      displayValue: question.questionMode === "choice" ? question.answers[answer].answerText : answer,
+      isCorrect: question.questionMode === "choice" ? question.answers[answer].correct : null,
       submitTime: firebase.database.ServerValue.TIMESTAMP
     };
-
-    let rootPath = question.questionMode === "lastStanding" ? 'answersLastStanding' : 'answers';
-
-    const answerRef = firebase.database().ref(`/${rootPath}/${question.eventId}/${question.questionId}/${uid}`);
+    
+    const answerRef = firebase.database().ref(`/answers/${question.eventId}/${question.questionId}/${uid}`);
     answerRef.set(payload).then(() => {
       console.log("answer submitted", payload);
-      showAnswerFormResult(answer);
+      showAnswerFormResult(payload.displayValue);
     },
       (rej) => {
         console.error(rej);
@@ -179,7 +179,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
 
     if (question.answer) {
       correctAnswerSectionEl.style.display = "block";
-      correctAnswerTextEl.innerHTML = `<pre>${escapeHtml(question.answer)}</pre>`;
+      correctAnswerTextEl.innerHTML = `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
     }
   }
 
