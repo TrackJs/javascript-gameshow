@@ -150,7 +150,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       let htmlContent = "";
       shuffleArray(Object.keys(question.answers)).forEach((answerId) => {
         let answer = { answerId, ...question.answers[answerId] };
-        htmlContent += `<label class="flex"><input type="radio" name="answer" required value="${answer.answerId}"/><span>${answer.answerText}</span></label>`;
+        htmlContent += `<label class="flex choice-option"><input type="radio" name="answer" required value="${answer.answerId}"/><span>${answer.answerText}</span></label>`;
       })
 
       answerTextContainerEl.innerHTML = htmlContent;

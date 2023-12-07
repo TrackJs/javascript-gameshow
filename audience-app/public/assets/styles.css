@@ -183,6 +183,31 @@ section#active-question #answer-text pre {
   margin: 0.5em 0;
 }
 
+section#active-question label.choice-option {
+  display: flex;
+  align-items: center;
+  padding: .25rem 1rem;
+  border-radius: 36px;
+  font-size: 1.2rem;
+  border: 4px solid #3e0676;
+  font-weight: bold;
+  color: white;
+  font-family: monospace;
+  background: radial-gradient(var(--dark-purple), #3e0676);
+}
+section#active-question input[type="radio"] {
+  appearance: none;
+}
+section#active-question input[type="radio"]::before {
+  content: "✓";
+  color: rgba(0,0,0,0);
+  padding-right: 2ch;
+}
+section#active-question input[type="radio"]:checked::before {
+  color: white;
+}
+
+
 section#active-question #answer-list {
   list-style: none;
   margin: 0;
