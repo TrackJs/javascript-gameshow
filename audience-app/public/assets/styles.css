@@ -191,10 +191,10 @@ section#active-question #answer-list {
 }
 
 section#active-question #answer-list li {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   border-bottom: 1px solid #7b417b;
 }
+
 
 section#active-question #answer-list li div {
   font-size: 1.0em;
@@ -287,6 +287,10 @@ section#questions #question-list li label pre {
   max-width: 100%;
   height: auto;
   animation: pulseGlow 3s linear infinite;
+}
+
+.correct {
+  background: #095934;
 }
 
 @keyframes pulseGlow {

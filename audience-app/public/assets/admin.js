@@ -198,11 +198,13 @@
 
       Object.values(answers)
         .sort((a, b) => a.submitTime - b.submitTime)
+        .sort((a,b) => b.correct - a.correct )
         .forEach((answer) => {
           answerListEl.innerHTML += `
-            <li>
+            <li class="${answer.correct ? "correct" : "" }">
               <div>${escapeHtml(answer.displayName)}</div>
-              <pre>${escapeHtml(answer.answer)}</pre>
+              <pre>${escapeHtml(answer.displayValue || answer.answer)}</pre>
+              ${answer.correct !== undefined ? answer.correct ? '<div>Correct</div>' : '<div>Wrong</div>' : ''}
               <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
             </li>`;
         });

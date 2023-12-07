@@ -55,7 +55,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       displayName,
       answer,
       displayValue: question.questionMode === "choice" ? question.answers[answer].answerText : answer,
-      isCorrect: question.questionMode === "choice" ? question.answers[answer].correct : null,
+      correct: question.questionMode === "choice" ? question.answers[answer].correct : null,
       submitTime: firebase.database.ServerValue.TIMESTAMP
     };
     
