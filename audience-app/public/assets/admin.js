@@ -190,12 +190,30 @@
     activeQuestionSectionEl.querySelector("#active-question-answer").innerHTML = `
         <pre>${escapeHtml(correctAnswerText)}</pre>`;
 
-    answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`)
+    answersRef = firebase.database().ref(`/answers/${activeEventId}`)
     answersRef.on('value', (snapshot) => {
-      const answers = snapshot.val();
+      const answers = snapshot.val()?.[activeQuestion.questionId];
+      
       answerListEl.innerHTML = "";
       if (!answers) { return; }
+      
+      if (activeQuestion.questionMode === 'choice') {
+        let fullList = snapshot.val()
+        let questions = Object.keys(fullList)
+          .filter(questionId => questionId.startsWith("qc")) 
+          .reduce((acc, questionId) => {
+            Object.keys(fullList[questionId]).reduce((acc, userId) => {
+              const userAnswer = fullList[questionId][userId];
+              
+            });
+            
 
+            //  create an array of users : { userId: sting, displayName: string, inRunning: boolean, totalTime: number }[]
+            // Object.keys(fullList[questionId]) => ["userid"];
+            // const question = typeof fullList[questionId].correct === 'boolean'
+            // if (fullList[questionId])
+          }), [])
+      }
       Object.values(answers)
         .sort((a, b) => a.submitTime - b.submitTime)
         .sort((a,b) => b.correct - a.correct )
