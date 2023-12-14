@@ -4,6 +4,8 @@ const USERNAME_KEY = "GAMESHOW_USER_NAME";
 const USERID_KEY = "GAMESHOW_USER_ID";
 const ANSWER_KEY = "GAMESHOW_ANSWER";
 const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
+const TOTAL_CORRECT_KEY = "TOTAL_CORRECT";
+const TOTAL_COUNT_KEY = "TOTAL_COUNT";
 
 (async () => {
 
@@ -128,7 +130,7 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
       <div>What is the result of this JavaScript?</div>
       <pre>${escapeHtml(question.questionText)}</pre>`;
 
-    const activeAnswer = tryGet(`${ANSWER_KEY}_${question.questionId}`);
+    const activeAnswer = tryGet(`${question.eventId}_${ANSWER_KEY}_${question.questionId}`);
     console.log('activeAnswer', activeAnswer)
     if (activeAnswer) {
       showAnswerFormResult(activeAnswer);
@@ -169,17 +171,29 @@ const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
 
   function showAnswerFormResult(answer) {
     answerFormResultEl.querySelector("#answer-text").innerHTML = `<pre>${escapeHtml(answer)}</pre>`;
-    trySet(`${ANSWER_KEY}_${question.questionId}`, answer);
+    trySet(`${question.eventId}_${ANSWER_KEY}_${question.questionId}`, answer);
 
     answerFormEl.reset();
     answerFormEl.style.display = "none";
     answerFormLoadingEl.style.display = "none";
     answerFormResultEl.style.display = "block";
     sponsorsEl.style.display = "none";
+    correctAnswerTextEl.innerHTML = ''
 
     if (question.answer) {
       correctAnswerSectionEl.style.display = "block";
-      correctAnswerTextEl.innerHTML = `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
+      if (question.answer.answerText) {
+        const correct = question.answer.answerText === answer;
+        correctAnswerTextEl.innerHTML += `<p>You are ${ correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;
+        let total = Number(localStorage.getItem(`${question.eventId}_${TOTAL_CORRECT_KEY}`) || 0)
+        total++;
+        let totalCorrect = Number(localStorage.getItem(`${question.eventId}_${TOTAL_COUNT_KEY}`) || 0)
+        if (correct) totalCorrect++;
+        correctAnswerTextEl.innerHTML += `<p>${totalCorrect} / ${total} Correct Answers</p>`;
+        correctAnswerTextEl.innerHTML += `<p>${totalCorrect === total ? 'You are still in the running': "Playing for fun now. No prizes for you." }</p>`;
+
+      }
+      correctAnswerTextEl.innerHTML += `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
     }
   }
 

@@ -1,26 +1,3 @@
-# Showing Answer Text to Player:
-
-When player answers a "choice" question, the "Your Answer" should display the answer Text instead of the answerId.
-
-# Player Choice Randomize
-
-When displaying "choice" questions to the player, randomize the order they are displayed in.
-
-# Admin Last Standing Answer Ordering
-
-When showing a "last standing/choice" question, the answers from users should display the answerText instead of the Id. It should also show whether it is correct or not.
-The list should be sorted by correctness first, then by time.
-
-# Player Answer Feedback
-
-After the admin "shows the answer", players that got it correct and incorrect should see some fanfare on their device. Confetti? Big Sad Emoji?
-This should happen in either Mode.
-
-# Player Last Standing Status
-
-When answering "last standing/choice" questions, the player should have some status in the header on how far they have progressed.
-"Answered 1 of 5 questions correctly". This can be based on local storage, it's not enforced.
-
 # Player Last Standing Elimination
 
 When a player gets a "last standing" question wrong, they no longer get new active questions displayed. Instead, they get a "you have been eliminated" UI.
