@@ -198,23 +198,52 @@
       if (!answers) { return; }
       
       if (activeQuestion.questionMode === 'choice') {
-        let fullList = snapshot.val()
-        let questions = Object.keys(fullList)
+        let scores = {};
+        let fullAnswerList = snapshot.val()
+        const questionsAsked = Object.keys(fullAnswerList).filter(questionId => questionId.startsWith("qc")).length;
+        Object.keys(fullAnswerList)
           .filter(questionId => questionId.startsWith("qc")) 
-          .reduce((acc, questionId) => {
-            Object.keys(fullList[questionId]).reduce((acc, userId) => {
-              const userAnswer = fullList[questionId][userId];
-              
-            });
-            
+          .forEach((questionId) => {
+            Object.keys(fullAnswerList[questionId]).forEach(userId => {
+              const userAnswer = fullAnswerList[questionId][userId];
+              const answers = (scores[userId] || {}).answers || []
+              const aggregatedAnswers = [ ...answers, userAnswer ]
+              scores[userId] = {
+                userId: userId,
+                answers: aggregatedAnswers,
+                inRunning: aggregatedAnswers.every(answer => answer.correct) && questionsAsked === aggregatedAnswers.length ,
+                answerCount: aggregatedAnswers.length,
+                correctCount: aggregatedAnswers.filter(answer => answer.correct).length,
+                displayName: userAnswer.displayName,
+              }
 
-            //  create an array of users : { userId: sting, displayName: string, inRunning: boolean, totalTime: number }[]
-            // Object.keys(fullList[questionId]) => ["userid"];
-            // const question = typeof fullList[questionId].correct === 'boolean'
-            // if (fullList[questionId])
-          }), [])
+              if (activeQuestion.questionId === questionId) {
+                scores[userId].displayValue = userAnswer.displayValue || '';
+                scores[userId].submitTime = userAnswer.submitTime;
+              }
+             
+             
+            });
+          });
+        scores = Object.values(scores);
+          console.log(scores)
+        Object.values(scores)
+          .sort((a,b) => b.correct - a.correct )
+          .sort((a, b) => (a.submitTime ? a.submitTime : Infinity) - (b.submitTime ? b.submitTime : Infinity))
+          .sort((a, b) => b.inRunning - a.inRunning)
+          .forEach((score) => {
+            answerListEl.innerHTML += `
+              <li class="${score.inRunning ? "correct" : "" }">
+                <div>${escapeHtml(score.displayName || '')}</div>
+                <pre>${escapeHtml(score.displayValue || '(No Answer)')}</pre>
+                <div>${score.inRunning ? 'Still in the game' : 'Out of game' } - ${score.correctCount } / ${questionsAsked}</div>
+                ${score.correct !== undefined ? score.correct ? '<div>Correct</div>' : '<div>Wrong</div>' : ''}
+                <div>${((score.submitTime || Number.MAX_VALUE) - activeQuestion.submitTime) / 1000} sec</div>
+              </li>`;
+          });
       }
-      Object.values(answers)
+      else {
+        Object.values(answers)
         .sort((a, b) => a.submitTime - b.submitTime)
         .sort((a,b) => b.correct - a.correct )
         .forEach((answer) => {
@@ -226,6 +255,7 @@
               <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
             </li>`;
         });
+      }
     });
   }
 
