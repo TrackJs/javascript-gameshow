@@ -5,6 +5,7 @@
     "answers": {
       "$eventId": {
         "$questionId": {
+          "void": {},
           "$user_id": {
             ".write": "!data.exists() && newData.hasChildren(['answer','displayName','submitTime'])",
             ".validate": "newData.child('submitTime').isNumber() && newData.child('answer').isString() && newData.child('answer').val().length < 100 && newData.child('displayName').val().length < 100"

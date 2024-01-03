@@ -128,6 +128,7 @@ const ANSWERED_HASH_KEY = "ANSWERED_QUESTIONS";
     correctAnswerSectionEl.style.display = "none";
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
+      ${question.void ? "<div style='color:red'>VOID VOID VOID</div>" : ""}
       <div>What is the result of this JavaScript?</div>
       <pre>${escapeHtml(question.questionText)}</pre>`;
 
@@ -137,7 +138,7 @@ const ANSWERED_HASH_KEY = "ANSWERED_QUESTIONS";
     if (activeAnswer && question.answer && question.answer.answerText) {
       const correct = activeAnswer === question.answer.answerText;
       const answerHash = JSON.parse(tryGet(`${question.eventId}_${ANSWERED_HASH_KEY}`) || "{}");
-      answerHash[question.questionId] = correct;
+      answerHash[question.questionId] = question.void ? "VOID" : correct;
       trySet(`${question.eventId}_${ANSWERED_HASH_KEY}`, JSON.stringify(answerHash));
     }
 
@@ -195,7 +196,7 @@ const ANSWERED_HASH_KEY = "ANSWERED_QUESTIONS";
       if (question.answer.answerText) {
         const correct = question.answer.answerText === answer;
         const answerHash = JSON.parse(tryGet(`${question.eventId}_${ANSWERED_HASH_KEY}`) || "{}");
-        const totalAsked = Object.keys(answerHash).filter(k => k.startsWith("qc")).length;
+        const totalAsked = Object.keys(answerHash).filter(k => k.startsWith("qc") && answerHash[k] !== "VOID").length;
         const totalCorrect = Object.keys(answerHash).filter(k => k.startsWith("qc") && answerHash[k] === true).length;
 
         correctAnswerTextEl.innerHTML += `<p>You are ${correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;

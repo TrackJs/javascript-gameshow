@@ -47,6 +47,7 @@
 
     activeQuestionRef.remove();
     document.querySelector("#active-question-show-answer").removeAttribute("disabled");
+    document.querySelector("#active-question-void").removeAttribute("disabled");
   });
 
   document.querySelector("#active-question-show-answer").addEventListener("click", (evt) => {
@@ -69,7 +70,19 @@
 
     activeQuestionRef.update({ answer });
     evt.target.setAttribute("disabled", "disabled");
-  })
+  });
+
+  document.querySelector("#active-question-void").addEventListener("click", (evt) => {
+    evt.preventDefault();
+    if (!confirm("Are you sure you want to VOID the question?")) { return; }
+
+    activeQuestionRef.update({ void: true });
+
+    answersRef = firebase.database().ref(`/answers/${activeEventId}/${activeQuestion.questionId}`);
+    answersRef.update({ void: true });
+
+    evt.target.setAttribute("disabled", "disabled");
+  });
 
   document.querySelector("#select-question-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
@@ -172,6 +185,7 @@
     activeQuestionSectionEl.style.display = "block";
 
     activeQuestionSectionEl.querySelector("#active-question-text").innerHTML = `
+      ${activeQuestion.void ? "<div style='color:red'>VOID VOID VOID</div>" : ""}
       <div>What is the result of this JavaScript?</div>
       <pre>${escapeHtml(activeQuestion.questionText)}</pre>`;
 
@@ -200,9 +214,9 @@
       if (activeQuestion.questionMode === 'choice') {
         let scores = {};
         let fullAnswerList = snapshot.val()
-        const questionsAsked = Object.keys(fullAnswerList).filter(questionId => questionId.startsWith("qc")).length;
+        const questionsAsked = Object.keys(fullAnswerList).filter(questionId => questionId.startsWith("qc") && !fullAnswerList[questionId].void).length;
         Object.keys(fullAnswerList)
-          .filter(questionId => questionId.startsWith("qc"))
+          .filter(questionId => questionId.startsWith("qc") && !fullAnswerList[questionId].void)
           .forEach((questionId) => {
             Object.keys(fullAnswerList[questionId]).forEach(userId => {
               const userAnswer = fullAnswerList[questionId][userId];
