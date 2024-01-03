@@ -60,7 +60,7 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
       correct: question.questionMode === "choice" ? question.answers[answer].correct : null,
       submitTime: firebase.database.ServerValue.TIMESTAMP
     };
-    
+
     const answerRef = firebase.database().ref(`/answers/${question.eventId}/${question.questionId}/${uid}`);
     answerRef.set(payload).then(() => {
       console.log("answer submitted", payload);
@@ -182,18 +182,18 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
 
     if (question.answer) {
       correctAnswerSectionEl.style.display = "block";
+      correctAnswerTextEl.innerHTML += `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
       if (question.answer.answerText) {
         const correct = question.answer.answerText === answer;
-        correctAnswerTextEl.innerHTML += `<p>You are ${ correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;
+        correctAnswerTextEl.innerHTML += `<p>You are ${correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;
         let total = Number(localStorage.getItem(`${question.eventId}_${TOTAL_CORRECT_KEY}`) || 0)
         total++;
         let totalCorrect = Number(localStorage.getItem(`${question.eventId}_${TOTAL_COUNT_KEY}`) || 0)
         if (correct) totalCorrect++;
         correctAnswerTextEl.innerHTML += `<p>${totalCorrect} / ${total} Correct Answers</p>`;
-        correctAnswerTextEl.innerHTML += `<p>${totalCorrect === total ? 'You are still in the running': "Playing for fun now. No prizes for you." }</p>`;
+        correctAnswerTextEl.innerHTML += `<p>${totalCorrect === total ? 'You are still in the running' : "Playing for fun now. No prizes for you."}</p>`;
 
       }
-      correctAnswerTextEl.innerHTML += `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
     }
   }
 
@@ -240,20 +240,20 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
     catch (e) { }
   }
   function shuffleArray(array) {
-    let currentIndex = array.length,  randomIndex;
-  
+    let currentIndex = array.length, randomIndex;
+
     // While there remain elements to shuffle.
     while (currentIndex > 0) {
-  
+
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
+
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-  
+
     return array;
   }
 
