@@ -4,8 +4,7 @@ const USERNAME_KEY = "GAMESHOW_USER_NAME";
 const USERID_KEY = "GAMESHOW_USER_ID";
 const ANSWER_KEY = "GAMESHOW_ANSWER";
 const ASSHOLE_KEY = "GAMESHOW_ASSHOLE";
-const TOTAL_CORRECT_KEY = "TOTAL_CORRECT";
-const TOTAL_COUNT_KEY = "TOTAL_COUNT";
+const ANSWERED_HASH_KEY = "ANSWERED_QUESTIONS";
 
 (async () => {
 
@@ -63,7 +62,9 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
 
     const answerRef = firebase.database().ref(`/answers/${question.eventId}/${question.questionId}/${uid}`);
     answerRef.set(payload).then(() => {
-      console.log("answer submitted", payload);
+      const answerHash = JSON.parse(tryGet(`${question.eventId}_${ANSWERED_HASH_KEY}`) || "{}");
+      answerHash[question.questionId] = answerHash[question.questionId] || null;
+      trySet(`${question.eventId}_${ANSWERED_HASH_KEY}`, JSON.stringify(answerHash));
       showAnswerFormResult(payload.displayValue);
     },
       (rej) => {
@@ -131,7 +132,15 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
       <pre>${escapeHtml(question.questionText)}</pre>`;
 
     const activeAnswer = tryGet(`${question.eventId}_${ANSWER_KEY}_${question.questionId}`);
-    console.log('activeAnswer', activeAnswer)
+
+    // answer has been revealed, save our state
+    if (activeAnswer && question.answer && question.answer.answerText) {
+      const correct = activeAnswer === question.answer.answerText;
+      const answerHash = JSON.parse(tryGet(`${question.eventId}_${ANSWERED_HASH_KEY}`) || "{}");
+      answerHash[question.questionId] = correct;
+      trySet(`${question.eventId}_${ANSWERED_HASH_KEY}`, JSON.stringify(answerHash));
+    }
+
     if (activeAnswer) {
       showAnswerFormResult(activeAnswer);
     }
@@ -185,14 +194,13 @@ const TOTAL_COUNT_KEY = "TOTAL_COUNT";
       correctAnswerTextEl.innerHTML += `<pre>${escapeHtml(question.answer.answerText || question.answer)}</pre>`;
       if (question.answer.answerText) {
         const correct = question.answer.answerText === answer;
-        correctAnswerTextEl.innerHTML += `<p>You are ${correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;
-        let total = Number(localStorage.getItem(`${question.eventId}_${TOTAL_CORRECT_KEY}`) || 0)
-        total++;
-        let totalCorrect = Number(localStorage.getItem(`${question.eventId}_${TOTAL_COUNT_KEY}`) || 0)
-        if (correct) totalCorrect++;
-        correctAnswerTextEl.innerHTML += `<p>${totalCorrect} / ${total} Correct Answers</p>`;
-        correctAnswerTextEl.innerHTML += `<p>${totalCorrect === total ? 'You are still in the running' : "Playing for fun now. No prizes for you."}</p>`;
+        const answerHash = JSON.parse(tryGet(`${question.eventId}_${ANSWERED_HASH_KEY}`) || "{}");
+        const totalAsked = Object.keys(answerHash).filter(k => k.startsWith("qc")).length;
+        const totalCorrect = Object.keys(answerHash).filter(k => k.startsWith("qc") && answerHash[k] === true).length;
 
+        correctAnswerTextEl.innerHTML += `<p>You are ${correct ? 'Correct! 😊' : 'Wrong! 💩'}</p>`;
+        correctAnswerTextEl.innerHTML += `<p>${totalCorrect} / ${totalAsked} Correct Answers</p>`;
+        correctAnswerTextEl.innerHTML += `<p>${totalCorrect === totalAsked ? 'You are still in the running' : "Playing for fun now. No prizes for you."}</p>`;
       }
     }
   }
