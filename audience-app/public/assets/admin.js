@@ -193,50 +193,54 @@
     answersRef = firebase.database().ref(`/answers/${activeEventId}`)
     answersRef.on('value', (snapshot) => {
       const answers = snapshot.val()?.[activeQuestion.questionId];
-      
+
       answerListEl.innerHTML = "";
       if (!answers) { return; }
-      
+
       if (activeQuestion.questionMode === 'choice') {
         let scores = {};
         let fullAnswerList = snapshot.val()
         const questionsAsked = Object.keys(fullAnswerList).filter(questionId => questionId.startsWith("qc")).length;
         Object.keys(fullAnswerList)
-          .filter(questionId => questionId.startsWith("qc")) 
+          .filter(questionId => questionId.startsWith("qc"))
           .forEach((questionId) => {
             Object.keys(fullAnswerList[questionId]).forEach(userId => {
               const userAnswer = fullAnswerList[questionId][userId];
               const answers = (scores[userId] || {}).answers || []
-              const aggregatedAnswers = [ ...answers, userAnswer ]
+              const aggregatedAnswers = [...answers, userAnswer]
               scores[userId] = {
                 userId: userId,
                 answers: aggregatedAnswers,
-                inRunning: aggregatedAnswers.every(answer => answer.correct) && questionsAsked === aggregatedAnswers.length ,
+                inRunning: aggregatedAnswers.every(answer => answer.correct) && questionsAsked === aggregatedAnswers.length,
                 answerCount: aggregatedAnswers.length,
                 correctCount: aggregatedAnswers.filter(answer => answer.correct).length,
                 displayName: userAnswer.displayName,
               }
 
+              // Check that we are now counting the "current" question, which is the only
+              // one that has display info. Also, if this doesn't exist, it means the user
+              // hasn't answered the current question yet.
               if (activeQuestion.questionId === questionId) {
                 scores[userId].displayValue = userAnswer.displayValue || '';
                 scores[userId].submitTime = userAnswer.submitTime;
+                scores[userId].hasAnsweredCurrent = true;
               }
-             
-             
+
+
             });
           });
         scores = Object.values(scores);
-          console.log(scores)
         Object.values(scores)
-          .sort((a,b) => b.correct - a.correct )
+          .filter((s) => s.hasAnsweredCurrent)
+          .sort((a, b) => b.correct - a.correct)
           .sort((a, b) => (a.submitTime ? a.submitTime : Infinity) - (b.submitTime ? b.submitTime : Infinity))
           .sort((a, b) => b.inRunning - a.inRunning)
           .forEach((score) => {
             answerListEl.innerHTML += `
-              <li class="${score.inRunning ? "correct" : "" }">
+              <li class="${score.inRunning ? "correct" : ""}">
                 <div>${escapeHtml(score.displayName || '')}</div>
                 <pre>${escapeHtml(score.displayValue || '(No Answer)')}</pre>
-                <div>${score.inRunning ? 'Still in the game' : 'Out of game' } - ${score.correctCount } / ${questionsAsked}</div>
+                <div>${score.inRunning ? 'Still in the game' : 'Out of game'} - ${score.correctCount} / ${questionsAsked}</div>
                 ${score.correct !== undefined ? score.correct ? '<div>Correct</div>' : '<div>Wrong</div>' : ''}
                 <div>${((score.submitTime || Number.MAX_VALUE) - activeQuestion.submitTime) / 1000} sec</div>
               </li>`;
@@ -244,17 +248,17 @@
       }
       else {
         Object.values(answers)
-        .sort((a, b) => a.submitTime - b.submitTime)
-        .sort((a,b) => b.correct - a.correct )
-        .forEach((answer) => {
-          answerListEl.innerHTML += `
-            <li class="${answer.correct ? "correct" : "" }">
+          .sort((a, b) => a.submitTime - b.submitTime)
+          .sort((a, b) => b.correct - a.correct)
+          .forEach((answer) => {
+            answerListEl.innerHTML += `
+            <li class="${answer.correct ? "correct" : ""}">
               <div>${escapeHtml(answer.displayName)}</div>
               <pre>${escapeHtml(answer.displayValue || answer.answer)}</pre>
               ${answer.correct !== undefined ? answer.correct ? '<div>Correct</div>' : '<div>Wrong</div>' : ''}
               <div>${(answer.submitTime - activeQuestion.submitTime) / 1000} sec</div>
             </li>`;
-        });
+          });
       }
     });
   }
