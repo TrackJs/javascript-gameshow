@@ -23,17 +23,27 @@ interface PrizeClaim {
 
 const STORAGE_KEY = "prize-claims";
 
-const PRIZE_INVENTORY : InventoryPrize[] = [
+const PRIZE_INVENTORY: InventoryPrize[] = [
 
-  // {
-  //   id: "ee2b4d37482543f0b2eeb651b8c4a4f8",
-  //   name: "Hand Sanitizer",
-  //   difficulty: 0,
-  //   quantity: 5,
-  //   imageUrl: "/assets/prizes/hand_sanitizer.png",
-  //   sponsorName: "Request Metrics",
-  //   sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
-  // },
+  // level 0
+  {
+    id: "ee2b4d37482543f0b2eeb651b8c4a4f8",
+    name: "Hand Sanitizer",
+    difficulty: 0,
+    quantity: 4,
+    imageUrl: "/assets/prizes/hand_sanitizer.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics2.svg"
+  },
+  {
+    id: "ee2b4d37482583f0b2eeb651b8c4a4f8",
+    name: "Highcharts Socks",
+    difficulty: 0,
+    quantity: 1,
+    imageUrl: "",
+    sponsorName: "Highcharts",
+    sponsorImageUrl: "/assets/sponsors/highcharts.png"
+  },
   // {
   //   id: "ee2b4d37482543f0b2eeb651b8c4a4f9",
   //   name: "Squeaky Sloth Keychain",
@@ -43,98 +53,106 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
   //   sponsorName: "Request Metrics",
   //   sponsorImageUrl: "/assets/sponsors/request_metrics.svg"
   // },
+
+  // level 1
   {
     id: "b85def0e3d0f4955a1869da68e47bca0",
     name: "At Least I'm Wearing Pants",
-    difficulty: 0,
+    difficulty: 1,
     quantity: 5,
     imageUrl: "/assets/prizes/jogger.png",
     sponsorName: "TrackJS",
     sponsorImageUrl: "/assets/sponsors/trackjs.svg"
   },
 
+  // level 2
   {
-    id: "b85def0e3d0f4955a1869da68e47bcb2",
-    name: "Signed Pro .NET on AWS",
-    difficulty: 1, //50gbp
-    quantity: 1,
-    imageUrl: "/assets/prizes/prodotnet_aws_book.png",
+    id: "b85de80e2d0f4955a1869da68e47bcb2",
+    name: "TBD Amazon Book",
+    difficulty: 2,
+    quantity: 2,
+    imageUrl: "",
     sponsorName: "AWS",
     sponsorImageUrl: "/assets/sponsors/aws.png"
   },
   {
     id: "5373650e5fe847d88b4f64ed0804207d",
-    name: "￡50 Secretlab GC",
-    difficulty: 1,
-    quantity: 1,
-    imageUrl: "/assets/prizes/secretlab.png",
-    sponsorName: "Couchbase",
-    sponsorImageUrl: "/assets/sponsors/couchbase.png"
+    name: "TrackJS 50 TBD",
+    difficulty: 2,
+    quantity: 3,
+    imageUrl: "",
+    sponsorName: "TrackJS",
+    sponsorImageUrl: "/assets/sponsors/trackjs.svg"
   },
+
+  // level 3
   {
     id: "087f90ccd7ac48fcb31bc3eaab86e1a1",
-    name: "￡25 Amazon GC",
-    difficulty: 1,
-    quantity: 1,
+    name: "￡100 Amazon GC",
+    difficulty: 3,
+    quantity: 2,
     imageUrl: "/assets/prizes/amazongc.png",
-    sponsorName: "Octopus Deploy",
-    sponsorImageUrl: "/assets/sponsors/octopus_deploy.svg"
+    sponsorName: "Progress",
+    sponsorImageUrl: "/assets/sponsors/progress.jpg"
   },
   {
     id: "5373650e5fe847d88b4f64ed0804207e",
-    name: "Lego Galaxy Explorer",
-    difficulty: 2, //90gbp
-    quantity: 1,
-    imageUrl: "/assets/prizes/lego_galaxy_explorer.png",
-    sponsorName: "Honeycomb",
-    sponsorImageUrl: "/assets/sponsors/honeycomb.svg"
-  },
-  {
-    id: "ba6ed21c72cb4d3dbe56aa23dd84ff1d",
-    name: "Lego Infinity Glove & Light",
-    difficulty: 2, // $65gbp
-    quantity: 1,
-    imageUrl: "/assets/prizes/lego_infinity_glove.png",
-    sponsorName: "RavenDB",
-    sponsorImageUrl: "/assets/sponsors/ravendb.png"
-  },
-  {
-    id: "ba6ed21c72cb4d3dbe56aa23dd84ff0c",
-    name: "Lego Star Wars Mandalorian Helmet",
-    difficulty: 2, // $60gbp
-    quantity: 1,
-    imageUrl: "/assets/prizes/lego_mandalorian.png",
-    sponsorName: "Vonage",
-    sponsorImageUrl: "/assets/sponsors/vonage.png"
+    name: "Ember Mug",
+    difficulty: 3,
+    quantity: 3,
+    imageUrl: "",
+    sponsorName: "Syncfusion",
+    sponsorImageUrl: "/assets/sponsors/syncfusion.png"
   },
 
+  // level 4
   {
     id: "9d312ed5f25a47469748f62f9eeab225",
     name: "Nintendo Switch",
-    difficulty: 3, // 250
+    difficulty: 4, // 250
     quantity: 1,
     imageUrl: "/assets/prizes/nintendo_switch.png",
     sponsorName: "Text Control",
     sponsorImageUrl: "/assets/sponsors/text_control.svg"
   },
   {
-    id: "251e637c340942d389e8ab64cd421e63",
-    name: "Surface Headphones 2",
-    difficulty: 3, // 240gbp
+    id: "ba6ed21c72cb4d3dbe56aa23dd84ff1d",
+    name: "Apple Airpods",
+    difficulty: 4, // $65gbp
     quantity: 1,
-    imageUrl: "/assets/prizes/surfaceheadphones2.png",
-    sponsorName: "Microsoft",
-    sponsorImageUrl: "/assets/sponsors/microsoft.png"
+    imageUrl: "/assets/prizes/airpods.png",
+    sponsorName: "Highcharts",
+    sponsorImageUrl: "/assets/sponsors/highcharts.png"
   },
   {
-    id: "4f780b6e31d64c77a9d9ae19cea87342",
-    name: "RODE NT-USB microphone",
-    difficulty: 3, //130gbp
-    quantity: 1,
-    imageUrl: "/assets/prizes/rode_mic.png",
-    sponsorName: "Kontent.ai",
-    sponsorImageUrl: "/assets/sponsors/kontentai.png"
-  },
+    id: "ba6ed21c72cb4d3dbe56aa23dd84ff0c",
+    name: "TBD TrackJS",
+    difficulty: 4,
+    quantity: 3,
+    imageUrl: "",
+    sponsorName: "TrackJS",
+    sponsorImageUrl: "/assets/sponsors/trackjs.svg"
+  }
+
+
+  // {
+  //   id: "251e637c340942d389e8ab64cd421e63",
+  //   name: "Surface Headphones 2",
+  //   difficulty: 3, // 240gbp
+  //   quantity: 1,
+  //   imageUrl: "/assets/prizes/surfaceheadphones2.png",
+  //   sponsorName: "Microsoft",
+  //   sponsorImageUrl: "/assets/sponsors/microsoft.png"
+  // },
+  // {
+  //   id: "4f780b6e31d64c77a9d9ae19cea87342",
+  //   name: "RODE NT-USB microphone",
+  //   difficulty: 3, //130gbp
+  //   quantity: 1,
+  //   imageUrl: "/assets/prizes/rode_mic.png",
+  //   sponsorName: "Kontent.ai",
+  //   sponsorImageUrl: "/assets/sponsors/kontentai.png"
+  // },
 
 
 
@@ -270,7 +288,7 @@ const PRIZE_INVENTORY : InventoryPrize[] = [
 
 class _PrizeController {
 
-  getPrize(gameId: string, difficulty: number) : Prize {
+  getPrize(gameId: string, difficulty: number): Prize {
     let claimedPrizeInventory = this.getClaimedPrizeInventory();
 
     let prize = claimedPrizeInventory
@@ -283,7 +301,7 @@ class _PrizeController {
     return prize;
   }
 
-  getAllPrizes() : Prize[] {
+  getAllPrizes(): Prize[] {
     return this.getClaimedPrizeInventory();
   }
 
@@ -300,7 +318,7 @@ class _PrizeController {
     this.savePrizeClaims(prizeClaims);
   }
 
-  private getClaimedPrizeInventory() : ClaimedInventoryPrize[] {
+  private getClaimedPrizeInventory(): ClaimedInventoryPrize[] {
     let prizeClaims = this.getPrizeClaims();
     return PRIZE_INVENTORY.map(p => {
       return {
@@ -310,19 +328,19 @@ class _PrizeController {
     });
   }
 
-  private getPrizeClaims() : PrizeClaim[] {
+  private getPrizeClaims(): PrizeClaim[] {
     let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
-  private savePrizeClaims(prizeClaims: PrizeClaim[]) : void  {
+  private savePrizeClaims(prizeClaims: PrizeClaim[]): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prizeClaims));
   }
 
   logPrizes() {
     console.groupCollapsed("Prize Integrity Check");
     console.info(`There are ${PRIZE_INVENTORY.reduce((count, p) => (count + p.quantity), 0)} prizes.`)
-    console.info(`${PRIZE_INVENTORY.filter(p => !!PRIZE_INVENTORY.find(pi => pi.id === p.id && pi !== p) ).length} have duplicate ids`);
+    console.info(`${PRIZE_INVENTORY.filter(p => !!PRIZE_INVENTORY.find(pi => pi.id === p.id && pi !== p)).length} have duplicate ids`);
     console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 0).reduce((count, p) => (count + p.quantity), 0)} have difficulty 0`);
     console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 1).reduce((count, p) => (count + p.quantity), 0)} have difficulty 1`);
     console.info(`${PRIZE_INVENTORY.filter(p => p.difficulty === 2).reduce((count, p) => (count + p.quantity), 0)} have difficulty 2`);

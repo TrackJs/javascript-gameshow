@@ -165,23 +165,23 @@
         }
       },
       "qc05": {
-        "questionText": "(function foo(a, b) {}).length",
+        "questionText": "false == NaN",
         "used": false,
         "answers": {
           "a00": {
-            "answerText": "2",
+            "answerText": "false",
             "correct": true
           },
           "a01": {
-            "answerText": "undefined",
+            "answerText": "true",
             "correct": false
           },
           "a02": {
-            "answerText": "23",
+            "answerText": "undefined",
             "correct": false
           },
           "a03": {
-            "answerText": "21",
+            "answerText": "NaN",
             "correct": false
           }
         }

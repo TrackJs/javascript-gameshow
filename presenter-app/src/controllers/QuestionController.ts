@@ -87,9 +87,9 @@ const QUESTIONS: Question[] = [
     "id": "a2c729f5597f464aa09d13461e4fe80f",
     "difficulty": 0,
     "type": "code",
-    "text": "false == NaN",
-    "afterText": "NaN is not equal to anything",
-    "correctId": "2",
+    "text": "true == !!'true'",
+    "afterText": "The string 'true' is truthy, which becomes true",
+    "correctId": "1",
     "answers": [
       { text: "true", "id": "1" },
       { text: "false", "id": "2" },
@@ -977,7 +977,7 @@ const QUESTIONS: Question[] = [
       }
     ]
   },
-  {
+  // {
   //   "id": "9193639211a248e2bd782ba62eb26040",
   //   "difficulty": 4,
   //   "type": "code",

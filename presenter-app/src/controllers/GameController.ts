@@ -40,7 +40,7 @@ export interface GameState {
   hasStarted: boolean
 };
 
-const QUESTION_COUNT = 4;
+const QUESTION_COUNT = 5;
 
 class _GameController {
 
@@ -154,9 +154,9 @@ class _GameController {
       let difficulty = this.getDifficultyForIndex(questionIdx);
       prizeStack[questionIdx] = PrizeController.getPrize(gameId, difficulty);
 
-      if (questionIdx === 2) {
-        prizeStack[questionIdx].isThreshold = true;
-      }
+      // if (questionIdx === 2) {
+      prizeStack[questionIdx].isThreshold = true;
+      // }
     }
 
     return prizeStack;
