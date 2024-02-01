@@ -26,8 +26,8 @@ export interface QuestionAnswer {
 
 export interface Question {
   id: string,
-  difficulty: 0|1|2|3|4|9,
-  type: "code"|"text",
+  difficulty: 0 | 1 | 2 | 3 | 4 | 9,
+  type: "code" | "text",
   text: string,
   afterText: string,
   correctId: string
@@ -39,148 +39,148 @@ interface QuestionClaim {
   questionId: string
 }
 
-const QUESTIONS : Question[] = [
+const QUESTIONS: Question[] = [
   // Trivial Difficulty Questions (10)
   {
     "id": "403830a44f1f40368c39e3388e485510",
     "difficulty": 0,
     "type": "code",
-    "text": "2 + 2",
-    "afterText": "JavaScript can do math.",
+    "text": "true == 1",
+    "afterText": "Both are truthy values",
     "correctId": "1",
     "answers": [
-      { text: "4", "id": "1" },
-      { text: "\"4\"", "id": "2" },
-      { text: "\"22\"", "id": "3" },
-      { text: "NaN", "id": "4" }
+      { text: "true", "id": "1" },
+      { text: "false", "id": "2" },
+      { text: "TypeError: Invalid types", "id": "3" },
+      { text: "undefined", "id": "4" }
     ]
   },
   {
     "id": "741eeb1cf4e246798c4410dea60c2049",
     "difficulty": 0,
     "type": "code",
-    "text": "5 + 3",
-    "afterText": "JavaScript can do math.",
-    "correctId": "3",
+    "text": "false == 0",
+    "afterText": "Both are falsy values'",
+    "correctId": "1",
     "answers": [
-      { text: "7", "id": "1" },
-      { text: "\"7\"", "id": "2" },
-      { text: "8", "id": "3" },
-      { text: "NaN", "id": "4" }
+      { text: "true", "id": "1" },
+      { text: "false", "id": "2" },
+      { text: "TypeError: Invalid types", "id": "3" },
+      { text: "undefined", "id": "4" }
     ]
   },
   {
     "id": "b5b6db6684c54e229b54e01a7480d473",
     "difficulty": 0,
     "type": "code",
-    "text": "5 - 1",
-    "afterText": "JavaScript can do math.",
+    "text": "true == !!'false'",
+    "afterText": "The string 'false' is truthy, which becomes true",
     "correctId": "1",
     "answers": [
-      { text: "4", "id": "1" },
-      { text: "\"51\"", "id": "2" },
-      { text: "\"5-1\"", "id": "3" },
-      { text: "NaN", "id": "4" }
+      { text: "true", "id": "1" },
+      { text: "false", "id": "2" },
+      { text: "TypeError: Invalid types", "id": "3" },
+      { text: "undefined", "id": "4" }
     ]
   },
   {
     "id": "a2c729f5597f464aa09d13461e4fe80f",
     "difficulty": 0,
     "type": "code",
-    "text": "8 - 2",
-    "afterText": "JavaScript can do math.",
-    "correctId": "1",
+    "text": "false == NaN",
+    "afterText": "NaN is not equal to anything",
+    "correctId": "2",
     "answers": [
-      { text: "6", "id": "1" },
-      { text: "\"82\"", "id": "2" },
-      { text: "\"8 - 2\"", "id": "3" },
-      { text: "NaN", "id": "4" }
+      { text: "true", "id": "1" },
+      { text: "false", "id": "2" },
+      { text: "TypeError: Invalid types", "id": "3" },
+      { text: "undefined", "id": "4" }
     ]
   },
-  {
-    "id": "298b3fb884974fbca4d020702f16360d",
-    "difficulty": 0,
-    "type": "code",
-    "text": "5 * 10",
-    "afterText": "JavaScript can do math.",
-    "correctId": "1",
-    "answers": [
-      { text: "50", "id": "1" },
-      { text: "\"510\"", "id": "2" },
-      { text: "NaN", "id": "3" },
-      { text: "15", "id": "4" }
-    ]
-  },
-  {
-    "id": "84438a6d585a4d00bcb92d755e9d7365",
-    "difficulty": 0,
-    "type": "code",
-    "text": "\"hello\" + 'world'",
-    "afterText": "String concatination works regardless of quote type.",
-    "correctId": "1",
-    "answers": [
-      { text: "\"helloworld\"", "id": "1" },
-      { text: "\"hello world\"", "id": "2" },
-      { text: "\"hello'world'\"", "id": "3" },
-      { text: "throw Error", "id": "4" }
-    ]
-  },
-  {
-    "id": "a3f2f5e5031b42eba43055c366f5dc77",
-    "difficulty": 0,
-    "type": "code",
-    "text": "'goodbye' + \"world\"",
-    "afterText": "String concatination works regardless of quote type.",
-    "correctId": "1",
-    "answers": [
-      { text: "\"goodbyeworld\"", "id": "1" },
-      { text: "\"goodbye world\"", "id": "2" },
-      { text: "\"'goodbye'world\"", "id": "3" },
-      { text: "throw Error", "id": "4" }
-    ]
-  },
-  {
-    "id": "e5ccf18775b541d3b291439792edc281",
-    "difficulty": 0,
-    "type": "code",
-    "text": "\"Goodbye\" + \"world\"",
-    "afterText": "String concatination with the plus symbol.",
-    "correctId": "1",
-    "answers": [
-      { text: "\"Goodbyeworld\"", "id": "1" },
-      { text: "\"Goodbye world\"", "id": "2" },
-      { text: "true", "id": "3" },
-      { text: "NaN", "id": "4" }
-    ]
-  },
-  {
-    "id": "86d942661c1e435897264241e95e9f2c",
-    "difficulty": 0,
-    "type": "code",
-    "text": "\"Code\" + 4 + \"Life\"",
-    "afterText": "String concatination with the plus symbol coerces a number.",
-    "correctId": "1",
-    "answers": [
-      { text: "\"Code4Life\"", "id": "1" },
-      { text: "\"Code 4 Life\"", "id": "2" },
-      { text: "6", "id": "3" },
-      { text: "NaN", "id": "4" }
-    ]
-  },
-  {
-    "id": "13d5589fc756421284a041e798136c8c",
-    "difficulty": 0,
-    "type": "code",
-    "text": "\"Legit\" + 2 + \"Quit\"",
-    "afterText": "String concatination with the plus symbol coerces a number.",
-    "correctId": "1",
-    "answers": [
-      { text: "\"Legit2Quit\"", "id": "1" },
-      { text: "\"Legit 2 Quit\"", "id": "2" },
-      { text: "3", "id": "3" },
-      { text: "NaN", "id": "4" }
-    ]
-  },
+  // {
+  //   "id": "298b3fb884974fbca4d020702f16360d",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "5 * 10",
+  //   "afterText": "JavaScript can do math.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "50", "id": "1" },
+  //     { text: "\"510\"", "id": "2" },
+  //     { text: "NaN", "id": "3" },
+  //     { text: "15", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "84438a6d585a4d00bcb92d755e9d7365",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "\"hello\" + 'world'",
+  //   "afterText": "String concatination works regardless of quote type.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "\"helloworld\"", "id": "1" },
+  //     { text: "\"hello world\"", "id": "2" },
+  //     { text: "\"hello'world'\"", "id": "3" },
+  //     { text: "throw Error", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "a3f2f5e5031b42eba43055c366f5dc77",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "'goodbye' + \"world\"",
+  //   "afterText": "String concatination works regardless of quote type.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "\"goodbyeworld\"", "id": "1" },
+  //     { text: "\"goodbye world\"", "id": "2" },
+  //     { text: "\"'goodbye'world\"", "id": "3" },
+  //     { text: "throw Error", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "e5ccf18775b541d3b291439792edc281",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "\"Goodbye\" + \"world\"",
+  //   "afterText": "String concatination with the plus symbol.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "\"Goodbyeworld\"", "id": "1" },
+  //     { text: "\"Goodbye world\"", "id": "2" },
+  //     { text: "true", "id": "3" },
+  //     { text: "NaN", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "86d942661c1e435897264241e95e9f2c",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "\"Code\" + 4 + \"Life\"",
+  //   "afterText": "String concatination with the plus symbol coerces a number.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "\"Code4Life\"", "id": "1" },
+  //     { text: "\"Code 4 Life\"", "id": "2" },
+  //     { text: "6", "id": "3" },
+  //     { text: "NaN", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "13d5589fc756421284a041e798136c8c",
+  //   "difficulty": 0,
+  //   "type": "code",
+  //   "text": "\"Legit\" + 2 + \"Quit\"",
+  //   "afterText": "String concatination with the plus symbol coerces a number.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "\"Legit2Quit\"", "id": "1" },
+  //     { text: "\"Legit 2 Quit\"", "id": "2" },
+  //     { text: "3", "id": "3" },
+  //     { text: "NaN", "id": "4" }
+  //   ]
+  // },
 
   // Easy (10)
   {
@@ -253,100 +253,100 @@ const QUESTIONS : Question[] = [
       { text: "jQuery", "id": "4" }
     ]
   },
-  {
-    "id": "58f39bf97b7c4875962042bebcb1346f",
-    "difficulty": 1,
-    "type": "code",
-    "text": "function(){ return this; }.call(window)",
-    "afterText": "Call invokes a function with a specified value for `this`.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "null"
-      },
-      {
-        "id": "2",
-        "text": "this"
-      },
-      {
-        "id": "3",
-        "text": "window"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
-  {
-    "id": "336cf3345c71451da25d6c8f3f6285e5",
-    "difficulty": 1,
-    "type": "code",
-    "text": "\"42\" + 1",
-    "afterText": "The \"+\" is preceded by a String, so is therefore considered concatenation. Subsequent variables are coerced into Strings.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "43"
-      },
-      {
-        "id": "2",
-        "text": "\"43\""
-      },
-      {
-        "id": "3",
-        "text": "\"421\""
-      },
-      {
-        "id": "4",
-        "text": "NaN"
-      }
-    ]
-  },
-  {
-    "id": "4c72445bcb084c71a32d984cfe34e503",
-    "difficulty": 1,
-    "type": "code",
-    "text": "true && false",
-    "afterText": "Basic logical AND operators",
-    "correctId": "1",
-    "answers": [
-      { text: "false", "id": "1" },
-      { text: "\"truefalse\"", "id": "2" },
-      { text: "true", "id": "3" },
-      { text: "0", "id": "4" }
-    ]
-  },
-  {
-    "id": "6872a24ecd72467f8646c8d5789b6b78",
-    "difficulty": 1,
-    "type": "code",
-    "text": "true || false",
-    "afterText": "Basic logical OR operators",
-    "correctId": "1",
-    "answers": [
-      { text: "true", "id": "1" },
-      { text: "\"truefalse\"", "id": "2" },
-      { text: "false", "id": "3" },
-      { text: "1", "id": "4" }
-    ]
-  },
-  {
-    "id": "1dce307751d14552879ab3bf3ac31cab",
-    "difficulty": 1,
-    "type": "code",
-    "text": "8 / 0",
-    "afterText": "JavaScript can do math.",
-    "correctId": "1",
-    "answers": [
-      { text: "Infinity", "id": "1" },
-      { text: "throw Error", "id": "2" },
-      { text: "undefined", "id": "3" },
-      { text: "NaN", "id": "4" }
-    ]
-  },
+  // {
+  //   "id": "58f39bf97b7c4875962042bebcb1346f",
+  //   "difficulty": 1,
+  //   "type": "code",
+  //   "text": "function(){ return this; }.call(window)",
+  //   "afterText": "Call invokes a function with a specified value for `this`.",
+  //   "correctId": "3",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "null"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "this"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "window"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "336cf3345c71451da25d6c8f3f6285e5",
+  //   "difficulty": 1,
+  //   "type": "code",
+  //   "text": "\"42\" + 1",
+  //   "afterText": "The \"+\" is preceded by a String, so is therefore considered concatenation. Subsequent variables are coerced into Strings.",
+  //   "correctId": "3",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "43"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "\"43\""
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "\"421\""
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "NaN"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "4c72445bcb084c71a32d984cfe34e503",
+  //   "difficulty": 1,
+  //   "type": "code",
+  //   "text": "true && false",
+  //   "afterText": "Basic logical AND operators",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "false", "id": "1" },
+  //     { text: "\"truefalse\"", "id": "2" },
+  //     { text: "true", "id": "3" },
+  //     { text: "0", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "6872a24ecd72467f8646c8d5789b6b78",
+  //   "difficulty": 1,
+  //   "type": "code",
+  //   "text": "true || false",
+  //   "afterText": "Basic logical OR operators",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "true", "id": "1" },
+  //     { text: "\"truefalse\"", "id": "2" },
+  //     { text: "false", "id": "3" },
+  //     { text: "1", "id": "4" }
+  //   ]
+  // },
+  // {
+  //   "id": "1dce307751d14552879ab3bf3ac31cab",
+  //   "difficulty": 1,
+  //   "type": "code",
+  //   "text": "8 / 0",
+  //   "afterText": "JavaScript can do math.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     { text: "Infinity", "id": "1" },
+  //     { text: "throw Error", "id": "2" },
+  //     { text: "undefined", "id": "3" },
+  //     { text: "NaN", "id": "4" }
+  //   ]
+  // },
 
   // Moderate (10)
   {
@@ -401,84 +401,84 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "8556d009fdf940e89cfb0f9e2e61457f",
-    "difficulty": 2,
-    "type": "code",
-    "text": "false == \"false\"",
-    "afterText": "the string \"false\" is a truthy value.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "\"false\""
-      }
-    ]
-  },
-  {
-    "id": "8930afdb93f344fe93c9333882944521",
-    "difficulty": 2,
-    "type": "code",
-    "text": "(function(a, b, c){ return c; })(1, ...[1, 2, 3])",
-    "afterText": "The spread operator will expand the array to cover the rest of the available arguments.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "1"
-      },
-      {
-        "id": "2",
-        "text": "2"
-      },
-      {
-        "id": "3",
-        "text": "3"
-      },
-      {
-        "id": "4",
-        "text": "undefined"
-      }
-    ]
-  },
-  {
-    "id": "7f6c5f32937446d38b8dfbbe880f6a19",
-    "difficulty": 2,
-    "type": "code",
-    "text": "(function(){ return arguments; })(1, 2)",
-    "afterText": "Arguments is a special array-like object that is built in to normal JavaScript functions.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "[1, 2]"
-      },
-      {
-        "id": "2",
-        "text": "[Arguments]"
-      },
-      {
-        "id": "3",
-        "text": "undefined"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
+  // {
+  //   "id": "8556d009fdf940e89cfb0f9e2e61457f",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "false == \"false\"",
+  //   "afterText": "the string \"false\" is a truthy value.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "\"false\""
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "8930afdb93f344fe93c9333882944521",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "(function(a, b, c){ return c; })(1, ...[1, 2, 3])",
+  //   "afterText": "The spread operator will expand the array to cover the rest of the available arguments.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "1"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "2"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "3"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "undefined"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "7f6c5f32937446d38b8dfbbe880f6a19",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "(function(){ return arguments; })(1, 2)",
+  //   "afterText": "Arguments is a special array-like object that is built in to normal JavaScript functions.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "[1, 2]"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "[Arguments]"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "undefined"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
   {
     "id": "2386f8b1f5b1427a983d238edb637b13",
     "difficulty": 2,
@@ -505,32 +505,32 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "857dbbb9cd9d430cb07293e36565426c",
-    "difficulty": 2,
-    "type": "code",
-    "text": "[1,2,3].toString()",
-    "afterText": "Arrays are represented as comma-separated strings of values.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "\"[1, 2, 3]\""
-      },
-      {
-        "id": "2",
-        "text": "123"
-      },
-      {
-        "id": "3",
-        "text": "1,2,3"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
+  // {
+  //   "id": "857dbbb9cd9d430cb07293e36565426c",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "[1,2,3].toString()",
+  //   "afterText": "Arrays are represented as comma-separated strings of values.",
+  //   "correctId": "3",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "\"[1, 2, 3]\""
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "123"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "1,2,3"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
   {
     "id": "cee98e11ba5a4652b5b1b774f60aaf77",
     "difficulty": 2,
@@ -557,86 +557,86 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "397c80d1c9724965ba49958184ce2648",
-    "difficulty": 2,
-    "type": "code",
-    "text": "true == \"true\"",
-    "afterText": "Both true and a non-empty string are truthy types.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "\"true\""
-      }
-    ]
-  },
-  {
-    "id": "737b2c503cef4cf2a7f4c87cfb7a2b79",
-    "difficulty": 2,
-    "type": "code",
-    "text": "!!\"\"",
-    "afterText": "Logical negation of a value will coerce it to a Boolean type. Double negation will flip the value back to its original Boolean coerced value.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "\"\""
-      },
-      {
-        "id": "2",
-        "text": "true"
-      },
-      {
-        "id": "3",
-        "text": "false"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
+  // {
+  //   "id": "397c80d1c9724965ba49958184ce2648",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "true == \"true\"",
+  //   "afterText": "Both true and a non-empty string are truthy types.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "\"true\""
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "737b2c503cef4cf2a7f4c87cfb7a2b79",
+  //   "difficulty": 2,
+  //   "type": "code",
+  //   "text": "!!\"\"",
+  //   "afterText": "Logical negation of a value will coerce it to a Boolean type. Double negation will flip the value back to its original Boolean coerced value.",
+  //   "correctId": "3",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "\"\""
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
 
   // Mod 2 (10)
-  {
-    "id": "6b886e2cb39a429ba96f7a8923468a62",
-    "difficulty": 3,
-    "type": "code",
-    "text": "undefined == 0",
-    "afterText": "Both undefined and 0 are falsy types and will equal with coerced equality.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "null"
-      }
-    ]
-  },
+  // {
+  //   "id": "6b886e2cb39a429ba96f7a8923468a62",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "undefined == 0",
+  //   "afterText": "Both undefined and 0 are falsy types and will equal with coerced equality.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "null"
+  //     }
+  //   ]
+  // },
   {
     "id": "c09fee8a1e8e4124aee216eae87b92f8",
     "difficulty": 3,
@@ -663,32 +663,32 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "81a16112bf584a5990db1a5b5f8bcf0c",
-    "difficulty": 3,
-    "type": "code",
-    "text": "\"poop\" instanceof String",
-    "afterText": "String literals have the type of string, but are not instances of String",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "\"poop\""
-      }
-    ]
-  },
+  // {
+  //   "id": "81a16112bf584a5990db1a5b5f8bcf0c",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "\"poop\" instanceof String",
+  //   "afterText": "String literals have the type of string, but are not instances of String",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "\"poop\""
+  //     }
+  //   ]
+  // },
   {
     "id": "bd4e32132c9d480fbf7c7acb4dddc605",
     "difficulty": 3,
@@ -767,110 +767,110 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "d9651ed51f1a428990c61016e49fa1cd",
-    "difficulty": 3,
-    "type": "code",
-    "text": "function(){ return this; }.bind(window).call(document)",
-    "afterText": "Function.prototype.bind locks the value of `this` for all future invocations of a function, even if it has been specified otherwise.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "null"
-      },
-      {
-        "id": "2",
-        "text": "window"
-      },
-      {
-        "id": "3",
-        "text": "document"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
-  {
-    "id": "80881e3a14cd480f8073eea3ba7c8cef",
-    "difficulty": 3,
-    "type": "code",
-    "text": "Math.min()",
-    "afterText": "Called with no arguments, Math.min() returns the largest number in JavaScript.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "0"
-      },
-      {
-        "id": "2",
-        "text": "Infinity"
-      },
-      {
-        "id": "3",
-        "text": "-Infinity"
-      },
-      {
-        "id": "4",
-        "text": "10e1000"
-      }
-    ]
-  },
-  {
-    "id": "dbfbc839ff4849bcad2ab77f041e7d02",
-    "difficulty": 3,
-    "type": "code",
-    "text": "[] == ![]",
-    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean false.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "[]"
-      }
-    ]
-  },
-  {
-    "id": "ebfbc839ff4849bcad2ab77f041e7d02",
-    "difficulty": 3,
-    "type": "code",
-    "text": "[] == []",
-    "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean true.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "true"
-      },
-      {
-        "id": "2",
-        "text": "false"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "[]"
-      }
-    ]
-  },
+  // {
+  //   "id": "d9651ed51f1a428990c61016e49fa1cd",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "function(){ return this; }.bind(window).call(document)",
+  //   "afterText": "Function.prototype.bind locks the value of `this` for all future invocations of a function, even if it has been specified otherwise.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "null"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "window"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "document"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "80881e3a14cd480f8073eea3ba7c8cef",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "Math.min()",
+  //   "afterText": "Called with no arguments, Math.min() returns the largest number in JavaScript.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "0"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "Infinity"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "-Infinity"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "10e1000"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "dbfbc839ff4849bcad2ab77f041e7d02",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "[] == ![]",
+  //   "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean false.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "[]"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "ebfbc839ff4849bcad2ab77f041e7d02",
+  //   "difficulty": 3,
+  //   "type": "code",
+  //   "text": "[] == []",
+  //   "afterText": "Array types are not compared natively, so the value is coerced into a string, \"\", which will evaluate to falsy. The second array is forced to a boolean true.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "[]"
+  //     }
+  //   ]
+  // },
 
   // Hard (10)
   {
@@ -899,58 +899,58 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "f693faf553424faf85875354fbcc6957",
-    "difficulty": 4,
-    "type": "code",
-    "text": "typeof null",
-    "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "\"object\""
-      },
-      {
-        "id": "2",
-        "text": "\"null\""
-      },
-      {
-        "id": "3",
-        "text": "\"function\""
-      },
-      {
-        "id": "4",
-        "text": "\"array\""
-      }
-    ]
-  },
-  {
-    "id": "3b42938c00c74921959b2d6a6c65c225",
-    "difficulty": 4,
-    "type": "code",
-    "text": "null instanceof Object",
-    "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "false"
-      },
-      {
-        "id": "2",
-        "text": "true"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "null"
-      }
-    ]
-  },
+  // {
+  //   "id": "f693faf553424faf85875354fbcc6957",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "typeof null",
+  //   "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "\"object\""
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "\"null\""
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "\"function\""
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "\"array\""
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "3b42938c00c74921959b2d6a6c65c225",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "null instanceof Object",
+  //   "afterText": "Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "null"
+  //     }
+  //   ]
+  // },
   {
     "id": "de86307d046c4be081d1659d01ea7199",
     "difficulty": 4,
@@ -978,31 +978,31 @@ const QUESTIONS : Question[] = [
     ]
   },
   {
-    "id": "9193639211a248e2bd782ba62eb26040",
-    "difficulty": 4,
-    "type": "code",
-    "text": "[] + []",
-    "afterText": "Array.prototype.toString is used in the coercion, which results in an empty string. Both are concatenated.",
-    "correctId": "1",
-    "answers": [
-      {
-        "id": "1",
-        "text": "\"\""
-      },
-      {
-        "id": "2",
-        "text": "[]"
-      },
-      {
-        "id": "3",
-        "text": "undefined"
-      },
-      {
-        "id": "4",
-        "text": "throw Error"
-      }
-    ]
-  },
+  //   "id": "9193639211a248e2bd782ba62eb26040",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "[] + []",
+  //   "afterText": "Array.prototype.toString is used in the coercion, which results in an empty string. Both are concatenated.",
+  //   "correctId": "1",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "\"\""
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "[]"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "undefined"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "throw Error"
+  //     }
+  //   ]
+  // },
   {
     "id": "eb54d2ced1984e21beb464fa26135f68",
     "difficulty": 4,
@@ -1055,84 +1055,84 @@ const QUESTIONS : Question[] = [
       }
     ]
   },
-  {
-    "id": "8cb65d51350b40af92836c466b48321d",
-    "difficulty": 4,
-    "type": "code",
-    "text": "!!~[1, 2, 3].indexOf(3)",
-    "afterText": "Bitwise NOT operator (~) will convert any number x to -(x + 1).  Double negation yields answer for whether array contains item.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "false"
-      },
-      {
-        "id": "2",
-        "text": "true"
-      },
-      {
-        "id": "3",
-        "text": "2"
-      },
-      {
-        "id": "4",
-        "text": "-2"
-      }
-    ]
-  },
-  {
-    "id": "7b20efaf8ef8480aae80951ddbc76485",
-    "difficulty": 4,
-    "type": "code",
-    "text": "(() => arguments)(1, 2)",
-    "afterText": "Fat arrow functions do not expose an instrinsic \"arguments\" property like normal functions.",
-    "correctId": "3",
-    "answers": [
-      {
-        "id": "1",
-        "text": "[1, 2]"
-      },
-      {
-        "id": "2",
-        "text": "[object Arguments]"
-      },
-      {
-        "id": "3",
-        "text": "throw Error"
-      },
-      {
-        "id": "4",
-        "text": "undefined"
-      }
-    ]
-  },
-  {
-    "id": "1a1103afd92845b299ed9e6909f266d3",
-    "difficulty": 4,
-    "type": "code",
-    "text": "Array(0, 1, Array(2));",
-    "afterText": "Instantiating an Array with multiple arguments creates an Array from those values. However a single argument only specifies the length.",
-    "correctId": "2",
-    "answers": [
-      {
-        "id": "1",
-        "text": "[0, 1, [2]]"
-      },
-      {
-        "id": "2",
-        "text": "[0, 1, [undefined, undefined]]"
-      },
-      {
-        "id": "3",
-        "text": "[0, 1, 2]"
-      },
-      {
-        "id": "4",
-        "text": "[0, 1, \"[object Array]\"]"
-      }
-    ]
-  },
+  // {
+  //   "id": "8cb65d51350b40af92836c466b48321d",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "!!~[1, 2, 3].indexOf(3)",
+  //   "afterText": "Bitwise NOT operator (~) will convert any number x to -(x + 1).  Double negation yields answer for whether array contains item.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "false"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "true"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "2"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "-2"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "7b20efaf8ef8480aae80951ddbc76485",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "(() => arguments)(1, 2)",
+  //   "afterText": "Fat arrow functions do not expose an instrinsic \"arguments\" property like normal functions.",
+  //   "correctId": "3",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "[1, 2]"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "[object Arguments]"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "throw Error"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "undefined"
+  //     }
+  //   ]
+  // },
+  // {
+  //   "id": "1a1103afd92845b299ed9e6909f266d3",
+  //   "difficulty": 4,
+  //   "type": "code",
+  //   "text": "Array(0, 1, Array(2));",
+  //   "afterText": "Instantiating an Array with multiple arguments creates an Array from those values. However a single argument only specifies the length.",
+  //   "correctId": "2",
+  //   "answers": [
+  //     {
+  //       "id": "1",
+  //       "text": "[0, 1, [2]]"
+  //     },
+  //     {
+  //       "id": "2",
+  //       "text": "[0, 1, [undefined, undefined]]"
+  //     },
+  //     {
+  //       "id": "3",
+  //       "text": "[0, 1, 2]"
+  //     },
+  //     {
+  //       "id": "4",
+  //       "text": "[0, 1, \"[object Array]\"]"
+  //     }
+  //   ]
+  // },
 
   // Find Player (10)
   {
@@ -1385,7 +1385,7 @@ class _QuestionController {
    * Get a random question at the specified difficulty for the game. If it has already been
    * requested, the same question is returned.
    */
-  getQuestion(gameId: string, questionIdx: number, difficulty: 0|1|2|3|4|9) : Question {
+  getQuestion(gameId: string, questionIdx: number, difficulty: 0 | 1 | 2 | 3 | 4 | 9): Question {
     let claims = this.getClaimRecords();
     let claimKey = `${gameId}${questionIdx}`;
 
@@ -1415,8 +1415,8 @@ class _QuestionController {
   logQuestions() {
     console.groupCollapsed("Question Integrity Check");
     console.info(`There are ${QUESTIONS.length} questions.`)
-    console.info(`${QUESTIONS.filter(q => !!QUESTIONS.find(qi => qi.id === q.id && q !== qi) ).length} have duplicate ids`);
-    console.info(`${QUESTIONS.filter(q => q.answers.filter(a => a.id === q.correctId).length !== 1 ).length} have invalid answers`);
+    console.info(`${QUESTIONS.filter(q => !!QUESTIONS.find(qi => qi.id === q.id && q !== qi)).length} have duplicate ids`);
+    console.info(`${QUESTIONS.filter(q => q.answers.filter(a => a.id === q.correctId).length !== 1).length} have invalid answers`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 0).length} have difficulty 0`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 1).length} have difficulty 1`);
     console.info(`${QUESTIONS.filter(q => q.difficulty === 2).length} have difficulty 2`);
@@ -1426,12 +1426,12 @@ class _QuestionController {
     console.groupEnd();
   }
 
-  private getClaimRecords() : QuestionClaim[] {
+  private getClaimRecords(): QuestionClaim[] {
     let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
-  private saveClaimRecords(usageRecords: QuestionClaim[]) : void  {
+  private saveClaimRecords(usageRecords: QuestionClaim[]): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(usageRecords));
   }
 }

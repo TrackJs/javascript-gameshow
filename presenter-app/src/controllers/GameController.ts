@@ -44,7 +44,7 @@ const QUESTION_COUNT = 4;
 
 class _GameController {
 
-  createGame(options: GameOptions) : Game {
+  createGame(options: GameOptions): Game {
     let id = this.getNextGameId();
     let game = {
       id,
@@ -81,9 +81,9 @@ class _GameController {
     this.saveGame(game);
   }
 
-  getAllGames() : Game[] {
+  getAllGames(): Game[] {
     const games = [];
-    for(let i = 0; i < localStorage.length; i++) {
+    for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       if (key?.startsWith("game-")) {
         let gameId = key.split("game-")[1];
@@ -96,7 +96,7 @@ class _GameController {
     return games;
   }
 
-  getGame(gameId: string) : Game {
+  getGame(gameId: string): Game {
     let gameString = localStorage.getItem(`game-${gameId}`);
     if (!gameString) {
       throw new Error(`No game found for ${gameId}`);
@@ -105,14 +105,14 @@ class _GameController {
     return JSON.parse(gameString) as Game;
   }
 
-  getDifficultyForIndex(questionIdx: number): 0|1|2|3|4 {
-    let difficultyMap = [0, 1, 2, 3];
-    return difficultyMap[questionIdx] as 0|1|2|3|4;
+  getDifficultyForIndex(questionIdx: number): 0 | 1 | 2 | 3 | 4 {
+    let difficultyMap = [0, 1, 2, 3, 4];
+    return difficultyMap[questionIdx] as 0 | 1 | 2 | 3 | 4;
   }
 
   getPrizesWon(game: Game): Prize[] {
-    let result : Prize[] = [];
-    let batch : Prize[] = []; // prizes within a threshold
+    let result: Prize[] = [];
+    let batch: Prize[] = []; // prizes within a threshold
 
     game.questionsAsked.forEach((asked, idx) => {
       let prize = game.prizeStack[idx];
@@ -125,7 +125,7 @@ class _GameController {
           batch.length = 0;
         }
       }
-      else if(asked.isCorrect === false) {
+      else if (asked.isCorrect === false) {
         batch.length = 0;
       }
     });
@@ -142,15 +142,15 @@ class _GameController {
     localStorage.setItem(`game-${game.id}`, JSON.stringify(game));
   }
 
-  private getNextGameId() : string {
+  private getNextGameId(): string {
     let games = this.getAllGames();
     return `${games.length}`;
   }
 
-  private getPrizeStack(gameId: string) : Prize[] {
+  private getPrizeStack(gameId: string): Prize[] {
     let prizeStack = [];
 
-    for(let questionIdx = 0; questionIdx < QUESTION_COUNT; questionIdx++) {
+    for (let questionIdx = 0; questionIdx < QUESTION_COUNT; questionIdx++) {
       let difficulty = this.getDifficultyForIndex(questionIdx);
       prizeStack[questionIdx] = PrizeController.getPrize(gameId, difficulty);
 

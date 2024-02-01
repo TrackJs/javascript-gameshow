@@ -223,6 +223,7 @@
               const answers = (scores[userId] || {}).answers || []
               const aggregatedAnswers = [...answers, userAnswer]
               scores[userId] = {
+                ...scores[userId],
                 userId: userId,
                 answers: aggregatedAnswers,
                 inRunning: aggregatedAnswers.every(answer => answer.correct) && questionsAsked === aggregatedAnswers.length,
@@ -243,7 +244,7 @@
 
             });
           });
-        scores = Object.values(scores);
+
         Object.values(scores)
           .filter((s) => s.hasAnsweredCurrent)
           .sort((a, b) => b.correct - a.correct)

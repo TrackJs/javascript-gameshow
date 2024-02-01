@@ -195,14 +195,17 @@ section#active-question label.choice-option {
   font-family: monospace;
   background: radial-gradient(var(--dark-purple), #3e0676);
 }
+
 section#active-question input[type="radio"] {
   appearance: none;
 }
+
 section#active-question input[type="radio"]::before {
   content: "✓";
-  color: rgba(0,0,0,0);
+  color: rgba(0, 0, 0, 0);
   padding-right: 2ch;
 }
+
 section#active-question input[type="radio"]:checked::before {
   color: white;
 }
@@ -283,13 +286,14 @@ section#questions #question-list li label pre {
 }
 
 .sponsors .flex {
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
+  gap: 5px;
   justify-content: center;
 }
 
 .sponsors .flex>* {
-  flex: 0 1 calc(50% - 10px);
-  padding: 20px 5px 0 0;
+  flex: 0 1 33%;
+  /* padding: 20px 5px 0 0; */
 }
 
 .sponsors a {
