@@ -1,23 +1,4 @@
-# Player Last Standing Elimination
+Question ->
+2 + 2 - 2
+> 20
 
-When a player gets a "last standing" question wrong, they no longer get new active questions displayed. Instead, they get a "you have been eliminated" UI.
-
-# Admin Last Standing Status
-
-The admin should see how many players are still eligible in the last standing round, based on who has answered all the choice questions displayed so far correctly.
-
-# How to handle complete elimination
-
-When 0 players answer a last standing question correctly, we need to have a "redo" and let everyone answer another question
-
-# How to handle a tie (stretch goal)
-
-When more than 1 player answer all the last standing questions, what do we do? Show a text question? Show a bonus choice question? Just go off of time?
-
-# Styling the things
-
-Styling choice answers
-
-
-
-# Aggregate time on last stading

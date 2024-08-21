@@ -40,7 +40,7 @@ const PRIZE_INVENTORY: InventoryPrize[] = [
     name: "Highcharts Socks",
     difficulty: 0,
     quantity: 1,
-    imageUrl: "",
+    imageUrl: "/assets/sponsors/highcharts.png",
     sponsorName: "Highcharts",
     sponsorImageUrl: "/assets/sponsors/highcharts.png"
   },
@@ -68,21 +68,21 @@ const PRIZE_INVENTORY: InventoryPrize[] = [
   // level 2
   {
     id: "b85de80e2d0f4955a1869da68e47bcb2",
-    name: "TBD Amazon Book",
+    name: "Cloud Career Journeys Book",
     difficulty: 2,
     quantity: 2,
-    imageUrl: "",
+    imageUrl: "/assets/prizes/cloudcareerbook.jpg",
     sponsorName: "AWS",
     sponsorImageUrl: "/assets/sponsors/aws.png"
   },
   {
     id: "5373650e5fe847d88b4f64ed0804207d",
-    name: "TrackJS 50 TBD",
+    name: "JVC Waterproof Bluetooth Speaker",
     difficulty: 2,
     quantity: 3,
-    imageUrl: "",
-    sponsorName: "TrackJS",
-    sponsorImageUrl: "/assets/sponsors/trackjs.svg"
+    imageUrl: "/assets/prizes/jvc-speaker.png",
+    sponsorName: "Request Metrics",
+    sponsorImageUrl: "/assets/sponsors/request_metrics2.svg"
   },
 
   // level 3
@@ -100,7 +100,7 @@ const PRIZE_INVENTORY: InventoryPrize[] = [
     name: "Ember Mug",
     difficulty: 3,
     quantity: 3,
-    imageUrl: "",
+    imageUrl: "/assets/prizes/embermug.png",
     sponsorName: "Syncfusion",
     sponsorImageUrl: "/assets/sponsors/syncfusion.png"
   },
@@ -126,10 +126,10 @@ const PRIZE_INVENTORY: InventoryPrize[] = [
   },
   {
     id: "ba6ed21c72cb4d3dbe56aa23dd84ff0c",
-    name: "TBD TrackJS",
+    name: "Sony Noise-Cancelling Headphones",
     difficulty: 4,
     quantity: 3,
-    imageUrl: "",
+    imageUrl: "/assets/prizes/sonyheadphones.png",
     sponsorName: "TrackJS",
     sponsorImageUrl: "/assets/sponsors/trackjs.svg"
   }
