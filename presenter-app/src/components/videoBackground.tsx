@@ -1,8 +1,13 @@
-import { h, Component, ComponentChild } from 'preact';
+import { h, Component, ComponentChild, JSX } from 'preact';
 import { VideoBackgroundController, VideoBackgroundState } from 'src/controllers/VideoBackgroundController';
-import { Player, ControlBar } from 'video-react';
+import { Player, PlayerProps, ControlBar } from 'video-react';
 
 import '../../node_modules/video-react/dist/video-react.css'; // import css
+
+interface PlayerProps2 extends PlayerProps {
+  loop: boolean
+};
+let StupidPlayerThatDidTypesWrong = Player as ((props: PlayerProps2) => JSX.Element);
 
 export default class VideoBackground extends Component<any, VideoBackgroundState> {
 
@@ -13,7 +18,7 @@ export default class VideoBackground extends Component<any, VideoBackgroundState
     this.state = VideoBackgroundController.init(() => this.state, this.setState.bind(this));
   }
 
-  componentDidUpdate(prevProps : any, prevState : VideoBackgroundState) {
+  componentDidUpdate(prevProps: any, prevState: VideoBackgroundState) {
     if (this.state.sourceUrl !== prevState.sourceUrl) {
       this.player.load();
     }
@@ -26,18 +31,14 @@ export default class VideoBackground extends Component<any, VideoBackgroundState
   }
 
   render(props: any, state: VideoBackgroundState): ComponentChild {
-    return(
+    return (
       <div class={`c-video-background ${state.greenscreen ? "greenscreen" : ""}`}>
-
-          {/*
-  // @ts-ignore */}<Player loop={state.loop} ref={(player: any) => {
-            this.player = player;
-          }}
+        <StupidPlayerThatDidTypesWrong loop={state.loop} ref={(player: any) => { this.player = player; }}
           fluid={true}
           autoPlay={state.playing} muted={true} >
           <ControlBar disableCompletely={false} />
           <source src={state.sourceUrl} />
-        </Player>
+        </StupidPlayerThatDidTypesWrong>
       </div>
     );
   }
