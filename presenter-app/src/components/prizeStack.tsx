@@ -14,7 +14,7 @@ export default class PrizeStack extends Component<PrizeStackProps, any> {
       <ol class="prize-stack">
         {
           props.game.prizes.map((prize, i) => {
-            let isCurrent = props.highlightLowerIdx ?
+            const isCurrent = props.highlightLowerIdx ?
               (i <= props.askIdx) :
               (i === props.askIdx);
 

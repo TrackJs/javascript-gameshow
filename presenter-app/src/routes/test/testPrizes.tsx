@@ -6,7 +6,7 @@ import { PrizeController } from 'src/controllers/PrizeController';
 export default class TestPrizes extends Component<any, any> {
 
   render(): ComponentChild {
-    let prizes = new PrizeController()._prizeMap;
+    const prizes = new PrizeController()._prizeMap;
 
     return (
       <div class="route-test-prizes">

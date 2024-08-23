@@ -22,7 +22,7 @@ export default class GameNew extends Component<any, any> {
         <img src="/assets/images/logo.png" class="glow" width="400" height="400" />
         <form onSubmit={this.onNewGameSubmit.bind(this)} disabled={this.state.disabled}>
           <div>
-            <input type="text" name="name" required placeholder="What is your name?"></input>
+            <input type="text" name="name" required placeholder="What is your name?" />
           </div>
           <div class="form-controls">
             <button type="submit" class="btn btn-purple btn-round">Play<br />Game</button>
@@ -40,9 +40,9 @@ export default class GameNew extends Component<any, any> {
   onNewGameSubmit(e: Event) {
     e.preventDefault();
     this.setState({ disabled: true });
-    let data = new FormData(e.target as HTMLFormElement);
+    const data = new FormData(e.target as HTMLFormElement);
 
-    let game = GameController.createGame({
+    const game = GameController.createGame({
       playerName: (data.get("name") || "anonymous") as string
     });
 

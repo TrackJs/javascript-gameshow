@@ -12,7 +12,7 @@ export enum SOUND {
   question_4 = "question_4",
   result_lose = "result_lose",
   result_win = "result_win",
-};
+}
 
 const BASE_SOUND_PATH = "/assets/sounds";
 
@@ -53,9 +53,9 @@ class _SoundController {
   }
 
   async play(sound: SOUND, offset?: number, duration?: number) {
-    let soundData = await this._sounds[sound];
+    const soundData = await this._sounds[sound];
 
-    let source = this._audioContext.createBufferSource();
+    const source = this._audioContext.createBufferSource();
     source.buffer = soundData.buffer;
     source.connect(this._audioContext.destination);
     source.start(0, offset, duration);
@@ -65,7 +65,7 @@ class _SoundController {
   }
 
   async stop(sound: SOUND) {
-    let soundData = await this._sounds[sound];
+    const soundData = await this._sounds[sound];
     if (soundData.lastSource) {
       soundData.lastSource.stop();
     }

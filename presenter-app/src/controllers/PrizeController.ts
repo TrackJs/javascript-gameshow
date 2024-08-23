@@ -15,7 +15,7 @@ const STORAGE_KEY = "prize-usage";
 
 export class PrizeController {
 
-  _STORAGE_KEY: string = "prize-usage";
+  _STORAGE_KEY = "prize-usage";
   _prizeUsage: PrizeUsage[];
   _prizeMap: PrizeLookup[];
 
@@ -23,7 +23,7 @@ export class PrizeController {
     this._prizeUsage = this._loadUsage();
     this._prizeMap = Prizes
       .map((prize, idx) => {
-        let usage = this._prizeUsage.filter((usage) => usage.prizeIdx === idx);
+        const usage = this._prizeUsage.filter((usage) => usage.prizeIdx === idx);
         return {
           prizeIdx: idx,
           claimedQty: usage.length,
@@ -36,7 +36,7 @@ export class PrizeController {
    * Get the next prize at the specified ask for the game.
    */
   getPrize(gameId: string, askIdx: number): PrizeLookup {
-    let chosenPrize = this._prizeMap
+    const chosenPrize = this._prizeMap
       .find(prize => prize.level === askIdx && prize.claimedQty < prize.quantity);
 
     if (!chosenPrize) {
@@ -57,7 +57,7 @@ export class PrizeController {
    * Release a prize back into inventory because it wasn't won in the game
    */
   releasePrize(prizeIdx: number) {
-    let releasedPrize = this._prizeMap[prizeIdx];
+    const releasedPrize = this._prizeMap[prizeIdx];
 
     releasedPrize.claimedQty--;
     this._prizeUsage = this._prizeUsage.filter((prize) => prize.prizeIdx !== prizeIdx);
@@ -65,7 +65,7 @@ export class PrizeController {
   }
 
   _loadUsage(): PrizeUsage[] {
-    let usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const usageRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return usageRecords;
   }
 
@@ -74,11 +74,11 @@ export class PrizeController {
   }
 
   getPrizeStats(): { label: string, value: number }[] {
-    let remainingLevel0 = this._prizeMap.filter((prize) => prize.level === 0).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
-    let remainingLevel1 = this._prizeMap.filter((prize) => prize.level === 1).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
-    let remainingLevel2 = this._prizeMap.filter((prize) => prize.level === 2).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
-    let remainingLevel3 = this._prizeMap.filter((prize) => prize.level === 3).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
-    let remainingLevel4 = this._prizeMap.filter((prize) => prize.level === 4).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
+    const remainingLevel0 = this._prizeMap.filter((prize) => prize.level === 0).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
+    const remainingLevel1 = this._prizeMap.filter((prize) => prize.level === 1).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
+    const remainingLevel2 = this._prizeMap.filter((prize) => prize.level === 2).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
+    const remainingLevel3 = this._prizeMap.filter((prize) => prize.level === 3).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
+    const remainingLevel4 = this._prizeMap.filter((prize) => prize.level === 4).reduce((count: number, prize) => count + (prize.quantity - prize.claimedQty), 0);
     return [
       {
         label: "Total Prizes",

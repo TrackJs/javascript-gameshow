@@ -6,12 +6,12 @@ import { Game } from 'src/controllers/GameController';
 export default class TestQuestions extends Component<any, any> {
 
   render(): ComponentChild {
-    let questions = new QuestionController()._questionMap;
+    const questions = new QuestionController()._questionMap;
 
     return (
       <div class="route-test-questions">
         {questions.map(question => {
-          let isComplete = false;
+          const isComplete = false;
           return (
             <div class="ask-question-wrap" style="margin: 20px 0">
               <AskQuestion game={{} as Game} question={question} showAnswers={true} onResult={(isCorrect) => console.log(`result: ${isCorrect}`)} />

@@ -7,8 +7,8 @@ import { QuestionController } from 'src/controllers/QuestionController';
 export default class TestEventState extends Component<any, any> {
 
   render(): ComponentChild {
-    let questionStats = new QuestionController().getQuestionStats();
-    let prizeStats = new PrizeController().getPrizeStats();
+    const questionStats = new QuestionController().getQuestionStats();
+    const prizeStats = new PrizeController().getPrizeStats();
 
     return (
       <div class="route-test-event-state flex justify-center align-center">

@@ -6,8 +6,8 @@ import '../../node_modules/video-react/dist/video-react.css'; // import css
 
 interface PlayerProps2 extends PlayerProps {
   loop: boolean
-};
-let StupidPlayerThatDidTypesWrong = Player as ((props: PlayerProps2) => JSX.Element);
+}
+const StupidPlayerThatDidTypesWrong = Player as ((props: PlayerProps2) => JSX.Element);
 
 export default class VideoBackground extends Component<any, VideoBackgroundState> {
 

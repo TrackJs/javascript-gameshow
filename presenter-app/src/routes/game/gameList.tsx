@@ -15,7 +15,7 @@ export default class GameList extends Component<any, any> {
   }
 
   render(): ComponentChild {
-    let games = GameController.getAllGames();
+    const games = GameController.getAllGames();
 
     return (
       <div class="route-game-list">
@@ -46,7 +46,7 @@ export default class GameList extends Component<any, any> {
   }
 
   private clearGames(): void {
-    let yes = confirm("Are you sure you want to erase everything?");
+    const yes = confirm("Are you sure you want to erase everything?");
     if (yes) {
       localStorage.clear();
       route("/games", true);

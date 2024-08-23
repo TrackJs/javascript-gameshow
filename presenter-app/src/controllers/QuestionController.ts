@@ -27,7 +27,7 @@ export class QuestionController {
     this._questionUsage = this._loadUsage();
     this._questionMap = Questions
       .map((question, idx) => {
-        let usage = this._questionUsage.find((usage) => usage.questionIdx === idx);
+        const usage = this._questionUsage.find((usage) => usage.questionIdx === idx);
         return {
           questionIdx: idx,
           askedOn: usage ? `${usage.gameId}-${usage.askIdx}` : null,
@@ -47,16 +47,16 @@ export class QuestionController {
    * requested, the same question is returned.
    */
   getQuestion(gameId: string, askIdx: number): QuestionLookup {
-    let askedQuestion = this._questionMap.find((question) => question.askedOn === `${gameId}-${askIdx}`);
+    const askedQuestion = this._questionMap.find((question) => question.askedOn === `${gameId}-${askIdx}`);
     if (askedQuestion) {
       return askedQuestion;
     }
 
-    let availableQuestions = this._questionMap
+    const availableQuestions = this._questionMap
       .filter((question) => !question.askedOn)
       .filter((question) => question.level === askIdx);
 
-    let chosenQuestion = availableQuestions[getRandomInteger(0, availableQuestions.length)];
+    const chosenQuestion = availableQuestions[getRandomInteger(0, availableQuestions.length)];
     if (!chosenQuestion) {
       throw new Error(`No questions remaining for difficulty ${askIdx}.`);
     }
@@ -67,11 +67,11 @@ export class QuestionController {
   }
 
   getQuestionStats(): { label: string, value: number }[] {
-    let remainingLevel0 = this._questionMap.filter((q) => !q.askedOn && q.level === 0).length;
-    let remainingLevel1 = this._questionMap.filter((q) => !q.askedOn && q.level === 1).length;
-    let remainingLevel2 = this._questionMap.filter((q) => !q.askedOn && q.level === 2).length;
-    let remainingLevel3 = this._questionMap.filter((q) => !q.askedOn && q.level === 3).length;
-    let remainingLevel4 = this._questionMap.filter((q) => !q.askedOn && q.level === 4).length;
+    const remainingLevel0 = this._questionMap.filter((q) => !q.askedOn && q.level === 0).length;
+    const remainingLevel1 = this._questionMap.filter((q) => !q.askedOn && q.level === 1).length;
+    const remainingLevel2 = this._questionMap.filter((q) => !q.askedOn && q.level === 2).length;
+    const remainingLevel3 = this._questionMap.filter((q) => !q.askedOn && q.level === 3).length;
+    const remainingLevel4 = this._questionMap.filter((q) => !q.askedOn && q.level === 4).length;
     return [
       {
         label: "Total Questions",

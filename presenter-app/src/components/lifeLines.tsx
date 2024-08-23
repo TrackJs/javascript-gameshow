@@ -56,10 +56,10 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     }
 
     if (selectedLifeLine.name === "50-50") {
-      for (var i = 0; i < 2; i++) {
-        let shownWrongAnswers = this.props.question.answers
+      for (let i = 0; i < 2; i++) {
+        const shownWrongAnswers = this.props.question.answers
           .filter(a => !a.hide && a.answerIdx !== this.props.question.correctAnswerIdx);
-        let index = getRandomInteger(0, shownWrongAnswers.length);
+        const index = getRandomInteger(0, shownWrongAnswers.length);
         shownWrongAnswers[index].hide = true;
       }
     }

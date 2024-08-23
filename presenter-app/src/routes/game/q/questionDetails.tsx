@@ -40,7 +40,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   componentWillReceiveProps(props: UrlRouteProps): void {
-    let state = this.getInitialState(props);
+    const state = this.getInitialState(props);
     this.setState(state);
     if (state.hasQuestionBeenAsked) {
       this.showQuestionAV();
@@ -62,21 +62,21 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private getInitialState(props: UrlRouteProps): QuestionDetailsState {
-    let askIdx = parseInt(props.askIdx, 10);
-    let game = GameController.getGame(props.gameId);
-    let hasQuestionBeenAsked = !!game.questions[askIdx];
+    const askIdx = parseInt(props.askIdx, 10);
+    const game = GameController.getGame(props.gameId);
+    const hasQuestionBeenAsked = !!game.questions[askIdx];
 
     if (hasQuestionBeenAsked) {
-      let question = GameController.getQuestion(game, askIdx);
+      const question = GameController.getQuestion(game, askIdx);
       return { askIdx, game, question, hasQuestionBeenAsked }
     }
-    else {
+    
       return { askIdx, game, question: undefined, hasQuestionBeenAsked };
-    }
+    
   }
 
   private renderPreQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
-    let prize = state.game.prizes[state.askIdx];
+    const prize = state.game.prizes[state.askIdx];
 
     return (
       <div class="pre-question">
@@ -90,7 +90,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="life-line-wrap">
-          {!!state.question ? (<LifeLines game={state.game} question={state.question} disabled={true} />) : undefined}
+          {state.question ? (<LifeLines game={state.game} question={state.question} disabled={true} />) : undefined}
         </div>
 
         <div class="controls">
@@ -132,13 +132,13 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private onShowQuestion(): void {
-    let question = GameController.getQuestion(this.state.game, this.state.askIdx);
+    const question = GameController.getQuestion(this.state.game, this.state.askIdx);
     this.showQuestionAV();
     this.setState({ question, hasQuestionBeenAsked: true });
   }
 
   private onLifelineUsed(lifeline: GameLifeLine): void {
-    let game = this.state.game;
+    const game = this.state.game;
     lifeline.isUsed = true;
     GameController.saveGame(game);
     this.setState({ game });

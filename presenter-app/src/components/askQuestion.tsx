@@ -83,7 +83,7 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
       <li>
         <input type="radio" name="selectedAnswerIdx" value={answer.answerIdx} id={`q${question.questionIdx}-a${answer.answerIdx}`}
           checked={state.playerAnswerIdx === answer.answerIdx}
-          class={`${(state.showResult && question.correctAnswerIdx === answer.answerIdx) ? "correct" : ""}`}></input>
+          class={`${(state.showResult && question.correctAnswerIdx === answer.answerIdx) ? "correct" : ""}`} />
         <label for={`q${question.questionIdx}-a${answer.answerIdx}`}>
           <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
             style={`transition: opacity 200ms ease-in-out ${index}s`}>
@@ -106,9 +106,9 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
   private onFinalAnswer(e: Event) {
     e.preventDefault();
 
-    let formData = new FormData(e.target as HTMLFormElement);
-    let playerAnswerIdx = parseInt(formData.get("selectedAnswerIdx") as string, 10);
-    let isCorrect = (playerAnswerIdx === this.props.question.correctAnswerIdx);
+    const formData = new FormData(e.target as HTMLFormElement);
+    const playerAnswerIdx = parseInt(formData.get("selectedAnswerIdx") as string, 10);
+    const isCorrect = (playerAnswerIdx === this.props.question.correctAnswerIdx);
 
     SoundController.stopAll();
     SoundController.play(SOUND.final_answer);

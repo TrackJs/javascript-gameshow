@@ -2,8 +2,8 @@ import { DateTime } from "luxon";
 import { PrizeLookup, PrizeController } from "./PrizeController";
 import { QuestionController, QuestionLookup, AnswerLookup } from "./QuestionController";
 
-const QUESTION_COUNT: number = 5;
-const THRESHOLD_IDX: number = 2;
+const QUESTION_COUNT = 5;
+const THRESHOLD_IDX = 2;
 const LIFELINES: GameLifeLine[] = [
   {
     name: "50-50",
@@ -60,8 +60,8 @@ class _GameController {
   }
 
   createGame(options: { playerName: string }): Game {
-    let gameId = this.getNextGameId();
-    let game: Game = {
+    const gameId = this.getNextGameId();
+    const game: Game = {
       id: gameId,
       playerName: options.playerName,
       startedOn: DateTime.now(),
@@ -99,7 +99,7 @@ class _GameController {
   }
 
   finalAnswer(game: Game, askIdx: number, playerAnswerIdx: number): void {
-    let question = game.questions[askIdx];
+    const question = game.questions[askIdx];
     question.playerAnswerIdx = playerAnswerIdx;
     question.isCorrect = (playerAnswerIdx === question.correctAnswerIdx);
     this.saveGame(game);
@@ -110,14 +110,14 @@ class _GameController {
   }
 
   getAllGames(): Game[] {
-    let gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+    const gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
     return gameUsage.map((gameId: string) => {
       return this.getGame(gameId);
     });
   }
 
   getGame(gameId: string): Game {
-    let gameString = localStorage.getItem(`game-${gameId}`);
+    const gameString = localStorage.getItem(`game-${gameId}`);
     if (!gameString) {
       throw new Error(`No game found for ${gameId}`);
     }
@@ -126,11 +126,11 @@ class _GameController {
   }
 
   finalizePrizes(game: Game): void {
-    let result: GamePrize[] = [];
-    let batch: GamePrize[] = []; // prizes within a threshold
+    const result: GamePrize[] = [];
+    const batch: GamePrize[] = []; // prizes within a threshold
 
     game.prizes.forEach((prize, idx) => {
-      let question = game.questions[idx];
+      const question = game.questions[idx];
 
       if (question?.isCorrect === true) {
         batch.push(prize);
@@ -157,7 +157,7 @@ class _GameController {
   }
 
   saveGame(game: Game) {
-    let gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+    const gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
     if (gameUsage.indexOf(game.id) < 0) {
       gameUsage.push(game.id);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(gameUsage));
@@ -166,15 +166,15 @@ class _GameController {
   }
 
   private getNextGameId(): string {
-    let games = this.getAllGames();
+    const games = this.getAllGames();
     return `${games.length}`;
   }
 
   private getPrizes(gameId: string): GamePrize[] {
-    let prizes: GamePrize[] = [];
+    const prizes: GamePrize[] = [];
 
     for (let askIdx = 0; askIdx < QUESTION_COUNT; askIdx++) {
-      let prize = this._prizeController.getPrize(gameId, askIdx) as GamePrize;
+      const prize = this._prizeController.getPrize(gameId, askIdx) as GamePrize;
       prize.isThreshold = (askIdx === THRESHOLD_IDX);
       prizes[askIdx] = prize;
     }

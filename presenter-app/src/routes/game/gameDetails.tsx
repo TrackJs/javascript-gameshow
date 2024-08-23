@@ -21,13 +21,13 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
   }
 
   componentWillMount() {
-    let game = GameController.getGame(this.props.gameId);
+    const game = GameController.getGame(this.props.gameId);
 
     if (!game.isFinished) {
       let nextQuestion = 0;
 
       if (game.questions.length) {
-        let unAnsweredQuestion = game.questions.find(q => !q.playerAnswerIdx);
+        const unAnsweredQuestion = game.questions.find(q => !q.playerAnswerIdx);
         if (unAnsweredQuestion) {
           nextQuestion = unAnsweredQuestion.questionIdx;
         }
@@ -42,16 +42,16 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
   }
 
   render(props: UrlRouteProps, state: GameDetailsState) {
-    let wonPrizes = state.game.prizes.filter((p) => p.isWon);
-    let largestPrizeIdx = wonPrizes.length - 1;
-    let unWonPrizes = state.game.prizes.filter(p => !p.isWon);
+    const wonPrizes = state.game.prizes.filter((p) => p.isWon);
+    const largestPrizeIdx = wonPrizes.length - 1;
+    const unWonPrizes = state.game.prizes.filter(p => !p.isWon);
 
     return (
       <div class="route-game-details">
 
         <div class="prizes">
           {wonPrizes.map((prize: GamePrize, i) => {
-            let sideMargin = 200 - (i * 50);
+            const sideMargin = 200 - (i * 50);
             return (
               <div class={`prize-wrap ${state.showPrizes ? "show" : ""}`}
                 style={`margin-left:${sideMargin}px;margin-right:${sideMargin}px;z-index:${i};transition-delay:${i}s`}>
