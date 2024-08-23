@@ -36,9 +36,11 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
       route(`/game/${this.props.gameId}/q/${nextQuestion}`, true);
     }
 
-    SoundController.play(SOUND.closing);
-    VideoBackgroundController.playBackgroundLoop();
     this.setState({ game, showPrizes: false });
+    setTimeout(() => {
+      SoundController.play(SOUND.closing);
+      VideoBackgroundController.playBackgroundLoop();
+    }, 100);
   }
 
   render(props: UrlRouteProps, state: GameDetailsState) {
