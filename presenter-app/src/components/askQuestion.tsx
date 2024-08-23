@@ -1,20 +1,19 @@
 import { h, Component, ComponentChild } from 'preact';
-import { Game } from 'src/controllers/GameController';
-import { Question, QuestionAnswer } from 'src/controllers/QuestionController';
+import { Game, GameAnswer, GameQuestion } from 'src/controllers/GameController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
 import { shuffleArray } from 'src/utils/shuffleArray';
 
 export interface AskQuestionProps {
   game: Game
-  question: Question
-  answerId?: string
+  question: GameQuestion
+  playerAnswerIdx?: number
   showAnswers?: boolean
-  onResult?: (answerId: string, isCorrect: boolean) => void
+  onResult?: (playerAnswerIdx: number, isCorrect: boolean) => void
 }
 
 export interface AskQuestionState {
-  answers: QuestionAnswer[]
-  answerId: string,
+  displayedAnswers: any[]
+  playerAnswerIdx?: number,
   isCorrect: boolean
   isFinal: boolean
   showAnswers: boolean
@@ -26,75 +25,72 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
   constructor(props: AskQuestionProps) {
     super();
     this.state = {
-      answers: shuffleArray(props.question?.answers || []),
-      answerId: props.answerId || "",
-      isCorrect: props.question?.correctId === props.answerId,
-      isFinal: !!props.answerId,
-      showAnswers: props.showAnswers || false,
-      showResult: !!props.answerId
+      displayedAnswers: shuffleArray(props.question?.answers || []),
+      playerAnswerIdx: props.playerAnswerIdx,
+      isCorrect: props.question?.correctAnswerIdx === props.playerAnswerIdx,
+      isFinal: props.playerAnswerIdx != undefined,
+      showAnswers: !!props.showAnswers,
+      showResult: props.playerAnswerIdx != undefined
     };
   }
 
   render(props: AskQuestionProps, state: AskQuestionState): ComponentChild {
-    let question = props.question;
-    let answers = state.answers;
-
-    return(
+    return (
       <form class="c-ask-question flex flex-column align-center" onSubmit={e => this.onFinalAnswer(e)}>
         <div class="question-text-bg">
           <div class="flex question-text justify-center align-center">
-            {question && question.type === "code" ?
+            {props.question.type === "code" ?
               <div class="flex flex-column">
                 <span class="code-result">What is the result of this JavaScript?</span>
-                <pre class={question.text.length >= 30 ? "small" : "" }>{question.text}</pre>
+                <pre class={props.question.text.length >= 30 ? "small" : ""}>{props.question.text}</pre>
               </div> :
-              <span>{question?.text}</span>
+              <span>{props.question.text}</span>
             }
           </div>
         </div>
         <ol class="answers">
           <div class="answer-row flex justify-center">
             {
-              answers
+              state.displayedAnswers
                 .filter((answer, i) => i <= 1)
                 .map((answer, i) =>
-                  this.renderAnswer(state, i, question, answer)
+                  this.renderAnswer(state, i, props.question, answer)
                 )
             }
           </div>
           <div class="answer-row flex justify-center">
             {
-              answers
+              state.displayedAnswers
                 .filter((answer, i) => i > 1)
                 .map((answer, i) =>
-                  this.renderAnswer(state, i+2, question, answer)
+                  this.renderAnswer(state, i + 2, props.question, answer)
                 )
             }
           </div>
         </ol>
         <div class="form-controls">
-          <button class="btn btn-orange btn-round" hidden={state.showAnswers} type="button" onClick={e => this.onShowAnswers()}>Show<br/>Answers</button>
-          <button class="btn btn-orange btn-round" hidden={state.isFinal || !state.showAnswers} type="submit">Final<br/>Answer</button>
+          <button class="btn btn-orange btn-round" hidden={state.showAnswers} type="button" onClick={e => this.onShowAnswers()}>Show<br />Answers</button>
+          <button class="btn btn-orange btn-round" hidden={state.isFinal || !state.showAnswers} type="submit">Final<br />Answer</button>
         </div>
       </form>
     );
   }
 
-  private renderAnswer(state: AskQuestionState, index: number, question: Question, answer: QuestionAnswer) : ComponentChild {
-    const ANSWER_LABEL = ["A","B","C","D"];
+  private renderAnswer(state: AskQuestionState, index: number, question: GameQuestion, answer: GameAnswer): ComponentChild {
+    const ANSWER_LABEL = ["A", "B", "C", "D"];
 
     return (
       <li>
-        <input type="radio" name="selectedAnswerId" value={answer.id} id={`q${question.id}-a${answer.id}`}
-          checked={state.answerId === answer.id}
-          class={`${(state.showResult && question.correctId === answer.id) ? "correct" : ""}`}></input>
-        <label for={`q${question.id}-a${answer.id}`}>
+        <input type="radio" name="selectedAnswerIdx" value={answer.answerIdx} id={`q${question.questionIdx}-a${answer.answerIdx}`}
+          checked={state.playerAnswerIdx === answer.answerIdx}
+          class={`${(state.showResult && question.correctAnswerIdx === answer.answerIdx) ? "correct" : ""}`}></input>
+        <label for={`q${question.questionIdx}-a${answer.answerIdx}`}>
           <div class={`answer-text flex align-center ${state.showAnswers ? "show" : ""}`}
             style={`transition: opacity 200ms ease-in-out ${index}s`}>
             <span class="letter">{ANSWER_LABEL[index]}:</span>&nbsp;
             {answer.hide === true ? "" :
               question.type === "code" ?
-                <pre class={answer.text.length >= 20 ? "small" : "" }>{answer.text}</pre> :
+                <pre class={answer.text.length >= 20 ? "small" : ""}>{answer.text}</pre> :
                 <span>{answer.text}</span>
             }
           </div>
@@ -111,21 +107,20 @@ export default class AskQuestion extends Component<AskQuestionProps, AskQuestion
     e.preventDefault();
 
     let formData = new FormData(e.target as HTMLFormElement);
-    let answerId = formData.get("selectedAnswerId") as string;
-    let isCorrect = (answerId === this.props.question.correctId);
+    let playerAnswerIdx = parseInt(formData.get("selectedAnswerIdx") as string, 10);
+    let isCorrect = (playerAnswerIdx === this.props.question.correctAnswerIdx);
 
     SoundController.stopAll();
     SoundController.play(SOUND.final_answer);
 
-    this.setState({ answerId, isCorrect, isFinal: true });
+    this.setState({ playerAnswerIdx, isCorrect, isFinal: true });
 
     setTimeout(() => {
       this.setState({ showResult: true });
       SoundController.play(isCorrect ? SOUND.result_win : SOUND.result_lose);
       if (this.props.onResult) {
-        this.props.onResult(answerId, isCorrect);
+        this.props.onResult(playerAnswerIdx, isCorrect);
       }
     }, 5_000);
   }
-
 }

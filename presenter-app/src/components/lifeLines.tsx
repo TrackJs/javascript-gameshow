@@ -1,14 +1,13 @@
 import { h, Component, ComponentChild } from 'preact';
-import { Game, GameController, GameLifeLine } from 'src/controllers/GameController';
-import { Question } from 'src/controllers/QuestionController';
+import { Game, GameLifeLine, GameQuestion } from 'src/controllers/GameController';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
 import { getRandomInteger } from 'src/utils/getRandomInteger';
 
 export interface LifeLinesProps {
   game: Game,
-  question: Question,
+  question: GameQuestion,
   disabled?: boolean,
-  onUsed?: (game: Game, question: Question) => void
+  onUsed?: (lifeline: GameLifeLine) => void
 }
 
 interface LifeLinesState {
@@ -20,11 +19,11 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
 
   render(props: LifeLinesProps, state: LifeLinesState): ComponentChild {
 
-    return(
+    return (
       <div class="c-life-line flex">
 
         <div class="lifelines">
-          { props.game.lifeLines.filter(ll => !ll.isUsed).map(ll => (
+          {props.game.lifeLines.filter(ll => !ll.isUsed).map(ll => (
             <button type="button" class="btn btn-red btn-square glow" onClick={e => this.onClick(ll)}>
               <img src={ll.iconUrl} alt={ll.name} />
             </button>
@@ -35,7 +34,7 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
           <div class="lifeline-bar flex flex-column justify-center">
             <h2>{state.selectedLifeLine?.name}</h2>
             <div class="lifeline-options flex justify-center">
-              { state.selectedLifeLine?.options?.map(o => (
+              {state.selectedLifeLine?.options?.map(o => (
                 <div class="lifeline-option">
                   <img src={o.imageUrl} alt={o.name} />
                   <div class="option-name">{o.name}</div>
@@ -51,18 +50,15 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     );
   }
 
-  onClick(selectedLifeLine : GameLifeLine): void {
+  onClick(selectedLifeLine: GameLifeLine): void {
     if (this.props.disabled === true) {
       return;
     }
 
-    selectedLifeLine.isUsed = true;
-    selectedLifeLine.questionUsed = this.props.question.id;
-
     if (selectedLifeLine.name === "50-50") {
-      for(var i=0; i<2; i++)  {
+      for (var i = 0; i < 2; i++) {
         let shownWrongAnswers = this.props.question.answers
-          .filter(a => !a.hide && a.id !== this.props.question.correctId);
+          .filter(a => !a.hide && a.answerIdx !== this.props.question.correctAnswerIdx);
         let index = getRandomInteger(0, shownWrongAnswers.length);
         shownWrongAnswers[index].hide = true;
       }
@@ -71,10 +67,9 @@ export default class LifeLines extends Component<LifeLinesProps, LifeLinesState>
     SoundController.stopAll();
     SoundController.play(SOUND.lifeline_friend);
     this.setState({ selectedLifeLine });
-    GameController.saveGame(this.props.game);
 
     if (this.props.onUsed !== undefined) {
-      this.props.onUsed(this.props.game, this.props.question);
+      this.props.onUsed(selectedLifeLine);
     }
 
   }

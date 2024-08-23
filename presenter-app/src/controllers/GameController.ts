@@ -1,23 +1,36 @@
 import { DateTime } from "luxon";
-import { Prize, PrizeController } from "./PrizeController";
-import { QuestionController } from "./QuestionController";
+import { PrizeLookup, PrizeController } from "./PrizeController";
+import { QuestionController, QuestionLookup, AnswerLookup } from "./QuestionController";
 
-export interface GameOptions {
-  playerName: string;
+const QUESTION_COUNT: number = 5;
+const THRESHOLD_IDX: number = 2;
+const LIFELINES: GameLifeLine[] = [
+  {
+    name: "50-50",
+    iconUrl: "/assets/images/5050.svg",
+    isUsed: false,
+  }
+];
+
+export interface GamePrize extends PrizeLookup {
+  isThreshold: boolean,
+  isWon?: boolean
 }
 
-export interface GameQuestionAsked {
-  questionIdx: number,
-  questionId: string,
-  answerId?: string,
-  isCorrect?: boolean
+export interface GameQuestion extends QuestionLookup {
+  playerAnswerIdx?: number
+  isCorrect?: boolean,
+  answers: GameAnswer[]
+}
+
+export interface GameAnswer extends AnswerLookup {
+  hide?: boolean
 }
 
 export interface GameLifeLine {
   name: string
   iconUrl: string
   isUsed: boolean
-  questionUsed?: string
   options?: {
     name: string
     imageUrl: string
@@ -29,71 +42,78 @@ export interface Game {
   playerName: string
   startedOn: DateTime
   lifeLines: GameLifeLine[],
-  questionsAsked: GameQuestionAsked[]
-  prizeStack: Prize[],
-  prizeWon: Prize[],
+  questions: GameQuestion[],
+  prizes: GamePrize[],
   isFinished: boolean
 }
 
-export interface GameState {
-  game: Game | null
-  hasStarted: boolean
-};
-
-const QUESTION_COUNT = 5;
+const STORAGE_KEY = "game_usage";
 
 class _GameController {
 
-  createGame(options: GameOptions): Game {
-    let id = this.getNextGameId();
-    let game = {
-      id,
+  _questionController = new QuestionController();
+  _prizeController = new PrizeController();
+
+  _reset() {
+    this._questionController = new QuestionController();
+    this._prizeController = new PrizeController();
+  }
+
+  createGame(options: { playerName: string }): Game {
+    let gameId = this.getNextGameId();
+    let game: Game = {
+      id: gameId,
       playerName: options.playerName,
       startedOn: DateTime.now(),
-      lifeLines: [
-        {
-          name: "50-50",
-          iconUrl: "/assets/images/5050.svg",
-          isUsed: false,
-        }
-      ],
-      questionsAsked: [],
-      prizeStack: this.getPrizeStack(id),
-      prizeWon: [],
+      lifeLines: LIFELINES.slice(),
+      questions: [],
+      prizes: [],
       isFinished: false
     }
+    this.saveGame(game); //  save fast so we don't double create things when we start claiming prizes
+    game.prizes = this.getPrizes(gameId);
     this.saveGame(game);
+
     return game;
   }
 
   finishGame(game: Game) {
-    game.prizeWon = this.getPrizesWon(game);
+    this.finalizePrizes(game);
 
-    // Removing this to setup the giveaway.
-    // game.prizeStack.forEach((prize, idx) => {
-    //   let hasWon = game.prizeWon.some(p => p.id === prize.id);
-    //   if (!hasWon) {
-    //     PrizeController.releasePrize(game.id, prize.id);
-    //   }
-    // });
+    game.prizes
+      .filter((prize) => !prize.isWon)
+      .forEach((unWonPrize) => {
+        this._prizeController.releasePrize(unWonPrize.prizeIdx);
+      });
 
     game.isFinished = true;
     this.saveGame(game);
   }
 
-  getAllGames(): Game[] {
-    const games = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      if (key?.startsWith("game-")) {
-        let gameId = key.split("game-")[1];
-        let game = this.getGame(gameId);
-        if (game) {
-          games.push(game);
-        }
-      }
+  getQuestion(game: Game, askIdx: number): GameQuestion {
+    if (!game.questions[askIdx]) {
+      game.questions[askIdx] = this._questionController.getQuestion(game.id, askIdx) as GameQuestion;
+      this.saveGame(game);
     }
-    return games;
+    return game.questions[askIdx];
+  }
+
+  finalAnswer(game: Game, askIdx: number, playerAnswerIdx: number): void {
+    let question = game.questions[askIdx];
+    question.playerAnswerIdx = playerAnswerIdx;
+    question.isCorrect = (playerAnswerIdx === question.correctAnswerIdx);
+    this.saveGame(game);
+  }
+
+  isLastAsk(askId: number) {
+    return askId >= QUESTION_COUNT;
+  }
+
+  getAllGames(): Game[] {
+    let gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+    return gameUsage.map((gameId: string) => {
+      return this.getGame(gameId);
+    });
   }
 
   getGame(gameId: string): Game {
@@ -105,40 +125,43 @@ class _GameController {
     return JSON.parse(gameString) as Game;
   }
 
-  getDifficultyForIndex(questionIdx: number): 0 | 1 | 2 | 3 | 4 {
-    let difficultyMap = [0, 1, 2, 3, 4];
-    return difficultyMap[questionIdx] as 0 | 1 | 2 | 3 | 4;
-  }
+  finalizePrizes(game: Game): void {
+    let result: GamePrize[] = [];
+    let batch: GamePrize[] = []; // prizes within a threshold
 
-  getPrizesWon(game: Game): Prize[] {
-    let result: Prize[] = [];
-    let batch: Prize[] = []; // prizes within a threshold
+    game.prizes.forEach((prize, idx) => {
+      let question = game.questions[idx];
 
-    game.questionsAsked.forEach((asked, idx) => {
-      let prize = game.prizeStack[idx];
-
-      if (asked.isCorrect) {
+      if (question?.isCorrect === true) {
         batch.push(prize);
 
+        // Once the user crosses a threshold, they won everything in the batch
         if (prize.isThreshold) {
-          result.push.apply(result, batch);
+          batch.forEach((prize) => { prize.isWon = true });
           batch.length = 0;
         }
       }
-      else if (asked.isCorrect === false) {
+      else if (question?.isCorrect === false) {
+        prize.isWon = false;
+        batch.forEach((prize) => { prize.isWon = false; })
         batch.length = 0;
+      }
+      else {
+        // question was not asked
+        prize.isWon = false;
       }
     });
 
-    result.push.apply(result, batch);
-    return result;
+    // anything remaining the in batch are top prizes won.
+    batch.forEach((prize) => { prize.isWon = true });
   }
 
-  // getLargestPrizeIdx(game: Game): number {
-  //   return -1;
-  // }
-
   saveGame(game: Game) {
+    let gameUsage = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+    if (gameUsage.indexOf(game.id) < 0) {
+      gameUsage.push(game.id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(gameUsage));
+    }
     localStorage.setItem(`game-${game.id}`, JSON.stringify(game));
   }
 
@@ -147,19 +170,16 @@ class _GameController {
     return `${games.length}`;
   }
 
-  private getPrizeStack(gameId: string): Prize[] {
-    let prizeStack = [];
+  private getPrizes(gameId: string): GamePrize[] {
+    let prizes: GamePrize[] = [];
 
-    for (let questionIdx = 0; questionIdx < QUESTION_COUNT; questionIdx++) {
-      let difficulty = this.getDifficultyForIndex(questionIdx);
-      prizeStack[questionIdx] = PrizeController.getPrize(gameId, difficulty);
-
-      // if (questionIdx === 2) {
-      prizeStack[questionIdx].isThreshold = true;
-      // }
+    for (let askIdx = 0; askIdx < QUESTION_COUNT; askIdx++) {
+      let prize = this._prizeController.getPrize(gameId, askIdx) as GamePrize;
+      prize.isThreshold = (askIdx === THRESHOLD_IDX);
+      prizes[askIdx] = prize;
     }
 
-    return prizeStack;
+    return prizes;
   }
 
 }

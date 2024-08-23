@@ -6,32 +6,32 @@ import { VideoBackgroundController } from 'src/controllers/VideoBackgroundContro
 
 export default class GameNew extends Component<any, any> {
 
-	componentDidMount(): void {
-		SoundController.play(SOUND.meet_contestant);
-		VideoBackgroundController.playBackgroundLoop();
-	}
+  componentDidMount(): void {
+    SoundController.play(SOUND.meet_contestant);
+    VideoBackgroundController.playBackgroundLoop();
+  }
 
-	componentWillUnmount(): void {
-		SoundController.stop(SOUND.meet_contestant);
-		VideoBackgroundController.pauseBackground();
-	}
+  componentWillUnmount(): void {
+    SoundController.stop(SOUND.meet_contestant);
+    VideoBackgroundController.pauseBackground();
+  }
 
   render(): ComponentChild {
     return (
-    	<div class="route-game-new flex flex-column justify-center align-center">
+      <div class="route-game-new flex flex-column justify-center align-center">
         <img src="/assets/images/logo.png" class="glow" width="400" height="400" />
-        <form onSubmit={this.onNewGameSubmit}>
+        <form onSubmit={this.onNewGameSubmit.bind(this)} disabled={this.state.disabled}>
           <div>
             <input type="text" name="name" required placeholder="What is your name?"></input>
           </div>
           <div class="form-controls">
-            <button type="submit" class="btn btn-purple btn-round">Play<br/>Game</button>
+            <button type="submit" class="btn btn-purple btn-round">Play<br />Game</button>
           </div>
         </form>
 
         <div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route("/")}>Home</button>
-				</div>
+        </div>
 
       </div>
     );
@@ -39,6 +39,7 @@ export default class GameNew extends Component<any, any> {
 
   onNewGameSubmit(e: Event) {
     e.preventDefault();
+    this.setState({ disabled: true });
     let data = new FormData(e.target as HTMLFormElement);
 
     let game = GameController.createGame({

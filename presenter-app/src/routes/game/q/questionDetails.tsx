@@ -1,7 +1,7 @@
 import { h, Component, ComponentChild } from 'preact';
 import { UrlRouteProps } from 'src/app';
-import { Game, GameController, GameQuestionAsked } from 'src/controllers/GameController';
-import { Question, QuestionController } from 'src/controllers/QuestionController';
+import { Game, GameController, GameLifeLine, GameQuestion } from 'src/controllers/GameController';
+import { QuestionController, QuestionLookup } from 'src/controllers/QuestionController';
 import { route } from 'preact-router';
 
 import PrizeShow from 'src/components/prizeShow';
@@ -13,10 +13,10 @@ import { SOUND, SoundController } from 'src/controllers/SoundController';
 import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
 
 interface QuestionDetailsState {
+  askIdx: number,
   game: Game
-  question?: Question
-  questionAsked?: GameQuestionAsked
-  questionIdx: number
+  hasQuestionBeenAsked: boolean
+  question?: GameQuestion
 }
 
 export default class QuestionDetails extends Component<UrlRouteProps, QuestionDetailsState> {
@@ -27,31 +27,27 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   componentDidMount(): void {
-    if (this.state.questionAsked) {
+    if (this.state.hasQuestionBeenAsked) {
       this.showQuestionAV();
     } else {
       this.showPreQuestionAV();
     }
-	}
+  }
 
-	componentWillUnmount(): void {
-		SoundController.stopAll();
-		VideoBackgroundController.pauseBackground();
-	}
-
+  componentWillUnmount(): void {
+    SoundController.stopAll();
+    VideoBackgroundController.pauseBackground();
+  }
 
   componentWillReceiveProps(props: UrlRouteProps): void {
     let state = this.getInitialState(props);
     this.setState(state);
-
-    if (state.questionAsked) {
+    if (state.hasQuestionBeenAsked) {
       this.showQuestionAV();
     } else {
       this.showPreQuestionAV();
     }
-
   }
-
 
   render(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
     return (
@@ -66,39 +62,23 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private getInitialState(props: UrlRouteProps): QuestionDetailsState {
-    // if !question -- show prize stack and controls
-    // if question && !answer -- show question
-    // if question && answer -- show finished question
-    let questionIdx = parseInt(props.questionIdx, 10);
+    let askIdx = parseInt(props.askIdx, 10);
     let game = GameController.getGame(props.gameId);
-    let questionAsked = game.questionsAsked[questionIdx];
-    let difficulty = GameController.getDifficultyForIndex(questionIdx);
+    let hasQuestionBeenAsked = !!game.questions[askIdx];
 
-    // question has not yet been asked
-    if (!questionAsked) {
-      return {
-        game,
-        question: undefined,
-        questionAsked: undefined,
-        questionIdx
-      };
+    if (hasQuestionBeenAsked) {
+      let question = GameController.getQuestion(game, askIdx);
+      return { askIdx, game, question, hasQuestionBeenAsked }
     }
-    // question has been asked
     else {
-      let question = QuestionController.getQuestion(game.id, questionIdx, difficulty);
-      return {
-        game,
-        question,
-        questionAsked,
-        questionIdx
-      }
+      return { askIdx, game, question: undefined, hasQuestionBeenAsked };
     }
   }
 
   private renderPreQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
-    let prize = state.game.prizeStack[state.questionIdx];
+    let prize = state.game.prizes[state.askIdx];
 
-    return(
+    return (
       <div class="pre-question">
 
         <div class="prize-to-win">
@@ -106,18 +86,17 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="prize-stack-wrap glow">
-          <PrizeStack game={state.game} questionIdx={state.questionIdx} />
+          <PrizeStack game={state.game} askIdx={state.askIdx} />
         </div>
 
         <div class="life-line-wrap">
-          { !!state.question ? (<LifeLines game={state.game} question={state.question as Question} disabled={true} />) : undefined }
-
+          {!!state.question ? (<LifeLines game={state.game} question={state.question} disabled={true} />) : undefined}
         </div>
 
         <div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route('/')}>Home</button>
           <button class="btn btn-purple" type="button" onClick={e => this.onShowQuestion()}>Show Question</button>
-          <button hidden={state.questionIdx === 0} class="btn btn-purple" type="button" onClick={e => this.onFinishGame()}>Take Prizes</button>
+          <button hidden={state.askIdx === 0} class="btn btn-purple" type="button" onClick={e => this.onFinishGame()}>Take Prizes</button>
         </div>
 
         <GameLogo />
@@ -126,31 +105,25 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private renderQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
-    let game = state.game;
-    let question = state.question as Question;
-    let questionAsked = state.questionAsked as GameQuestionAsked;
-    let prize = game.prizeStack[state.questionIdx];
-    let lastQuestionIdx = game.prizeStack.length-1;
-
     return (
       <div class="show-question">
 
-        <div class={`prize-wrap ${(questionAsked.isCorrect) ? "show" : ""}`}>
-          <PrizeShow prize={prize} />
+        <div class={`prize-wrap ${(state.question?.isCorrect) ? "show" : ""}`}>
+          <PrizeShow prize={state.game.prizes[state.askIdx]} />
         </div>
 
         <div class="question-wrap">
-          <AskQuestion question={question} onResult={this.onAnswer.bind(this)}
-            showAnswers={!!questionAsked.answerId} answerId={questionAsked.answerId} game={state.game} />
+          <AskQuestion question={state.question as GameQuestion} onResult={this.onAnswer.bind(this)}
+            showAnswers={state.question?.playerAnswerIdx != undefined} playerAnswerIdx={state.question?.playerAnswerIdx} game={state.game} />
         </div>
 
-        <div class="life-line-wrap" hidden={!!questionAsked.answerId}>
-          <LifeLines game={state.game} question={question} disabled={!!questionAsked.answerId} onUsed={this.onLifelineUsed.bind(this)} />
+        <div class="life-line-wrap" hidden={state.question?.playerAnswerIdx != undefined}>
+          <LifeLines game={state.game} question={state.question as GameQuestion} disabled={state.question?.playerAnswerIdx != undefined} onUsed={this.onLifelineUsed.bind(this)} />
         </div>
 
         <div class="controls">
-          <button hidden={!(questionAsked.isCorrect && state.questionIdx < lastQuestionIdx)} type="button" class="btn btn-purple" onClick={e => route(`/game/${game.id}/q/${state.questionIdx + 1}`)}>Next Question</button>
-          <button hidden={!(questionAsked.isCorrect === false || state.questionIdx >= lastQuestionIdx)} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
+          <button hidden={!(state.question?.isCorrect === true && !GameController.isLastAsk(state.askIdx))} type="button" class="btn btn-purple" onClick={e => route(`/game/${state.game.id}/q/${state.askIdx + 1}`)}>Next Question</button>
+          <button hidden={!(state.question?.isCorrect === false || GameController.isLastAsk(state.askIdx))} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
         </div>
 
         <GameLogo />
@@ -159,45 +132,26 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private onShowQuestion(): void {
-    let game = this.state.game;
-    let questionIdx = this.state.questionIdx;
-    let difficulty = GameController.getDifficultyForIndex(questionIdx);
-
-    // Mark that the user is seeing this question and it will now be added to their game.
-    let question = QuestionController.getQuestion(game.id, questionIdx, difficulty);
-    let questionAsked = {
-      questionIdx: questionIdx,
-      questionId: question.id
-    }
-
-    game.questionsAsked.push(questionAsked);
-    GameController.saveGame(game);
-
+    let question = GameController.getQuestion(this.state.game, this.state.askIdx);
     this.showQuestionAV();
-
-    this.setState({
-      question,
-      questionAsked
-    });
+    this.setState({ question, hasQuestionBeenAsked: true });
   }
 
-  private onLifelineUsed(game: Game, question: Question): void {
-    this.setState({ game, question });
+  private onLifelineUsed(lifeline: GameLifeLine): void {
+    let game = this.state.game;
+    lifeline.isUsed = true;
+    GameController.saveGame(game);
+    this.setState({ game });
   }
 
-  private onAnswer(answerId: string, isCorrect: boolean): void {
-    let questionAsked = this.state.questionAsked as GameQuestionAsked;
-    questionAsked.answerId = answerId;
-    questionAsked.isCorrect = isCorrect;
-
+  private onAnswer(playerAnswerIdx: number, isCorrect: boolean): void {
+    GameController.finalAnswer(this.state.game, this.state.askIdx, playerAnswerIdx);
     SoundController.play(SOUND.final_answer);
     VideoBackgroundController.playFanfare();
-
-    GameController.saveGame(this.state.game);// persist that the question has been answered.
-    this.setState({ questionAsked });
+    this.setState({ game: this.state.game, question: this.state.question });
   }
 
-  private onFinishGame() : void {
+  private onFinishGame(): void {
     GameController.finishGame(this.state.game);
     route(`/game/${this.state.game.id}`);
   }
@@ -210,7 +164,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
 
   private showQuestionAV() {
     SoundController.stopAll();
-    SoundController.playQuestionSound(this.state.questionIdx);
+    SoundController.playQuestionSound(this.state.askIdx);
     VideoBackgroundController.playFanfare();
     setTimeout(() => {
       VideoBackgroundController.greenscreen();

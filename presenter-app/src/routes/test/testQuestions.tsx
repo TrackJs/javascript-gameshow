@@ -6,12 +6,11 @@ import { Game } from 'src/controllers/GameController';
 export default class TestQuestions extends Component<any, any> {
 
   render(): ComponentChild {
-    QuestionController.logQuestions();
-		let questions = QuestionController.getAllQuestions();
+    let questions = new QuestionController()._questionMap;
 
     return (
-			<div class="route-test-questions">
-        { questions.map(question => {
+      <div class="route-test-questions">
+        {questions.map(question => {
           let isComplete = false;
           return (
             <div class="ask-question-wrap" style="margin: 20px 0">
@@ -19,8 +18,8 @@ export default class TestQuestions extends Component<any, any> {
             </div>
           );
         })}
-			</div>
-		);
+      </div>
+    );
   }
 
 

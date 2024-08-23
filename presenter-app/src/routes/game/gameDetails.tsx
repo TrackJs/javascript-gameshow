@@ -1,13 +1,12 @@
 import { h, Component, ComponentChild } from 'preact';
 import { UrlRouteProps } from 'src/app';
-import { Game, GameController } from 'src/controllers/GameController';
+import { Game, GameController, GamePrize } from 'src/controllers/GameController';
 import { route } from 'preact-router';
 import GameLogo from 'src/components/gameLogo';
 import PrizeStack from 'src/components/prizeStack';
 import PrizeShow from 'src/components/prizeShow';
 import { SOUND, SoundController } from 'src/controllers/SoundController';
 import { VideoBackgroundController } from 'src/controllers/VideoBackgroundController';
-import { PrizeController } from 'src/controllers/PrizeController';
 
 interface GameDetailsState {
   game: Game
@@ -27,8 +26,8 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
     if (!game.isFinished) {
       let nextQuestion = 0;
 
-      if (game.questionsAsked.length) {
-        let unAnsweredQuestion = game.questionsAsked.find(qa => !qa.answerId);
+      if (game.questions.length) {
+        let unAnsweredQuestion = game.questions.find(q => !q.playerAnswerIdx);
         if (unAnsweredQuestion) {
           nextQuestion = unAnsweredQuestion.questionIdx;
         }
@@ -43,47 +42,49 @@ export default class GameDetails extends Component<UrlRouteProps, any> {
   }
 
   render(props: UrlRouteProps, state: GameDetailsState) {
-    let largestPrizeIdx = state.game.prizeWon.length - 1;
-    let remainingPrizes = state.game.prizeStack.filter(prize => !state.game.prizeWon.some(won => won.id === prize.id));
+    let wonPrizes = state.game.prizes.filter((p) => p.isWon);
+    let largestPrizeIdx = wonPrizes.length - 1;
+    let unWonPrizes = state.game.prizes.filter(p => !p.isWon);
 
     return (
       <div class="route-game-details">
 
         <div class="prizes">
-          { state.game.prizeWon.map((prize, i) => {
-            let sideMargin = 200 - (i*50);
+          {wonPrizes.map((prize: GamePrize, i) => {
+            let sideMargin = 200 - (i * 50);
             return (
               <div class={`prize-wrap ${state.showPrizes ? "show" : ""}`}
                 style={`margin-left:${sideMargin}px;margin-right:${sideMargin}px;z-index:${i};transition-delay:${i}s`}>
                 <PrizeShow prize={prize} />
               </div>
             );
-          })}
-          { state.game.prizeWon.length === 0 ? (
+          })
+          }
+          {wonPrizes.length === 0 ? (
             <div class="box no-prize">
               <h2>No Prizes Won</h2>
             </div>
-          ) : null }
+          ) : null}
         </div>
 
         <div class="prizes" hidden={!this.state.showRemaining}>
-          { remainingPrizes.map((prize, i) => {
-              return (
-                <div class={`prize-wrap ${state.showRemaining ? "show" : ""}`}>
-                  <PrizeShow prize={prize} />
-                </div>
-              );
+          {unWonPrizes.map((prize, i) => {
+            return (
+              <div class={`prize-wrap ${state.showRemaining ? "show" : ""}`}>
+                <PrizeShow prize={prize} />
+              </div>
+            );
           })}
         </div>
 
         <div class="prize-stack-wrap">
-          <PrizeStack game={state.game} questionIdx={largestPrizeIdx} highlightLowerIdx={true} />
+          <PrizeStack game={state.game} askIdx={largestPrizeIdx} highlightLowerIdx={true} />
         </div>
 
         <div class="controls">
           <button class="btn btn-purple" type="button" onClick={e => route("/")}>Home</button>
-          <button hidden={!(state.game.prizeWon.length < state.game.prizeStack.length && !state.showRemaining)} class="btn btn-purple" type="button" onClick={e => this.showRemaining()}>Show Remaining</button>
-          <button hidden={!(state.game.prizeWon.length > 0 && !state.showPrizes)} class="btn btn-purple" type="button" onClick={e => this.showPrizes()}>Show Prizes</button>
+          <button hidden={!(wonPrizes.length < state.game.prizes.length && !state.showRemaining)} class="btn btn-purple" type="button" onClick={e => this.showRemaining()}>Show Remaining</button>
+          <button hidden={!(wonPrizes.length > 0 && !state.showPrizes)} class="btn btn-purple" type="button" onClick={e => this.showPrizes()}>Show Prizes</button>
         </div>
 
         <GameLogo />

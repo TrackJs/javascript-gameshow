@@ -15,17 +15,18 @@ export default class Home extends Component<any, any> {
 		VideoBackgroundController.pauseBackground();
 	}
 
-	render() : ComponentChild {
+	render(): ComponentChild {
 		return (
 			<div class="route-home flex flex-column justify-center align-center">
 
 				<div class="home-game-logo">
-					<img class="glow" src="/assets/images/logo.png" height="500" width="500"/>
+					<img class="glow" src="/assets/images/logo.png" height="500" width="500" />
 				</div>
 
 				<div class="controls">
 					<button class="btn btn-purple" type="button" onClick={e => route('/find-player')}>Find Player</button>
 					<button class="btn btn-purple" type="button" onClick={e => route(`/games`)}>List Games</button>
+					<button class="btn btn-purple" type="button" onClick={e => route(`/test/event-state`)}>Check State</button>
 				</div>
 
 			</div>

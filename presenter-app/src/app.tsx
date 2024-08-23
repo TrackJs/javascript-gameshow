@@ -12,14 +12,15 @@ import TestQuestions from './routes/test/testQuestions';
 import ErrorNotFound from './routes/error/errorNotFound';
 import TestPrizes from './routes/test/testPrizes';
 import VideoBackground from './components/videoBackground';
+import TestEventState from './routes/test/testEventState';
 
 export interface UrlRouteProps {
     gameId: string,
-    questionIdx: string
+    askIdx: string
 }
 
 const App = () => (
-	<main id="app">
+    <main id="app">
         <Router>
             <Route path="/" component={Home} />
             <Route path="/find-player" component={FindPlayer} />
@@ -27,10 +28,11 @@ const App = () => (
             <Route path="/games" component={GameList} />
             <Route path="/game/new" component={GameNew} />
             <Route path="/game/:gameId" component={GameDetails} />
-            <Route path="/game/:gameId/q/:questionIdx" component={QuestionDetails} />
+            <Route path="/game/:gameId/q/:askIdx" component={QuestionDetails} />
 
             <Route path="/test/questions" component={TestQuestions} />
             <Route path="/test/prizes" component={TestPrizes} />
+            <Route path="/test/event-state" component={TestEventState} />
 
             <Route default component={ErrorNotFound} />
         </Router>

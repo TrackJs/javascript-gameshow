@@ -1,14 +1,14 @@
 import { h, Component, ComponentChild } from 'preact';
-import { Prize } from 'src/controllers/PrizeController';
+import { GamePrize } from 'src/controllers/GameController';
 
 export interface PrizeShowProps {
-  prize: Prize
+  prize: GamePrize
 }
 
 export default class PrizeShow extends Component<PrizeShowProps, any> {
 
   render(props: PrizeShowProps, state: any): ComponentChild {
-    return(
+    return (
       <div class="prize-show">
         <div class="prize-show-bg">
           <div class="prize-show-text flex justify-center align-center">
