@@ -281,6 +281,7 @@ describe("GameController", () => {
 
     for (let gameIdx = 2; gameIdx < 5; gameIdx++) {
       let game = GameController.createGame({ playerName: `player${gameIdx}` });
+
       for (let questionIdx = 0; questionIdx < 5; questionIdx++) {
         let question = GameController.getQuestion(game, questionIdx);
         GameController.finalAnswer(game, questionIdx, question.correctAnswerIdx);

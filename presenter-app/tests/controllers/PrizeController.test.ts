@@ -104,14 +104,14 @@ describe("PrizeController", () => {
       let prize2 = prizeController.getPrize("0", 1);
       let prize3 = prizeController.getPrize("0", 2);
 
-      expect(prize1.prizeIdx).toBe(1);
-      expect(prize1.name).toBe("bar");
+      expect(prize1?.prizeIdx).toBe(1);
+      expect(prize1?.name).toBe("bar");
 
-      expect(prize2.prizeIdx).toBe(2);
-      expect(prize2.name).toBe("baz");
+      expect(prize2?.prizeIdx).toBe(2);
+      expect(prize2?.name).toBe("baz");
 
-      expect(prize3.prizeIdx).toBe(3);
-      expect(prize3.name).toBe("boof");
+      expect(prize3?.prizeIdx).toBe(3);
+      expect(prize3?.name).toBe("boof");
     });
 
   });

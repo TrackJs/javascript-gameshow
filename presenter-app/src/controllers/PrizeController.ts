@@ -35,12 +35,17 @@ export class PrizeController {
   /**
    * Get the next prize at the specified ask for the game.
    */
-  getPrize(gameId: string, askIdx: number): PrizeLookup {
+  getPrize(gameId: string, askIdx: number): PrizeLookup | null {
     const chosenPrize = this._prizeMap
-      .find(prize => prize.level === askIdx && prize.claimedQty < prize.quantity);
+      .slice()
+      .sort((a, b) => b.level - a.level)
+      .find(prize => prize.level <= askIdx && prize.claimedQty < prize.quantity);
 
     if (!chosenPrize) {
-      throw new Error(`Could not get prize for game ${gameId} for ask ${askIdx}`);
+      // throw new Error();
+
+      console.warn(`Could not get prize for game ${gameId} for ask ${askIdx}`);
+      return null;
     }
 
     chosenPrize.claimedQty++;

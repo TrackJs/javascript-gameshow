@@ -1,0 +1,355 @@
+.route-audience-play {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  .question-wrap {
+    position: absolute;
+    inset: 0 0 0 0;
+    color: white;
+    width: 75vw;
+    height: 50vh;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 3em;
+
+    pre {
+      background: #efefef;
+      padding: 6px 12px;
+      border-radius: 4px;
+      margin: 10px 0;
+      color: black;
+      overflow: auto;
+      width: 33vw;
+      text-align: center;
+    }
+  }
+
+  .bonus-prize-to-win {
+    width: 75vw;
+    position: absolute;
+    top: 60vh;
+    left: -1vw;
+  }
+
+  .waiting-spinner {
+    position: absolute;
+    inset: 0 0 0 0;
+    color: white;
+    width: 75vw;
+    height: 100vh;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    font-size: 3em;
+    text-align: center;
+  }
+
+
+
+  .prize-stack-wrap {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    height: calc(100vh - 40px);
+  }
+
+  /* spinner */
+  .lds-grid {
+    transform: scale(2);
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+
+  .lds-grid div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    animation: lds-grid 1.2s linear infinite;
+  }
+
+  .lds-grid div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+  }
+
+  .lds-grid div:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
+  }
+
+  .lds-grid div:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+
+  .lds-grid div:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+
+  .lds-grid div:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+
+  .lds-grid div:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+
+  .lds-grid div:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+
+  .lds-grid div:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+
+  .lds-grid div:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
+  }
+
+  @keyframes lds-grid {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+
+
+
+
+
+
+
+
+  .show-question {
+    .prize-wrap {
+      position: absolute;
+      top: 160px;
+      width: 100vw;
+      transform: translateX(100vw); // hide off to the right
+
+      &.show {
+        transform: translateX(0);
+        transition: transform 1s;
+      }
+    }
+
+    .question-wrap {
+      position: absolute;
+      bottom: 40px;
+    }
+  }
+
+}
+
+.question-show {
+
+  .prize {
+    position: absolute;
+    top: 160px;
+    width: 100vw;
+    transform: translateX(100vw); // hide off to the right
+
+    &.show {
+      transform: translateX(0);
+      transition: transform 1s;
+    }
+  }
+
+  .question {
+    position: absolute;
+    bottom: 40px;
+
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+
+    .question-text-bg {
+      background-image: url(/assets/images/question_bg.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      width: 100vw;
+      height: 150px;
+    }
+
+    .question-text {
+      padding: 10px;
+      font-size: 3em;
+      font-weight: 600;
+      width: 1200px;
+      margin: 0 auto;
+      height: 150px;
+      text-align: center;
+      color: white;
+
+      .code-result {
+        font-size: 0.75em;
+      }
+
+      pre {
+        margin: 0;
+        font-size: 1.25em;
+      }
+    }
+
+    ol,
+    li {
+      list-style: none;
+    }
+
+    .answers {
+      width: 100vw;
+      list-style: inside upper-alpha;
+      padding: 0;
+      margin: 10px 0 0 0;
+
+      .answer-row {
+        background-image: url(/assets/images/answer_bg_line.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        width: 100vw;
+      }
+
+      li {
+        flex: 0 0 650px;
+        margin: 5px 0 0;
+
+        &:nth-child(even) {
+          margin-left: 10px;
+        }
+
+        input[type=radio] {
+          display: none;
+        }
+
+        label {
+          display: flex;
+          background-image: url(/assets/images/answer_bg_sprite.webp);
+          background-size: cover;
+          height: 72px;
+
+          .answer-text {
+            padding: 10px 35px;
+            width: 100%;
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #ddd;
+            opacity: 0;
+
+            &.show {
+              opacity: 1;
+            }
+
+            pre {
+              margin: 0;
+              font-size: 1.25em;
+            }
+          }
+
+          .letter {
+            font-weight: 400;
+            color: orange;
+          }
+
+          pre {
+            display: inline;
+            font-size: 1.1em;
+          }
+        }
+
+        input[type=radio]:checked~label {
+          background-position: 0 -97px;
+
+          .answer-text {
+            color: black;
+          }
+
+          .letter {
+            color: white;
+          }
+        }
+
+        input[type=radio].result.correct~label {
+          background-position: 0 -251px;
+
+          .answer-text {
+            color: black;
+          }
+
+          .letter {
+            color: white;
+          }
+        }
+      }
+
+
+    }
+
+    .controls {
+      height: 0;
+      position: relative;
+      left: 47vw;
+      top: -80px;
+
+      button {
+        max-width: 15vw;
+        line-height: 1em;
+        font-size: 1em;
+        height: 80px;
+        width: 80px;
+        text-align: center;
+        border-radius: 40px;
+        border: 4px solid #3d758c;
+        background-color: #101011;
+        color: white;
+        cursor: pointer;
+
+        &:active,
+        &:hover,
+        &:focus {
+          border: 4px solid orange;
+          background-color: beige;
+          color: black;
+        }
+      }
+    }
+
+  }
+}

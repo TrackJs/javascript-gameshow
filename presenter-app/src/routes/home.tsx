@@ -25,6 +25,7 @@ export default class Home extends Component<any, any> {
 
 				<div class="controls">
 					<button class="btn btn-purple" type="button" onClick={e => route('/find-player')}>Find Player</button>
+					<button class="btn btn-purple" type="button" onClick={e => route('/audience-play')}>Audience Play</button>
 					<button class="btn btn-purple" type="button" onClick={e => route(`/games`)}>List Games</button>
 					<button class="btn btn-purple" type="button" onClick={e => route(`/test/event-state`)}>Check State</button>
 				</div>

@@ -13,6 +13,7 @@ import ErrorNotFound from './routes/error/errorNotFound';
 import TestPrizes from './routes/test/testPrizes';
 import VideoBackground from './components/videoBackground';
 import TestEventState from './routes/test/testEventState';
+import AudiencePlay from './routes/audiencePlay';
 
 export interface UrlRouteProps {
     gameId: string,
@@ -29,6 +30,8 @@ const App = () => (
             <Route path="/game/new" component={GameNew} />
             <Route path="/game/:gameId" component={GameDetails} />
             <Route path="/game/:gameId/q/:askIdx" component={QuestionDetails} />
+
+            <Route path="/audience-play" component={AudiencePlay} />
 
             <Route path="/test/questions" component={TestQuestions} />
             <Route path="/test/prizes" component={TestPrizes} />

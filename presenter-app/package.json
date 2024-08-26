@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "firebase": "^9.13.0",
     "luxon": "^3.0.3",
     "preact": "^10.10.0",
     "preact-render-to-string": "^5.2.1",

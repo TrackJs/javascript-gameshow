@@ -20,6 +20,8 @@ $boxed-background: linear-gradient(45deg, black, $dark-purple);
 
 @import "./routes/test/eventState.scss";
 
+@import "./routes/audiencePlay.scss";
+
 @import "./components/askQuestion.scss";
 @import "./components/gameLogo.scss";
 @import "./components/lifeLines.scss";
