@@ -248,19 +248,7 @@ export const Questions: Question[] = [
       { text: 'throw Error' }
     ]
   },
-  {
-    type: 'code',
-    level: 1,
-    text: '"42" + 1',
-    explanation: 'The "+" is preceded by a String, so is therefore considered concatenation. Subsequent variables are coerced into Strings.',
-    correctAnswerIdx: 2,
-    answers: [
-      { text: '43' },
-      { text: '"43"' },
-      { text: '"421"' },
-      { text: 'NaN' }
-    ]
-  },
+
   {
     type: 'code',
     level: 1,
@@ -485,19 +473,6 @@ export const Questions: Question[] = [
   {
     type: 'code',
     level: 3,
-    text: '"poop" instanceof String',
-    explanation: 'String literals have the type of string, but are not instances of String',
-    correctAnswerIdx: 1,
-    answers: [
-      { text: 'true' },
-      { text: 'false' },
-      { text: 'throw Error' },
-      { text: '"poop"' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 3,
     text: 'parseInt("poop", 26)',
     explanation: 'The second parameter of parseint is a radix (base) specification.',
     correctAnswerIdx: 3,
@@ -599,32 +574,7 @@ export const Questions: Question[] = [
       { text: '"null"' }
     ]
   },
-  {
-    type: 'code',
-    level: 4,
-    text: 'typeof null',
-    explanation: 'Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.',
-    correctAnswerIdx: 0,
-    answers: [
-      { text: '"object"' },
-      { text: '"null"' },
-      { text: '"function"' },
-      { text: '"array"' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 4,
-    text: 'null instanceof Object',
-    explanation: 'Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.',
-    correctAnswerIdx: 0,
-    answers: [
-      { text: 'false' },
-      { text: 'true' },
-      { text: 'throw Error' },
-      { text: 'null' }
-    ]
-  },
+
   {
     type: 'code',
     level: 4,
@@ -634,19 +584,6 @@ export const Questions: Question[] = [
     answers: [
       { text: 'null' },
       { text: '{ id: 42 }' },
-      { text: 'undefined' },
-      { text: 'throw Error' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 4,
-    text: '[] + []',
-    explanation: 'Array.prototype.toString is used in the coercion, which results in an empty string. Both are concatenated.',
-    correctAnswerIdx: 0,
-    answers: [
-      { text: '""' },
-      { text: '[]' },
       { text: 'undefined' },
       { text: 'throw Error' }
     ]
@@ -740,32 +677,6 @@ export const Questions: Question[] = [
   {
     type: 'code',
     level: 9,
-    text: '[1, 2, 3] + [4, 5, 6]',
-    explanation: 'Both arrays are converted to a string, then concatenated',
-    correctAnswerIdx: 3,
-    answers: [
-      { text: '[1, 2, 3, 4, 5, 6]' },
-      { text: '"1,2,3,4,5,6"' },
-      { text: 'throw Error' },
-      { text: '"1,2,34,5,6"' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 9,
-    text: '1 / 0',
-    explanation: "JavaScript's Number type includes the concepts of positive and negative Infinity.",
-    correctAnswerIdx: 1,
-    answers: [
-      { text: 'NaN' },
-      { text: 'Infinity' },
-      { text: 'null' },
-      { text: 'throw Error' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 9,
     text: '+"42"',
     explanation: 'The "+" operator is not preceded by a String, so it is considered arithmetic and attempts to coerce the following value into a Number. The gets evaluated as "0 + 42".',
     correctAnswerIdx: 0,
@@ -774,19 +685,6 @@ export const Questions: Question[] = [
       { text: '43' },
       { text: '"43"' },
       { text: 'NaN' }
-    ]
-  },
-  {
-    type: 'code',
-    level: 9,
-    text: '[10, 5, 1].sort()',
-    explanation: "Array.prototype.sort's default comparator assumes String operations. All values are coerced and compared as Strings.",
-    correctAnswerIdx: 1,
-    answers: [
-      { text: '[1, 5, 10]' },
-      { text: '[1, 10, 5]' },
-      { text: '[10, 5, 1]' },
-      { text: '[5, 10, 1]' }
     ]
   },
   {
@@ -818,6 +716,110 @@ export const Questions: Question[] = [
   {
     type: 'code',
     level: 9,
+    text: 'null instanceof Object',
+    explanation: 'Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.',
+    correctAnswerIdx: 0,
+    answers: [
+      { text: 'false' },
+      { text: 'true' },
+      { text: 'throw Error' },
+      { text: 'null' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '1 / 0',
+    explanation: "JavaScript's Number type includes the concepts of positive and negative Infinity.",
+    correctAnswerIdx: 1,
+    answers: [
+      { text: 'NaN' },
+      { text: 'Infinity' },
+      { text: 'null' },
+      { text: 'throw Error' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '[1, 2, 3] + [4, 5, 6]',
+    explanation: 'Both arrays are converted to a string, then concatenated',
+    correctAnswerIdx: 3,
+    answers: [
+      { text: '[1, 2, 3, 4, 5, 6]' },
+      { text: '"1,2,3,4,5,6"' },
+      { text: 'throw Error' },
+      { text: '"1,2,34,5,6"' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '[] + []',
+    explanation: 'Array.prototype.toString is used in the coercion, which results in an empty string. Both are concatenated.',
+    correctAnswerIdx: 0,
+    answers: [
+      { text: '""' },
+      { text: '[]' },
+      { text: 'undefined' },
+      { text: 'throw Error' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: 'typeof null',
+    explanation: 'Null, like almost all other concepts in JavaScript, is an object. However, it is a special case of Object where its type is object, but it is not an instance of object.',
+    correctAnswerIdx: 0,
+    answers: [
+      { text: '"object"' },
+      { text: '"null"' },
+      { text: '"function"' },
+      { text: '"array"' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: 'parseInt(0.0000005)',
+    explanation: '',
+    correctAnswerIdx: 0,
+    answers: [
+      { text: '5' },
+      { text: 'undefined' },
+      { text: '0' },
+      { text: 'ArgumentError' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: 'false == NaN',
+    explanation: '',
+    correctAnswerIdx: 0,
+    answers: [
+      { text: 'false' },
+      { text: 'true' },
+      { text: 'undefined' },
+      { text: 'NaN' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '[10, 5, 1].sort()',
+    explanation: "Array.prototype.sort's default comparator assumes String operations. All values are coerced and compared as Strings.",
+    correctAnswerIdx: 1,
+    answers: [
+      { text: '[1, 5, 10]' },
+      { text: '[1, 10, 5]' },
+      { text: '[10, 5, 1]' },
+      { text: '[5, 10, 1]' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
     text: 'typeof typeof 1',
     explanation: 'typeof returns a string, which has a type of string',
     correctAnswerIdx: 1,
@@ -827,5 +829,32 @@ export const Questions: Question[] = [
       { text: '"object"' },
       { text: 'throw Error' }
     ]
-  }
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '"42" + 1',
+    explanation: 'The "+" is preceded by a String, so is therefore considered concatenation. Subsequent variables are coerced into Strings.',
+    correctAnswerIdx: 2,
+    answers: [
+      { text: '43' },
+      { text: '"43"' },
+      { text: '"421"' },
+      { text: 'NaN' }
+    ]
+  },
+  {
+    type: 'code',
+    level: 9,
+    text: '"💩" instanceof String',
+    explanation: 'String literals have the type of string, but are not instances of String',
+    correctAnswerIdx: 1,
+    answers: [
+      { text: 'true' },
+      { text: 'false' },
+      { text: 'throw Error' },
+      { text: '"poop"' }
+    ]
+  },
+
 ]

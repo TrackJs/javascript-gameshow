@@ -3,13 +3,13 @@ import { Questions } from '../src/questions'
 describe("Questions Data", () => {
 
   it("has the expected number of questions", () => {
-    expect(Questions.length).toBe(63);
+    expect(Questions.length).toBe(65);
     expect(Questions.filter(q => q.level === 0).length).toBe(11);
-    expect(Questions.filter(q => q.level === 1).length).toBe(11);
+    expect(Questions.filter(q => q.level === 1).length).toBe(10);
     expect(Questions.filter(q => q.level === 2).length).toBe(10);
-    expect(Questions.filter(q => q.level === 3).length).toBe(11);
-    expect(Questions.filter(q => q.level === 4).length).toBe(10);
-    expect(Questions.filter(q => q.level === 9).length).toBe(10);
+    expect(Questions.filter(q => q.level === 3).length).toBe(10);
+    expect(Questions.filter(q => q.level === 4).length).toBe(7);
+    expect(Questions.filter(q => q.level === 9).length).toBe(17);
   })
 
   it("does not contain duplicates", () => {
