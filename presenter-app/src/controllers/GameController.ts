@@ -111,7 +111,7 @@ class _GameController {
   }
 
   isLastAsk(askId: number) {
-    return askId >= QUESTION_COUNT;
+    return askId >= (QUESTION_COUNT - 1);
   }
 
   getAllGames(): Game[] {

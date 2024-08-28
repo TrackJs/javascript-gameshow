@@ -19,6 +19,10 @@ describe("GameController", () => {
         expect.objectContaining({
           name: expect.any(String),
           isUsed: false
+        }),
+        expect.objectContaining({
+          name: expect.any(String),
+          isUsed: false
         })
       ],
       questions: [],
@@ -131,6 +135,10 @@ describe("GameController", () => {
       playerName: "test",
       startedOn: expect.any(DateTime),
       lifeLines: [
+        expect.objectContaining({
+          name: expect.any(String),
+          isUsed: false
+        }),
         expect.objectContaining({
           name: expect.any(String),
           isUsed: false

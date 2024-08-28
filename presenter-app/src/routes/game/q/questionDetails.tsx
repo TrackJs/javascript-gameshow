@@ -70,9 +70,9 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
       const question = GameController.getQuestion(game, askIdx);
       return { askIdx, game, question, hasQuestionBeenAsked }
     }
-    
-      return { askIdx, game, question: undefined, hasQuestionBeenAsked };
-    
+
+    return { askIdx, game, question: undefined, hasQuestionBeenAsked };
+
   }
 
   private renderPreQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
@@ -105,6 +105,7 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
   }
 
   private renderQuestion(props: UrlRouteProps, state: QuestionDetailsState): ComponentChild {
+    const isLastQuestion = GameController.isLastAsk(state.askIdx);
     return (
       <div class="show-question">
 
@@ -122,8 +123,8 @@ export default class QuestionDetails extends Component<UrlRouteProps, QuestionDe
         </div>
 
         <div class="controls">
-          <button hidden={!(state.question?.isCorrect === true && !GameController.isLastAsk(state.askIdx))} type="button" class="btn btn-purple" onClick={e => route(`/game/${state.game.id}/q/${state.askIdx + 1}`)}>Next Question</button>
-          <button hidden={!(state.question?.isCorrect === false || GameController.isLastAsk(state.askIdx))} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
+          <button hidden={!(state.question?.isCorrect === true && !isLastQuestion)} type="button" class="btn btn-purple" onClick={e => route(`/game/${state.game.id}/q/${state.askIdx + 1}`)}>Next Question</button>
+          <button hidden={!(state.question?.isCorrect === false || isLastQuestion)} type="button" class="btn btn-purple" onClick={e => this.onFinishGame()}>Finish Game</button>
         </div>
 
         <GameLogo />

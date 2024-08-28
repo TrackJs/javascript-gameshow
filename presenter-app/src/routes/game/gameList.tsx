@@ -30,7 +30,7 @@ export default class GameList extends Component<any, any> {
                 </div>
                 {game.isFinished ?
                   <button type="button" onClick={e => route(`/game/${game.id}`)}>Prizes</button> :
-                  <button type="button" onClick={e => route(`/game/${game.id}/q/${game.questions.length}`)}>Resume</button>
+                  <button type="button" onClick={e => route(`/game/${game.id}/q/${game.questions.length - 1}`)}>Resume</button>
                 }
               </li>
             ))}
