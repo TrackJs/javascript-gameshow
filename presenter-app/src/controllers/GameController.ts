@@ -9,6 +9,11 @@ const LIFELINES: GameLifeLine[] = [
     name: "50-50",
     iconUrl: "/assets/images/5050.svg",
     isUsed: false,
+  },
+  {
+    name: "Ask for help",
+    iconUrl: "/assets/images/ask_a_speaker.svg",
+    isUsed: false,
   }
 ];
 
